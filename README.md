@@ -1,3 +1,2 @@
 # tech4all is 
-#ciao 1
-#gggg
+#ciao 1 sono gay
