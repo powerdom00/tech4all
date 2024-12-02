@@ -1,7 +1,7 @@
 
 export class Utente {
   
-    private _id!: number;
+    private _id!: number | undefined;
 
  
     private _email: string;
