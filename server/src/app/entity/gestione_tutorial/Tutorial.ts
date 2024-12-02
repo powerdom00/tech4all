@@ -3,7 +3,7 @@ export class Tutorial {
      * Identificativo unico del tutorial.
      * Viene assegnato automaticamente e non dovrebbe essere modificato manualmente.
      */
-    private _id: number;
+    private _id?: number | undefined;
 
     /**
      * Titolo descrittivo del tutorial.
@@ -33,16 +33,14 @@ export class Tutorial {
     /**
      * Costruttore della classe Tutorial.
      *
-     * @param id Identificativo unico del tutorial.
      * @param titolo Titolo descrittivo del tutorial.
      * @param grafica URL dell'immagine associata al tutorial.
      * @param testo Contenuto principale del tutorial.
      * @param categoria Categoria a cui appartiene il tutorial.
      * @param valutazione Valutazione iniziale del tutorial.
+     * @param id Identificativo unico del tutorial.
      */
-    constructor(
-        /** Identificativo unico */
-        id: number,
+    constructor(    
         /** Titolo del tutorial */
         titolo: string,
         /** URL dell'immagine */
@@ -52,10 +50,10 @@ export class Tutorial {
         /** Categoria del tutorial */
         categoria: string,
         /** Valutazione iniziale */
-        valutazione: number
-    ) {
-        /** Assegna il valore dell'ID */
-        this._id = id;
+        valutazione: number,
+        /** Identificativo unico */
+        id?: number | undefined
+    ) {     
         /** Assegna il titolo */
         this._titolo = titolo;
         /** Assegna l'URL dell'immagine */
@@ -66,14 +64,23 @@ export class Tutorial {
         this._categoria = categoria;
         /** Assegna la valutazione, validandola */
         this._valutazione = this.validateValutazione(valutazione);
+        /** Assegna il valore dell'ID */
+        this._id = id;
     }
 
     /**
      * Restituisce l'identificativo unico del tutorial.
      */
-    public get id(): number {
+    public get id(): number | undefined{
         return this._id;
     }
+
+/**
+     * Sets the unique identifier of the feedback.
+     */
+public set id(value: number | undefined) {
+        this._id = value;
+}
 
     /**
      * Imposta il titolo del tutorial.
