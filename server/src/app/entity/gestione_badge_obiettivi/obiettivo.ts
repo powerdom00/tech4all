@@ -1,4 +1,4 @@
-class Utente {
+class obiettivo {
     private nome: string;
     private descrizione: string;
     private graficaBadge: string;
