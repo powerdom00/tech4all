@@ -8,7 +8,7 @@ USE Tech4All;
 -- Creazione della tabella utente
 CREATE TABLE utente (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(255) UNIQUE,
+    email VARCHAR(255) UNIQUE CHECK (email LIKE '%_@_%._%'),
     password VARCHAR(32) NOT NULL,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE obiettivo (
     nome VARCHAR(255) PRIMARY KEY,
     descrizione TEXT NOT NULL,
     grafica_badge VARCHAR(255) NOT NULL,
-    quiz_da_superare INT NOT NULL
+    quiz_da_superare INT NOT NULL CHECK (quiz_da_superare > 0)
 );
 
 -- Creazione della tabella conseguimento
@@ -33,6 +33,21 @@ CREATE TABLE conseguimento (
     FOREIGN KEY (obiettivo_nome) REFERENCES obiettivo(nome) ON DELETE CASCADE
 );
 
+-- Trigger per verificare la data di conseguimento
+DELIMITER $$
+
+CREATE TRIGGER check_data_conseguimento
+BEFORE INSERT ON conseguimento
+FOR EACH ROW
+BEGIN
+    IF NEW.data_conseguimento > NOW() THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La data di conseguimento non può essere futura.';
+    END IF;
+END$$
+
+DELIMITER ;
+
 -- Creazione della tabella tutorial
 CREATE TABLE tutorial (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,24 +55,73 @@ CREATE TABLE tutorial (
     grafica VARCHAR(255) NOT NULL,
     testo TEXT NOT NULL,
     categoria VARCHAR(50) NOT NULL,
-    valutazione DECIMAL(3, 2) DEFAULT NULL
+    valutazione DECIMAL(3, 2) DEFAULT NULL CHECK (valutazione BETWEEN 1 AND 5)
 );
 
 -- Creazione della tabella feedback
 CREATE TABLE feedback (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    valutazione INT NOT NULL,
+    valutazione INT NOT NULL CHECK (valutazione BETWEEN 1 AND 5),
     commento VARCHAR(280) NOT NULL,
     utente_id INT NOT NULL,
     tutorial_id INT NOT NULL,
+    UNIQUE (utente_id, tutorial_id),
     FOREIGN KEY (utente_id) REFERENCES utente(id) ON DELETE CASCADE,
     FOREIGN KEY (tutorial_id) REFERENCES tutorial(id) ON DELETE CASCADE
 );
+
+-- Trigger per aggiornare la valutazione media dei tutorial
+DELIMITER $$
+
+CREATE TRIGGER update_tutorial_valutazione
+AFTER INSERT ON feedback
+FOR EACH ROW
+BEGIN
+    DECLARE media_valutazione DECIMAL(3, 2);
+    SELECT AVG(valutazione) INTO media_valutazione
+    FROM feedback
+    WHERE tutorial_id = NEW.tutorial_id;
+
+    UPDATE tutorial
+    SET valutazione = media_valutazione
+    WHERE id = NEW.tutorial_id;
+END$$
+
+CREATE TRIGGER update_tutorial_valutazione_delete
+AFTER DELETE ON feedback
+FOR EACH ROW
+BEGIN
+    DECLARE media_valutazione DECIMAL(3, 2);
+    SELECT AVG(valutazione) INTO media_valutazione
+    FROM feedback
+    WHERE tutorial_id = OLD.tutorial_id;
+
+    UPDATE tutorial
+    SET valutazione = media_valutazione
+    WHERE id = OLD.tutorial_id;
+END$$
+
+CREATE TRIGGER update_tutorial_valutazione_update
+AFTER UPDATE ON feedback
+FOR EACH ROW
+BEGIN
+    DECLARE media_valutazione DECIMAL(3, 2);
+    SELECT AVG(valutazione) INTO media_valutazione
+    FROM feedback
+    WHERE tutorial_id = NEW.tutorial_id;
+
+    UPDATE tutorial
+    SET valutazione = media_valutazione
+    WHERE id = NEW.tutorial_id;
+END$$
+
+DELIMITER ;
 
 -- Creazione della tabella quiz
 CREATE TABLE quiz (
     id INT PRIMARY KEY AUTO_INCREMENT,
     tutorial_id INT NOT NULL,
+    UNIQUE (tutorial_id),
     FOREIGN KEY (tutorial_id) REFERENCES tutorial(id) ON DELETE CASCADE
 );
 
