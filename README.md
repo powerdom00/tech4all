@@ -1,5 +1,2 @@
 # tech4all is 
-#ciao
-#c2evbol
-#teres
-#iiiiiii
+#ciao 1 sono gay (Giovanni salsano)
