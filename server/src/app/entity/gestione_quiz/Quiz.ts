@@ -1,25 +1,52 @@
-class Quiz {
-    private id: number;
-    private tutorialId: number;
+/**
+ * Represents a Quiz entity.
+ */
+export class Quiz {
+    /**
+     * The unique identifier of the quiz.
+     */
+    private _id?: number;
 
-    constructor(id: number, tutorialId: number) {
-        this.id = id;
-        this.tutorialId = tutorialId;
+    /**
+     * The identifier of the tutorial associated with the quiz.
+     */
+    private _tutorialId: number;
+
+    /**
+     * Creates an instance of Quiz.
+     * @param tutorialId - The identifier of the tutorial associated with the quiz.
+     * @param id - The unique identifier of the quiz.
+     */
+    constructor(tutorialId: number, id?: number) {
+        this._tutorialId = tutorialId;
+        this._id = id;
     }
 
-    get Id(): number {
-        return this.id;
+    /**
+     * Gets the unique identifier of the quiz.
+     */
+    public get Id(): number | undefined {
+        return this._id;
     }
 
-    set Id(value: number) {
-        this.id = value;
+    /**
+     * Sets the unique identifier of the quiz.
+     */
+    public set Id(value: number | undefined) {
+        this._id = value;
     }
 
-    get TutorialId(): number {
-        return this.tutorialId;
+    /**
+     * Gets the identifier of the tutorial associated with the quiz.
+     */
+    public get TutorialId(): number {
+        return this._tutorialId;
     }
 
-    set TutorialId(value: number) {
-        this.tutorialId = value;
+    /**
+     * Sets the identifier of the tutorial associated with the quiz.
+     */
+    public set TutorialId(value: number) {
+        this._tutorialId = value;
     }
 }

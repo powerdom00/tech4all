@@ -1,11 +1,11 @@
 /**
- * Represents a feedback entity.
+ * Represents a Feedback entity.
  */
 export class Feedback {
     /**
      * The unique identifier of the feedback.
      */
-    private _id?: number | undefined;
+    private _id?: number;
 
     /**
      * The rating given in the feedback.
