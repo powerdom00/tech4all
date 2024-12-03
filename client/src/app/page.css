@@ -1,0 +1,103 @@
+/* Page.css */
+
+/* Hero style */
+.hero {
+  color: #ffffff;
+  padding: 60px 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Ombra per evidenziare la sezione */
+  background-image: url('/Media/heroimg.jpg'); /* Percorso dell'immagine */ /* Se riuscite trovate un immagine migliore io non ho trovato nulla di bello */
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 40vh;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin: 0 0 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Card style */
+.card {
+border: 1px solid #e1e1e1; 
+border-radius: 8px;
+padding: 20px;
+background-color: #ffffff; 
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombra forte */
+max-width: 400px;
+margin: 20px auto;
+text-align: center;
+height: 60vh;
+width: 100%;
+}
+
+.card p {
+font-size: 1rem;
+color: #7f8c8d; 
+margin-bottom: 20px;
+padding-top: 20px;
+}
+
+.card-button {
+background-color: #166e3b;
+color: #fff;
+border: none;
+padding: 10px 20px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 16px;
+margin: top 20px;
+}
+
+.card-button:hover {
+background-color: #3b993b;
+}
+
+/* Popup style */
+.popup {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+}
+
+.popup-content {
+background-color: #ffffff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+text-align: center;
+max-width: 300px;
+}
+
+.popup-content p {
+color: #555;
+margin-bottom: 20px;
+}
+
+.popup-buttons {
+display: flex;
+justify-content: space-between;
+}
+
+.popup-button {
+background-color: #166e3b;
+color: #fff;
+border: none;
+padding: 10px 20px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 14px;
+}
+
+.popup-button:hover {
+background-color: #3b993b;
+}

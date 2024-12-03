@@ -1,95 +1,75 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import React, { useState } from 'react';
+import Header from "./Components/Header";
+import Footer from './Components/Footer';
+import './page.css';
+
+/* 
+
+  Accortezze:se dovete inserire un immagine inseritela nella cartella media che non può essere spostata da public
+  poiché next.js richiede che le immagine statiche siano postate li. Per quanto possibile manterene la stessa palette cromatica.
+  Ho inserito il comando "use client" cosi node non da problemi con useState ed ho creato un prima bozza della pagina iniziale.
+  Se vi servono chiarimenti ci sono; by Casotto.
+
+*/
+
+const App: React.FC = () => {
+
+  const [isPopupVisible, setPopupVisible] = useState(false);
+
+  const handleChoice = () => {
+    setPopupVisible(false); // Chiusura popup
+  };
+
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div>
+      <Header />  {/* Aggiunta component header*/}
+      <main>
+      <section className="hero">
+        <div className="hero-content">
+          <h1>Tech4All</h1>
+        </div>
+      </section>
+        <div className="card">
+          <h2>Chi siamo?</h2>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            uzzicooooo
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+          <p>
+            Tech4All è un sito dedicato a migliorare l alfabetizzazione digitale, 
+            offrendo tutorial facili da seguire e interattivi. 
+            Il sito è progettato per rendere la tecnologia accessibile a tutti, 
+            guidando gli utenti passo dopo passo in vari argomenti legati al mondo digitale. 
+            Con contenuti chiari e pratici, Tech4All aiuta le persone a sviluppare le competenze necessarie per navigare, 
+            comprendere e sfruttare le risorse digitali in modo efficace e sicuro.
+            Registrati ora per accedere a tutti i contenuti esclusivi e inizia il tuo viaggio verso una maggiore competenza digitale!
+          </p>
+
+          <button onClick={() => setPopupVisible(true)} className="card-button">
+            Registrati!
+          </button>
+          
+          {/* Creazione popoup*/}
+          {isPopupVisible && (      
+            <div className="popup">
+              <div className="popup-content">
+                  <p>Sai già come registrarti?</p>
+              <div className="popup-buttons">
+                <button onClick={handleChoice} className="popup-button">
+                  Sì
+                </button>
+                <button onClick={handleChoice} className="popup-button">
+                  No
+                </button>
+              </div>
+              </div>
+            </div>
+          )}
         </div>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      <Footer />  {/* Aggiunta component footer*/}
     </div>
   );
 }
+
+export default App;
