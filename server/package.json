@@ -6,7 +6,9 @@
     "build": "tsc --build",
     "start": "node ./dist/server.js",
     "start:dev": "nodemon ./src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint", 
+    "lintfix": "eslint . --fix" 
   },
   "keywords": [],
   "author": "",
@@ -16,9 +18,15 @@
     "express": "^4.21.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.16.0",
     "@types/express": "^5.0.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.13.0",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.17.0"
   }
 }
