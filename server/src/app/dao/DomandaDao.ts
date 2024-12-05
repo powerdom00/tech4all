@@ -1,6 +1,6 @@
 import { Pool } from "mysql2/promise";
-import { Domanda } from "./Domanda";
-import { Risposta } from "./Risposta";
+import { Domanda } from "../entity/gestione_quiz/Domanda";
+import { Risposta } from "../entity/gestione_quiz/Risposta";
 import db from "./db"; // Importa il modulo di connessione al database
 
 export class DomandaDao {

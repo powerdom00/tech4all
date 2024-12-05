@@ -1,5 +1,5 @@
 import { Pool } from "mysql2/promise";
-import { Utente } from "./Utente";
+import { Utente } from "../entity/gestione_autenticazione/Utente";
 import db from "./db"; // Importa il file di connessione al database
 
 export class UtenteDao {
