@@ -1,4 +1,4 @@
-export class Utente {
+export class utente {
   private _id!: number | undefined;
 
   private _email: string;

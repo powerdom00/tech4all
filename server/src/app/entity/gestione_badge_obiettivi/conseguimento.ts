@@ -1,4 +1,4 @@
-export class Conseguimento {
+export class conseguimento {
   private utenteId: number;
   private obiettivoNome: string;
   private dataConseguimento: Date;

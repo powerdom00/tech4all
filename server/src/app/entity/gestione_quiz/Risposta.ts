@@ -1,7 +1,7 @@
 /**
  * Represents a Risposta entity.
  */
-export class Risposta {
+export class risposta {
   /**
    * The unique identifier of the risposta.
    */

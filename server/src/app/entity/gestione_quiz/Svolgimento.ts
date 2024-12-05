@@ -1,5 +1,5 @@
-import { Quiz } from "./Quiz";
-import { Utente } from "../gestione_autenticazione/utente";
+import { quiz } from "./Quiz";
+import { utente } from "../gestione_autenticazione/utente";
 
 /**
  * Represents a Svolgimento entity.
@@ -8,12 +8,12 @@ export class Svolgimento {
   /**
    * The Quiz entity associated with the svolgimento.
    */
-  private _quiz: Quiz;
+  private _quiz: quiz;
 
   /**
    * The Utente entity associated with the svolgimento.
    */
-  private _utente: Utente;
+  private _utente: utente;
 
   /**
    * The outcome of the svolgimento.
@@ -26,7 +26,7 @@ export class Svolgimento {
    * @param utente - The Utente entity associated with the svolgimento.
    * @param esito - The outcome of the svolgimento.
    */
-  constructor(quiz: Quiz, utente: Utente, esito: boolean) {
+  constructor(quiz: quiz, utente: utente, esito: boolean) {
     this._quiz = quiz;
     this._utente = utente;
     this._esito = esito;
@@ -35,28 +35,28 @@ export class Svolgimento {
   /**
    * Gets the Quiz entity associated with the svolgimento.
    */
-  public get quiz(): Quiz {
+  public get quiz(): quiz {
     return this._quiz;
   }
 
   /**
    * Sets the Quiz entity associated with the svolgimento.
    */
-  public set quiz(value: Quiz) {
+  public set quiz(value: quiz) {
     this._quiz = value;
   }
 
   /**
    * Gets the Utente entity associated with the svolgimento.
    */
-  public get utente(): Utente {
+  public get utente(): utente {
     return this._utente;
   }
 
   /**
    * Sets the Utente entity associated with the svolgimento.
    */
-  public set utente(value: Utente) {
+  public set utente(value: utente) {
     this._utente = value;
   }
 
