@@ -1,78 +1,68 @@
-export class utente {
-  private _id!: number | undefined;
+export class Utente {
+	private id!: number | undefined;
+	private email: string;
+	private password: string;
+	private nome: string;
+	private cognome: string;
+	private ruolo: boolean;
 
-  private _email: string;
+	constructor(
+		email: string,
+		password: string,
+		nome: string,
+		cognome: string,
+		ruolo: boolean
+	) {
+		this.email = email;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.ruolo = ruolo;
+	}
 
-  private _password: string;
+	// Getters
+	public getId(): number | undefined {
+		return this.id;
+	}
 
-  private _nome: string;
+	public getEmail(): string {
+		return this.email;
+	}
 
-  private _cognome: string;
+	public getPassword(): string {
+		return this.password;
+	}
 
-  private _ruolo: boolean;
+	public getNome(): string {
+		return this.nome;
+	}
 
-  constructor(
-    email: string,
-    password: string,
-    nome: string,
-    cognome: string,
-    ruolo: boolean,
-  ) {
-    this._email = email;
-    this._password = password;
-    this._nome = nome;
-    this._cognome = cognome;
-    this._ruolo = ruolo;
-  }
+	public getCognome(): string {
+		return this.cognome;
+	}
 
-  // Getters
-  get id(): number | undefined {
-    return this._id;
-  }
+	public getRuolo(): boolean {
+		return this.ruolo;
+	}
 
-  get email(): string {
-    return this._email;
-  }
+	// Setters
+	public setEmail(value: string) {
+		this.email = value;
+	}
 
-  get password(): string {
-    return this._password;
-  }
+	public setPassword(value: string) {
+		this.password = value;
+	}
 
-  get nome(): string {
-    return this._nome;
-  }
+	public setNome(value: string) {
+		this.nome = value;
+	}
 
-  get cognome(): string {
-    return this._cognome;
-  }
+	public setCognome(value: string) {
+		this.cognome = value;
+	}
 
-  get ruolo(): boolean {
-    return this._ruolo;
-  }
-
-  // Setters
-  set email(value: string) {
-    this._email = value;
-  }
-
-  set password(value: string) {
-    this._password = value;
-  }
-
-  set nome(value: string) {
-    this._nome = value;
-  }
-
-  set cognome(value: string) {
-    this._cognome = value;
-  }
-
-  set ruolo(value: boolean) {
-    this._ruolo = value;
-  }
-
-  // toString method
-  toString(): string {
-    return `Utente { id: ${this._id}, email: ${this._email}, nome: ${this._nome}, cognome: ${this._cognome}, ruolo: ${this._ruolo} }`;
-  }
+	public setRuolo(value: boolean) {
+		this.ruolo = value;
+	}
 }

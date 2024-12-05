@@ -1,61 +1,63 @@
 export class Obiettivo {
-  private nome: string;
-  private descrizione: string;
-  private graficaBadge: string;
-  private quizDaSuperare: number;
-  private categoriaQuiz: string;
+	private nome: string;
+	private descrizione: string;
+	private graficaBadge: string;
+	private quizDaSuperare: number;
+	private categoriaQuiz: string;
 
-  constructor(
-    nome: string,
-    descrizione: string,
-    graficaBadge: string,
-    quizDaSuperare: number,
-    categoriaQuiz: string,
-  ) {
-    this.nome = nome;
-    this.descrizione = descrizione;
-    this.graficaBadge = graficaBadge;
-    this.quizDaSuperare = quizDaSuperare;
-    this.categoriaQuiz = categoriaQuiz;
-  }
+	constructor(
+		nome: string,
+		descrizione: string,
+		graficaBadge: string,
+		quizDaSuperare: number,
+		categoriaQuiz: string
+	) {
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.graficaBadge = graficaBadge;
+		this.quizDaSuperare = quizDaSuperare;
+		this.categoriaQuiz = categoriaQuiz;
+	}
 
-  public getNome(): string {
-    return this.nome;
-  }
+	// Getter
+	public getNome(): string {
+		return this.nome;
+	}
 
-  public setNome(nome: string): void {
-    this.nome = nome;
-  }
+	public getDescrizione(): string {
+		return this.descrizione;
+	}
 
-  public getDescrizione(): string {
-    return this.descrizione;
-  }
+	public getGraficaBadge(): string {
+		return this.graficaBadge;
+	}
 
-  public setDescrizione(descrizione: string): void {
-    this.descrizione = descrizione;
-  }
+	public getQuizDaSuperare(): number {
+		return this.quizDaSuperare;
+	}
 
-  public getGraficaBadge(): string {
-    return this.graficaBadge;
-  }
+	public getCategoriaQuiz(): string {
+		return this.categoriaQuiz;
+	}
 
-  public setGraficaBadge(graficaBadge: string): void {
-    this.graficaBadge = graficaBadge;
-  }
+	// Setter
+	public setNome(nome: string): void {
+		this.nome = nome;
+	}
 
-  public getQuizDaSuperare(): number {
-    return this.quizDaSuperare;
-  }
+	public setDescrizione(descrizione: string): void {
+		this.descrizione = descrizione;
+	}
 
-  public setQuizDaSuperare(quizDaSuperare: number): void {
-    this.quizDaSuperare = quizDaSuperare;
-  }
+	public setGraficaBadge(graficaBadge: string): void {
+		this.graficaBadge = graficaBadge;
+	}
 
-  public getCategoriaQuiz(): string {
-    return this.categoriaQuiz;
-  }
+	public setQuizDaSuperare(quizDaSuperare: number): void {
+		this.quizDaSuperare = quizDaSuperare;
+	}
 
-  public setCategoriaQuiz(categoriaQuiz: string): void {
-    this.categoriaQuiz = categoriaQuiz;
-  }
+	public setCategoriaQuiz(categoriaQuiz: string): void {
+		this.categoriaQuiz = categoriaQuiz;
+	}
 }
