@@ -2,98 +2,97 @@
  * Represents a Risposta entity.
  */
 export class Risposta {
-  /**
-   * The unique identifier of the risposta.
-   */
-  private _id?: number;
+	/**
+	 * The unique identifier of the risposta.
+	 */
+	private id?: number;
+	/**
+	 * The identifier of the domanda associated with the risposta.
+	 */
+	private domandaId: number;
+	/**
+	 * The text of the risposta.
+	 */
+	private risposta: string;
+	/**
+	 * Indicates whether the risposta is correct.
+	 */
+	private corretta: boolean;
 
-  /**
-   * The identifier of the domanda associated with the risposta.
-   */
-  private _domandaId: number;
+	/**
+	 * Creates an instance of Risposta.
+	 * @param domandaId - The identifier of the domanda associated with the risposta.
+	 * @param risposta - The text of the risposta.
+	 * @param corretta - Indicates whether the risposta is correct.
+	 * @param id - The unique identifier of the risposta.
+	 */
+	constructor(
+		domandaId: number,
+		risposta: string,
+		corretta: boolean,
+		id?: number
+	) {
+		this.domandaId = domandaId;
+		this.risposta = risposta;
+		this.corretta = corretta;
+		this.id = id;
+	}
 
-  /**
-   * The text of the risposta.
-   */
-  private _risposta: string;
+	// Getter
+	/**
+	 * Gets the unique identifier of the risposta.
+	 */
+	public getId(): number | undefined {
+		return this.id;
+	}
 
-  /**
-   * Indicates whether the risposta is correct.
-   */
-  private _corretta: boolean;
+	/**
+	 * Gets the identifier of the domanda associated with the risposta.
+	 */
+	public getDomandaId(): number {
+		return this.domandaId;
+	}
 
-  /**
-   * Creates an instance of Risposta.
-   * @param domandaId - The identifier of the domanda associated with the risposta.
-   * @param risposta - The text of the risposta.
-   * @param corretta - Indicates whether the risposta is correct.
-   * @param id - The unique identifier of the risposta.
-   */
-  constructor(
-    domandaId: number,
-    risposta: string,
-    corretta: boolean,
-    id?: number,
-  ) {
-    this._domandaId = domandaId;
-    this._risposta = risposta;
-    this._corretta = corretta;
-    this._id = id;
-  }
+	/**
+	 * Gets the text of the risposta.
+	 */
+	public getRisposta(): string {
+		return this.risposta;
+	}
 
-  /**
-   * Gets the unique identifier of the risposta.
-   */
-  public get id(): number | undefined {
-    return this._id;
-  }
+	/**
+	 * Gets whether the risposta is correct.
+	 */
+	public getCorretta(): boolean {
+		return this.corretta;
+	}
 
-  /**
-   * Sets the unique identifier of the risposta.
-   */
-  public set id(value: number | undefined) {
-    this._id = value;
-  }
+	// Setter
+	/**
+	 * Sets the unique identifier of the risposta.
+	 */
+	public setId(value: number | undefined) {
+		this.id = value;
+	}
 
-  /**
-   * Gets the identifier of the domanda associated with the risposta.
-   */
-  public get domandaId(): number {
-    return this._domandaId;
-  }
+	/**
+	 * Sets the identifier of the domanda associated with the risposta.
+	 */
+	public setDomandaId(value: number) {
+		this.domandaId = value;
+	}
 
-  /**
-   * Sets the identifier of the domanda associated with the risposta.
-   */
-  public set domandaId(value: number) {
-    this._domandaId = value;
-  }
+	/**
+	 * Sets the text of the risposta.
+	 */
+	public setRisposta(value: string) {
+		this.risposta = value;
+	}
 
-  /**
-   * Gets the text of the risposta.
-   */
-  public get risposta(): string {
-    return this._risposta;
-  }
-
-  /**
-   * Sets the text of the risposta.
-   */
-  public set risposta(value: string) {
-    this._risposta = value;
-  }
-
-  /**
-   * Gets whether the risposta is correct.
-   */
-  public get corretta(): boolean {
-    return this._corretta;
-  }
-
-  /**
-   * Sets whether the risposta is correct.
-   */
-  public set corretta(value: boolean) {
-    this._corretta = value;
-  }
+	/**
+	 * Sets whether the risposta is correct.
+	 */
+	public setCorretta(value: boolean) {
+		this.corretta = value;
+	}
 }
