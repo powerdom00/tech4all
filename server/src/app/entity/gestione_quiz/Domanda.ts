@@ -1,7 +1,9 @@
+import { risposta } from "./risposta";
+
 /**
  * Represents a Domanda entity.
  */
-export class Domanda {
+export class domanda {
   /**
    * The unique identifier of the domanda.
    */
@@ -18,56 +20,70 @@ export class Domanda {
   private _domanda: string;
 
   /**
+   * lista di risposte alla domanda.
+   */
+  private _risposte: risposta[];  
+  /**
    * Creates an instance of Domanda.
    * @param quizId - The identifier of the quiz associated with the domanda.
    * @param domanda - The text of the domanda.
    * @param id - The unique identifier of the domanda.
+   * @param risposte - The list of answers to the question.
    */
-  constructor(quizId: number, domanda: string, id?: number) {
+  constructor(quizId: number, domanda: string, risposte: risposta[], id?: number) {
     this._quizId = quizId;
     this._domanda = domanda;
     this._id = id;
+    this._risposte = risposte;
   }
 
   /**
    * Gets the unique identifier of the domanda.
    */
-  public get id(): number | undefined {
+  public getid(): number | undefined {
     return this._id;
   }
 
   /**
    * Sets the unique identifier of the domanda.
    */
-  public set id(value: number | undefined) {
+  public setid(value: number | undefined) {
     this._id = value;
   }
 
   /**
    * Gets the identifier of the quiz associated with the domanda.
    */
-  public get quizId(): number {
+  public getquizId(): number {
     return this._quizId;
   }
 
   /**
    * Sets the identifier of the quiz associated with the domanda.
    */
-  public set quizId(value: number) {
+  public setquizId(value: number) {
     this._quizId = value;
   }
 
   /**
    * Gets the text of the domanda.
    */
-  public get domanda(): string {
+  public getdomanda(): string {
     return this._domanda;
   }
 
   /**
    * Sets the text of the domanda.
    */
-  public set domanda(value: string) {
+  public setdomanda(value: string) {
     this._domanda = value;
   }
+
+  public setRisposte(value: risposta[]) {
+    this._risposte = value;
+  }   
+
+  public getRisposte(): risposta[] {
+    return this._risposte;
+  } 
 }
