@@ -1,9 +1,9 @@
-import { risposta } from "./risposta";
+import { Risposta } from "./Risposta";
 
 /**
  * Represents a Domanda entity.
  */
-export class domanda {
+export class Domanda {
   /**
    * The unique identifier of the domanda.
    */

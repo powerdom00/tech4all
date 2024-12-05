@@ -1,7 +1,7 @@
 /**
  * Represents a Feedback entity.
  */
-export class feedback {
+export class Feedback {
   /**
    * The unique identifier of the feedback.
    */

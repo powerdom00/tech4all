@@ -1,4 +1,4 @@
-export class obiettivo {
+export class Obiettivo {
   private nome: string;
   private descrizione: string;
   private graficaBadge: string;

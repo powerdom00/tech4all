@@ -1,5 +1,5 @@
-import { domanda } from "./domanda";
-import { risposta } from "./risposta";
+import { Domanda } from "./Domanda";
+import { Risposta } from "./Risposta";
 
 /**
  * Represents a Quiz entity.
