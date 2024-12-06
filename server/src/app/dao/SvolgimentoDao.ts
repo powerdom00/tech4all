@@ -1,7 +1,7 @@
 import { Pool } from "mysql2/promise";
-import { Svolgimento } from "./Svolgimento";
-import { Quiz } from "./Quiz";
-import { Utente } from "../gestione_autenticazione/Utente";
+import { Svolgimento } from "../entity/gestione_quiz/Svolgimento";
+import { Quiz } from "../entity/gestione_quiz/Quiz";
+import { Utente } from "../entity/gestione_autenticazione/Utente";
 import db from "./db"; // Importa il modulo di connessione al database
 
 export class SvolgimentoDao {

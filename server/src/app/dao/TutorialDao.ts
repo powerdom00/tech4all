@@ -1,5 +1,5 @@
 import { Pool } from "mysql2/promise";
-import { Tutorial } from "./Tutorial";
+import { Tutorial } from "../entity/gestione_tutorial/Tutorial";
 import db from "./db"; // Importa il modulo di connessione al database
 
 export class TutorialDao {

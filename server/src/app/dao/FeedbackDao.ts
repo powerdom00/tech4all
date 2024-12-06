@@ -1,5 +1,5 @@
 import { Pool } from "mysql2/promise";
-import { Feedback } from "./Feedback";
+import { Feedback } from "../entity/gestione_feedback/Feedback";
 import db from "./db"; // Importa il file di connessione al database
 
 export class FeedbackDao {

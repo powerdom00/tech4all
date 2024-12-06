@@ -1,5 +1,5 @@
 import { Pool } from "mysql2/promise";
-import { Conseguimento } from "./Conseguimento";
+import { Conseguimento } from "../entity/gestione_badge_obiettivi/Conseguimento";
 import db from "./db"; // Importa il file di connessione al database
 
 export class ConseguimentoDao {
