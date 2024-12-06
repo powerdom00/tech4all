@@ -1,103 +1,160 @@
-/* Page.css */
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+/* General Layout */
 
-/* Hero style */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Hero Section */
 .hero {
   color: #ffffff;
-  padding: 60px 20px;
+  padding: 80px 20px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Ombra per evidenziare la sezione */
-  background-image: url('/Media/heroimg.jpg'); /* Percorso dell'immagine */ /* Se riuscite trovate un immagine migliore io non ho trovato nulla di bello */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-image: url('/Media/heroimg.jpg');
+  /* Percorso dell'immagine */
   background-size: cover;
-  background-position: center; 
+  background-position: center;
   background-repeat: no-repeat;
-  height: 40vh;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.hero-content h1 {
-  font-size: 2.5rem;
-  margin: 0 0 20px;
-  font-family: 'Arial', sans-serif;
+.hero-title {
+  font-size: 3rem;
+  margin: 0;
 }
 
-/* Card style */
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Card Section */
 .card {
-border: 1px solid #e1e1e1; 
-border-radius: 8px;
-padding: 20px;
-background-color: #ffffff; 
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombra forte */
-max-width: 400px;
-margin: 20px auto;
-text-align: center;
-height: 60vh;
-width: 100%;
+  background-color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
-.card p {
-font-size: 1rem;
-color: #7f8c8d; 
-margin-bottom: 20px;
-padding-top: 20px;
+.video-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 2rem;
+  color: #1d5c31;
+  margin-bottom: 20px;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #7f8c8d;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 .card-button {
-background-color: #166e3b;
-color: #fff;
-border: none;
-padding: 10px 20px;
-border-radius: 4px;
-cursor: pointer;
-font-size: 16px;
-margin: top 20px;
+  background-color: #1d5c31;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .card-button:hover {
-background-color: #3b993b;
+  background-color: #1d5c31;
 }
 
-/* Popup style */
+/* Popup */
 .popup {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.5);
-display: flex;
-align-items: center;
-justify-content: center;
-z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Sfondo semi-trasparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .popup-content {
-background-color: #ffffff;
-padding: 20px;
-border-radius: 8px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-text-align: center;
-max-width: 300px;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  position: relative;
 }
 
-.popup-content p {
-color: #555;
-margin-bottom: 20px;
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  color:#1d5c31;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.popup-text {
+  color:black;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .popup-buttons {
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .popup-button {
-background-color: #166e3b;
-color: #fff;
-border: none;
-padding: 10px 20px;
-border-radius: 4px;
-cursor: pointer;
-font-size: 14px;
+  padding: 0.8rem 1.5rem;
+  background-color: #1d5c31;
+  /* Colore verde */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.popup-button:hover {
-background-color: #3b993b;
+.popup-message {
+  margin-top: 1rem;
+  color: white;
+  font-weight: 200;
+  background-color: #1d5c31;
+    border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.8rem 1.5rem;
+  /* Colore per il messaggio */
+  font-size: 1rem;
 }
