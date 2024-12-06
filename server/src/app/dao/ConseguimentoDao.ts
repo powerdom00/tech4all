@@ -1,12 +1,13 @@
 import { Pool } from "mysql2/promise";
 import { Conseguimento } from "../entity/gestione_badge_obiettivi/Conseguimento";
-import db from "./db"; // Importa il file di connessione al database
+import pool from "../../db";; // Importa il file di connessione al database
+
 
 export class ConseguimentoDao {
   private db: Pool;
 
   constructor() {
-    this.db = db; // Utilizza il modulo di connessione al database
+    this.db = pool; // Utilizza il modulo di connessione al database
   }
 
   // Metodo per ottenere tutti i conseguimenti
