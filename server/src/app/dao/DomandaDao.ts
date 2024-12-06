@@ -1,13 +1,13 @@
 import { Pool } from "mysql2/promise";
 import { Domanda } from "../entity/gestione_quiz/Domanda";
 import { Risposta } from "../entity/gestione_quiz/Risposta";
-import db from "./db"; // Importa il modulo di connessione al database
+import pool from "../../db";; // Importa il file di connessione al database
 
 export class DomandaDao {
   private db: Pool;
 
   constructor() {
-    this.db = db; // Utilizza la connessione al database
+    this.db = pool; // Utilizza la connessione al database
   }
 
   // Metodo per ottenere tutte le domande

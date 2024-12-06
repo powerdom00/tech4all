@@ -2,13 +2,13 @@ import { Pool } from "mysql2/promise";
 import { Svolgimento } from "../entity/gestione_quiz/Svolgimento";
 import { Quiz } from "../entity/gestione_quiz/Quiz";
 import { Utente } from "../entity/gestione_autenticazione/Utente";
-import db from "./db"; // Importa il modulo di connessione al database
+import pool from "../../db";
 
 export class SvolgimentoDao {
   private db: Pool;
 
   constructor() {
-    this.db = db; // Utilizza la connessione al database
+    this.db = pool; // Utilizza la connessione al database
   }
 
   // Metodo per ottenere tutti gli svolgimenti

@@ -1,12 +1,13 @@
 import { Pool } from "mysql2/promise";
 import { Feedback } from "../entity/gestione_feedback/Feedback";
-import db from "./db"; // Importa il file di connessione al database
+import pool from "../../db";; // Importa il file di connessione al database
+
 
 export class FeedbackDao {
   private db: Pool;
 
   constructor() {
-    this.db = db; // Utilizza il modulo di connessione al database
+    this.db = pool; // Utilizza il modulo di connessione al database
   }
 
   // Metodo per ottenere tutti i feedback

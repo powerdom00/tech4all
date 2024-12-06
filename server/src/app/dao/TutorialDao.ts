@@ -1,12 +1,12 @@
 import { Pool } from "mysql2/promise";
 import { Tutorial } from "../entity/gestione_tutorial/Tutorial";
-import db from "./db"; // Importa il modulo di connessione al database
+import pool from "../../db";
 
 export class TutorialDao {
   private db: Pool;
 
   constructor() {
-    this.db = db; // Utilizza la connessione al database
+    this.db = pool; // Utilizza la connessione al database
   }
 
   // Metodo per ottenere tutti i tutorial
