@@ -1,4 +1,4 @@
-import { Pool } from "mysql2/promise";
+import { FieldPacket, Pool, RowDataPacket } from "mysql2/promise";
 import { Risposta } from "../entity/gestione_quiz/Risposta";
 import pool from "../../db";
 
@@ -11,18 +11,21 @@ export class RispostaDao {
 
   // Metodo per ottenere tutte le risposte
   public async getAllRisposte(): Promise<Risposta[]> {
-    const [rows] = await this.db.query("SELECT * FROM risposta");
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM risposta",
+    );
     return rows.map(
-      (row: any) =>
+      (row: RowDataPacket) =>
         new Risposta(row.id, row.domanda_id, row.risposta, row.corretta),
     );
   }
 
   // Metodo per ottenere una risposta specifica per id
   public async getRisposta(id: number): Promise<Risposta | null> {
-    const [rows] = await this.db.query("SELECT * FROM risposta WHERE id = ?", [
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM risposta WHERE id = ?",
       id,
-    ]);
+    );
     if (rows.length > 0) {
       const row = rows[0];
       return new Risposta(row.id, row.domanda_id, row.risposta, row.corretta);
@@ -32,19 +35,24 @@ export class RispostaDao {
 
   // Metodo per creare una nuova risposta
   public async createRisposta(risposta: Risposta): Promise<void> {
-    const { getDomandaId, getRisposta, getCorretta } = risposta;
+    const idDomanda = risposta.getDomandaId;
+    const risp = risposta.getRisposta;
+    const corretta = risposta.getCorretta;
     await this.db.query(
       "INSERT INTO risposta (domanda_id, risposta, corretta) VALUES (?, ?, ?)",
-      [getDomandaId(), getRisposta(), getCorretta()],
+      [idDomanda, risp, corretta],
     );
   }
 
   // Metodo per aggiornare una risposta esistente
   public async updateRisposta(risposta: Risposta): Promise<void> {
-    const { getId, getDomandaId, getRisposta, getCorretta } = risposta;
+    const id = risposta.getId();
+    const domandaId = risposta.getDomandaId;
+    const risp = risposta.getRisposta;
+    const corretta = risposta.getCorretta();
     await this.db.query(
       "UPDATE risposta SET domanda_id = ?, risposta = ?, corretta = ? WHERE id = ?",
-      [getDomandaId(), getRisposta(), getCorretta(), getId()],
+      [id, domandaId, risp, corretta],
     );
   }
 
