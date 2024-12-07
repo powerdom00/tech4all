@@ -1,66 +1,64 @@
-import { Pool } from "mysql2/promise";
+import { Pool, RowDataPacket, FieldPacket } from "mysql2/promise";
 import { Svolgimento } from "../entity/gestione_quiz/Svolgimento";
 import { Quiz } from "../entity/gestione_quiz/Quiz";
-import { Utente } from "../entity/gestione_autenticazione/Utente";
+import { Utente } from "../entity/gestione_autenticazione/utente";
 import pool from "../../db";
+import { QuizDao } from "./QuizDao";
+import { UtenteDao } from "./UtenteDao";
 
 export class SvolgimentoDao {
   private db: Pool;
+  private daoQuiz!: QuizDao;
+  private daoUtente!: UtenteDao;
 
   constructor() {
     this.db = pool; // Utilizza la connessione al database
   }
 
   // Metodo per ottenere tutti gli svolgimenti
+  //QUESTO METODO è DA RIVEDERE UNA ATTIMO
   public async getAllSvolgimenti(): Promise<Svolgimento[]> {
-    const [rows] = await this.db.query("SELECT * FROM svolgimento");
-    return rows.map(
-      (row: any) =>
-        new Svolgimento(
-          new Quiz(row.quizId), // Assumendo che il costruttore di Quiz accetti solo un ID per ora
-          new Utente(row.utenteId), // Assumendo che il costruttore di Utente accetti solo un ID per ora
-          row.esito,
-        ),
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM svolgimento",
     );
+    const svolgimenti: Svolgimento[] = [];
+    for (const row of rows) {
+      const quiz: Quiz | null = await this.daoQuiz.getQuizById(row.quiz_id);
+      const utente: Utente | null = await this.daoUtente.getUtenteById(
+        row.utente_id,
+      );
+      if (quiz && utente) {
+        svolgimenti.push(new Svolgimento(quiz, utente, row.esito));
+      }
+    }
+    return svolgimenti;
   }
 
   // Metodo per ottenere uno svolgimento specifico per ID
-  public async getSvolgimentoById(id: number): Promise<Svolgimento | null> {
-    const [rows] = await this.db.query(
-      "SELECT * FROM svolgimento WHERE id = ?",
-      [id],
-    );
-    if (rows.length > 0) {
-      const row = rows[0];
-      return new Svolgimento(
-        new Quiz(row.quizId),
-        new Utente(row.utenteId),
-        row.esito,
-      );
-    }
-    return null;
-  }
+  //ELIMINATO, NON ESISTE L'ID PER SVOLGIMENTO, VIENE IDENTIFICATO TRAMITE QUIZ E UTENTE
 
   // Metodo per creare un nuovo svolgimento
   public async createSvolgimento(svolgimento: Svolgimento): Promise<void> {
-    const { getQuiz, getUtente, getEsito } = svolgimento;
-    const [result] = await this.db.query(
+    const Quiz = svolgimento.getQuiz();
+    const Utente = svolgimento.getUtente();
+    const eisto = svolgimento.getEsito();
+    await this.db.query(
       "INSERT INTO svolgimento (quizId, utenteId, esito) VALUES (?, ?, ?)",
-      [getQuiz().getId(), getUtente().getId(), getEsito()],
+      [Quiz.getId(), Utente.getId(), eisto],
     );
-    const insertedId = (result as any).insertId;
-    // Se necessario, imposta l'ID nel oggetto Svolgimento creato.
   }
 
   // Metodo per aggiornare uno svolgimento esistente
   public async updateSvolgimento(svolgimento: Svolgimento): Promise<void> {
-    const { getQuiz, getUtente, getEsito } = svolgimento;
-    if (getQuiz().getId() === undefined || getUtente().getId() === undefined) {
+    const quiz: Quiz = svolgimento.getQuiz();
+    const utente: Utente = svolgimento.getUtente();
+    const esito = svolgimento.getEsito();
+    if (quiz === undefined || utente === undefined) {
       throw new Error("Quiz ID and Utente ID are required for updating.");
     }
     await this.db.query(
       "UPDATE svolgimento SET quizId = ?, utenteId = ?, esito = ? WHERE id = ?",
-      [getQuiz().getId(), getUtente().getId(), getEsito(), getQuiz().getId()], // Sostituire con ID corretto se presente
+      [utente.getId(), esito, quiz.getId()], // Sostituire con ID corretto se presente
     );
   }
 

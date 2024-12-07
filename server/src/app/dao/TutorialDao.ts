@@ -1,4 +1,4 @@
-import { Pool } from "mysql2/promise";
+import { RowDataPacket, FieldPacket, Pool } from "mysql2/promise";
 import { Tutorial } from "../entity/gestione_tutorial/Tutorial";
 import pool from "../../db";
 
@@ -11,9 +11,11 @@ export class TutorialDao {
 
   // Metodo per ottenere tutti i tutorial
   public async getAllTutorials(): Promise<Tutorial[]> {
-    const [rows] = await this.db.query("SELECT * FROM tutorial");
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM tutorial",
+    );
     return rows.map(
-      (row: any) =>
+      (row: RowDataPacket) =>
         new Tutorial(
           row.titolo,
           row.grafica,
@@ -27,9 +29,10 @@ export class TutorialDao {
 
   // Metodo per ottenere un tutorial specifico per ID
   public async getTutorialById(id: number): Promise<Tutorial | null> {
-    const [rows] = await this.db.query("SELECT * FROM tutorial WHERE id = ?", [
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM tutorial WHERE id = ?",
       id,
-    ]);
+    );
     if (rows.length > 0) {
       const row = rows[0];
       return new Tutorial(
@@ -46,39 +49,31 @@ export class TutorialDao {
 
   // Metodo per creare un nuovo tutorial
   public async createTutorial(tutorial: Tutorial): Promise<void> {
-    const { getTitolo, getGrafica, getTesto, getCategoria, getValutazione } =
-      tutorial;
-    const [result] = await this.db.query(
+    const Titolo = tutorial.getTitolo;
+    const grafica = tutorial.getGrafica();
+    const testo = tutorial.getTesto();
+    const categoria = tutorial.getCategoria();
+    const valutazione = tutorial.getValutazione();
+    await this.db.query(
       "INSERT INTO tutorial (titolo, grafica, testo, categoria, valutazione) VALUES (?, ?, ?, ?, ?)",
-      [getTitolo(), getGrafica(), getTesto(), getCategoria(), getValutazione()],
+      [Titolo, grafica, testo, categoria, valutazione],
     );
-    const insertedId = (result as any).insertId;
-    tutorial.setId(insertedId);
   }
 
   // Metodo per aggiornare un tutorial esistente
   public async updateTutorial(tutorial: Tutorial): Promise<void> {
-    const {
-      getId,
-      getTitolo,
-      getGrafica,
-      getTesto,
-      getCategoria,
-      getValutazione,
-    } = tutorial;
-    if (getId() === undefined) {
+    const Id = tutorial.getId();
+    const Titolo = tutorial.getTitolo;
+    const grafica = tutorial.getGrafica();
+    const testo = tutorial.getTesto();
+    const categoria = tutorial.getCategoria();
+    const valutazione = tutorial.getValutazione();
+    if (Id === undefined) {
       throw new Error("Tutorial ID is required for updating.");
     }
     await this.db.query(
       "UPDATE tutorial SET titolo = ?, grafica = ?, testo = ?, categoria = ?, valutazione = ? WHERE id = ?",
-      [
-        getTitolo(),
-        getGrafica(),
-        getTesto(),
-        getCategoria(),
-        getValutazione(),
-        getId(),
-      ],
+      [Id, Titolo, grafica, testo, categoria, valutazione],
     );
   }
 

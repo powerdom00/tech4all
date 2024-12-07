@@ -1,7 +1,6 @@
-import { Pool } from "mysql2/promise";
-import { Conseguimento } from "../entity/gestione_badge_obiettivi/Conseguimento";
-import pool from "../../db";; // Importa il file di connessione al database
-
+import { Pool, RowDataPacket, FieldPacket } from "mysql2/promise";
+import { Conseguimento } from "../entity/gestione_badge_obiettivi/conseguimento";
+import pool from "../../db"; // Importa il file di connessione al database
 
 export class ConseguimentoDao {
   private db: Pool;
@@ -12,8 +11,12 @@ export class ConseguimentoDao {
 
   // Metodo per ottenere tutti i conseguimenti
   public async getAllConseguimenti(): Promise<Conseguimento[]> {
-    const [rows] = await this.db.query("SELECT * FROM conseguimento");
+    const [rows] = await this.db.query<RowDataPacket[]>(
+      "SELECT * FROM conseguimento",
+    );
     return rows.map(
+      //la riga subito sotto disabilita l'errore di tipo any, per permettere di vedere gli errori della riga sottostante, cancellare il commento di sotto.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (row: any) =>
         new Conseguimento(
           row.utente_id,
@@ -28,11 +31,11 @@ export class ConseguimentoDao {
     utenteId: number,
     obiettivoNome: string,
   ): Promise<Conseguimento | null> {
-    const [rows] = await this.db.query(
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM conseguimento WHERE utente_id = ? AND obiettivo_nome = ?",
       [utenteId, obiettivoNome],
     );
-    if (rows.length > 0) {
+    if (rows.length > 0 && rows != null) {
       const row = rows[0];
       return new Conseguimento(
         row.utente_id,
@@ -47,11 +50,12 @@ export class ConseguimentoDao {
   public async createConseguimento(
     conseguimento: Conseguimento,
   ): Promise<void> {
-    const { getUtenteId, getObiettivoNome, getDataConseguimento } =
-      conseguimento;
+    const idUtente = conseguimento.getUtenteId();
+    const nomeObiettivo = conseguimento.getObiettivoNome();
+    const data = conseguimento.getDataConseguimento();
     await this.db.query(
       "INSERT INTO conseguimento (utente_id, obiettivo_nome, data_conseguimento) VALUES (?, ?, ?)",
-      [getUtenteId(), getObiettivoNome(), getDataConseguimento()],
+      [idUtente, nomeObiettivo, data],
     );
   }
 
@@ -59,11 +63,12 @@ export class ConseguimentoDao {
   public async updateConseguimento(
     conseguimento: Conseguimento,
   ): Promise<void> {
-    const { getUtenteId, getObiettivoNome, getDataConseguimento } =
-      conseguimento;
+    const Utenteid = conseguimento.getUtenteId();
+    const ObiettivoNome = conseguimento.getObiettivoNome();
+    const DataConseguimento = conseguimento.getDataConseguimento();
     await this.db.query(
       "UPDATE conseguimento SET data_conseguimento = ? WHERE utente_id = ? AND obiettivo_nome = ?",
-      [getDataConseguimento(), getUtenteId(), getObiettivoNome()],
+      [Utenteid, ObiettivoNome, DataConseguimento],
     );
   }
 

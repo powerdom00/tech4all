@@ -1,4 +1,4 @@
-import { Pool } from "mysql2/promise";
+import { Pool, RowDataPacket, FieldPacket } from "mysql2/promise";
 import { Obiettivo } from "../entity/gestione_badge_obiettivi/Obiettivo";
 import pool from "../../db";
 
@@ -11,9 +11,12 @@ export class ObiettivoDao {
 
   // Metodo per ottenere tutti gli obiettivi
   public async getAllObiettivi(): Promise<Obiettivo[]> {
-    const [rows] = await this.db.query("SELECT * FROM obiettivo");
+    //le tuple richiedono sempre due elementi come definizione del tipo
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM obiettivo",
+    );
     return rows.map(
-      (row: any) =>
+      (row: RowDataPacket) =>
         new Obiettivo(
           row.nome,
           row.descrizione,
@@ -25,7 +28,7 @@ export class ObiettivoDao {
 
   // Metodo per ottenere un obiettivo specifico per nome
   public async getObiettivo(nome: string): Promise<Obiettivo | null> {
-    const [rows] = await this.db.query(
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM obiettivo WHERE nome = ?",
       [nome],
     );
@@ -43,21 +46,25 @@ export class ObiettivoDao {
 
   // Metodo per creare un nuovo obiettivo
   public async createObiettivo(obiettivo: Obiettivo): Promise<void> {
-    const { getNome, getDescrizione, getGraficaBadge, getQuizDaSuperare } =
-      obiettivo;
+    const nome = obiettivo.getNome;
+    const descrizione = obiettivo.getDescrizione;
+    const grafica = obiettivo.getGraficaBadge;
+    const numeroQuiz = obiettivo.getQuizDaSuperare;
     await this.db.query(
       "INSERT INTO obiettivo (nome, descrizione, grafica_badge, quiz_da_superare) VALUES (?, ?, ?, ?)",
-      [getNome(), getDescrizione(), getGraficaBadge(), getQuizDaSuperare()],
+      [nome, descrizione, grafica, numeroQuiz],
     );
   }
 
   // Metodo per aggiornare un obiettivo esistente
   public async updateObiettivo(obiettivo: Obiettivo): Promise<void> {
-    const { getNome, getDescrizione, getGraficaBadge, getQuizDaSuperare } =
-      obiettivo;
+    const nome = obiettivo.getNome;
+    const descrizione = obiettivo.getDescrizione;
+    const grafica = obiettivo.getGraficaBadge;
+    const numeroQuiz = obiettivo.getQuizDaSuperare;
     await this.db.query(
       "UPDATE obiettivo SET descrizione = ?, grafica_badge = ?, quiz_da_superare = ? WHERE nome = ?",
-      [getDescrizione(), getGraficaBadge(), getQuizDaSuperare(), getNome()],
+      [nome, descrizione, grafica, numeroQuiz],
     );
   }
 
