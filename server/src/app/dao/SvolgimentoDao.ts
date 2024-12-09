@@ -1,7 +1,7 @@
 import { Pool, RowDataPacket, FieldPacket } from "mysql2/promise";
 import { Svolgimento } from "../entity/gestione_quiz/Svolgimento";
 import { Quiz } from "../entity/gestione_quiz/Quiz";
-import { Utente } from "../entity/gestione_autenticazione/utente";
+import { Utente } from "../entity/gestione_autenticazione/Utente";
 import pool from "../../db";
 import { QuizDao } from "./QuizDao";
 import { UtenteDao } from "./UtenteDao";

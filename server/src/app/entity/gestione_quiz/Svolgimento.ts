@@ -1,5 +1,5 @@
 import { Quiz } from "./Quiz";
-import { Utente } from "../gestione_autenticazione/utente";
+import { Utente } from "../gestione_autenticazione/Utente";
 
 /**
  * Represents a Svolgimento entity.
