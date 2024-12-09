@@ -1,5 +1,5 @@
 import { Pool, RowDataPacket } from "mysql2/promise";
-import { Utente } from "../entity/gestione_autenticazione/utente";
+import { Utente } from "../entity/gestione_autenticazione/Utente";
 import pool from "../../db";
 
 export class UtenteDao {
