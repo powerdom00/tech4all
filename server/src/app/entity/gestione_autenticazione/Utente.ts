@@ -41,8 +41,9 @@ export class Utente {
     return this.cognome;
   }
 
-  public getRuolo(): boolean {
-    return this.ruolo;
+  public getRuolo(): string {
+    // Converte il booleano in stringa
+    return this.ruolo ? "admin" : "utente";
   }
 
   // Setters
@@ -62,7 +63,7 @@ export class Utente {
     this.cognome = value;
   }
 
-  public setRuolo(value: boolean) {
-    this.ruolo = value;
+  public setRuolo(value: string) {
+    this.ruolo = value === "admin";
   }
 }

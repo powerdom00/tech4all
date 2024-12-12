@@ -19,7 +19,7 @@ export class UtenteDao {
           row.password,
           row.nome,
           row.cognome,
-          row.ruolo === "admin",
+          row.ruolo === "admin", // Converte la stringa in booleano
         ),
     );
   }
@@ -37,7 +37,7 @@ export class UtenteDao {
         row.password,
         row.nome,
         row.cognome,
-        row.ruolo === "admin",
+        row.ruolo === "admin", // Converte la stringa in booleano
       );
     }
     return null;
@@ -45,20 +45,14 @@ export class UtenteDao {
 
   // Metodo per creare un nuovo utente
   public async createUtente(utente: Utente): Promise<void> {
-    const password = utente.getPassword();
-    const ruolo = utente.getRuolo();
-    //Password e ruolo sono gli unici su cui verranno fatte delle modifiche
-    //ruolo come di vede sotto,
-    //password andremo a fare una crittografia
-    const ruoloStr = ruolo ? "admin" : "utente";
     await this.db.query(
       "INSERT INTO utente (email, password, nome, cognome, ruolo) VALUES (?, ?, ?, ?, ?)",
       [
         utente.getEmail(),
-        password,
+        utente.getPassword(),
         utente.getNome(),
         utente.getCognome(),
-        ruoloStr,
+        utente.getRuolo(), // Il getter converte in "utente" o "admin"
       ],
     );
   }
