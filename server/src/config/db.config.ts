@@ -1,6 +1,6 @@
 export default {
   HOST: "localhost",
   USER: "root",
-  PASSWORD: "Silvana.01",
+  PASSWORD: "1212",
   DB: "tech4all",
 };
