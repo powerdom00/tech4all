@@ -7,45 +7,62 @@ const Register = () => {
   // Stato per i campi del form
   const [nome, setNome] = useState<string>("");
   const [cognome, setCognome] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [telefono, setTelefono] = useState<string>("");
-  const [sesso, setSesso] = useState<string>("");
-
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Validazione dei campi
-    if (!nome || !cognome || !username || !email || !password || !confirmPassword || !telefono || !sesso) {
+    if (!nome || !cognome || !email || !password || !confirmPassword) {
       setError("Tutti i campi sono obbligatori.");
+      setSuccess(null);
       return;
     }
 
     if (password !== confirmPassword) {
       setError("Le password non corrispondono.");
-      return;
-    }
-
-    if (!/^\d+$/.test(telefono)) {
-      setError("Il numero di telefono deve contenere solo numeri.");
+      setSuccess(null);
       return;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
       setError("L'email non è valida.");
+      setSuccess(null);
       return;
     }
 
     setError(null); // Clear errors
 
-    // Logica di invio al server (può essere un mock)
-    console.log("Registrazione con", { nome, cognome, username, email, password, telefono, sesso });
+    try {
+      // Invio dei dati al server
+      const response = await fetch("http://localhost:3000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nome, cognome, email, password }),
+      });
 
-    // Aggiungi qui la logica di invio al server, ad esempio usando fetch o axios
+      if (!response.ok) {
+        const { error } = await response.json();
+        throw new Error(error || "Errore durante la registrazione.");
+      }
+
+      const data = await response.json();
+      setSuccess("Registrazione completata con successo! Benvenuto!");
+      setNome("");
+      setCognome("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    } catch (err: any) {
+      setError(err.message);
+      setSuccess(null);
+    }
   };
 
   return (
@@ -57,6 +74,7 @@ const Register = () => {
           <form onSubmit={handleSubmit} style={styles.form}>
             <h1>Registrazione</h1>
             {error && <p style={styles.error}>{error}</p>}
+            {success && <p style={styles.success}>{success}</p>}
             
             <div style={styles.inputGroup}>
               <label htmlFor="nome">Nome</label>
@@ -78,18 +96,6 @@ const Register = () => {
                 name="cognome"
                 value={cognome}
                 onChange={(e) => setCognome(e.target.value)}
-                style={styles.input}
-              />
-            </div>
-
-            <div style={styles.inputGroup}>
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
                 style={styles.input}
               />
             </div>
@@ -128,34 +134,6 @@ const Register = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 style={styles.input}
               />
-            </div>
-
-            <div style={styles.inputGroup}>
-              <label htmlFor="telefono">Numero di Telefono</label>
-              <input
-                type="tel"
-                id="telefono"
-                name="telefono"
-                value={telefono}
-                onChange={(e) => setTelefono(e.target.value)}
-                style={styles.input}
-              />
-            </div>
-
-            <div style={styles.inputGroup}>
-              <label htmlFor="sesso">Sesso</label>
-              <select
-                id="sesso"
-                name="sesso"
-                value={sesso}
-                onChange={(e) => setSesso(e.target.value)}
-                style={styles.input}
-              >
-                <option value="">Seleziona...</option>
-                <option value="uomo">Uomo</option>
-                <option value="donna">Donna</option>
-                <option value="altro">Altro</option>
-              </select>
             </div>
 
             <button type="submit" style={styles.button}>
@@ -219,6 +197,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   error: {
     color: "red",
+    marginBottom: "1rem",
+    fontSize: "0.9rem",
+  },
+  success: {
+    color: "green",
     marginBottom: "1rem",
     fontSize: "0.9rem",
   },
