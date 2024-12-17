@@ -151,3 +151,4 @@ CREATE TABLE svolgimento (
     FOREIGN KEY (utente_id) REFERENCES utente(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quiz(id) ON DELETE CASCADE
 );
+
