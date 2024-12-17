@@ -12,8 +12,10 @@ CREATE TABLE utente (
     password VARCHAR(32) NOT NULL,
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
-    ruolo VARCHAR(10) NOT NULL CHECK (ruolo IN ('utente', 'admin'))
+    ruolo VARCHAR(10) NOT NULL CHECK (ruolo IN ('utente', 'admin')),
+    quiz_superati INT DEFAULT 0
 );
+
 
 -- Creazione della tabella obiettivo
 CREATE TABLE obiettivo (
@@ -147,7 +149,10 @@ CREATE TABLE svolgimento (
     utente_id INT NOT NULL,
     quiz_id INT NOT NULL,
     esito BOOLEAN NOT NULL,
+    data_conseguimento DATE NOT NULL,
+    risposte_esatte INT NOT NULL,
     PRIMARY KEY (utente_id, quiz_id),
     FOREIGN KEY (utente_id) REFERENCES utente(id) ON DELETE CASCADE,
     FOREIGN KEY (quiz_id) REFERENCES quiz(id) ON DELETE CASCADE
 );
+
