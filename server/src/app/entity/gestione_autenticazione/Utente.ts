@@ -12,13 +12,15 @@ export class Utente {
     password: string,
     nome: string,
     cognome: string,
-    ruolo: boolean
+    ruolo: boolean,
+    quizSuperati: number
   ) {
     this.email = email;
     this.password = password;
     this.nome = nome;
     this.cognome = cognome;
     this.ruolo = ruolo;
+    this.quizSuperati = quizSuperati;
   }
 
   // Getters

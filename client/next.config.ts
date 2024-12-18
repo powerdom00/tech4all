@@ -9,11 +9,21 @@ const nextConfig: NextConfig = {
       use: {
         loader: "ts-loader",
         options: {
-          transpileOnly: true, // Consente una compilazione più veloce senza verifica dei tipi
+          transpileOnly: true, // Compilazione più veloce senza verifica dei tipi
         },
       },
     });
     return config;
+  },
+
+  // Aggiungi riscritture per proxy
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*", // Indirizza tutte le richieste che iniziano con /api/
+        destination: "http://localhost:5000/:path*", // Proxy al server Express
+      },
+    ];
   },
 };
 

@@ -1,4 +1,4 @@
-# tech4all is
+# tech4all
 
 ---
 
