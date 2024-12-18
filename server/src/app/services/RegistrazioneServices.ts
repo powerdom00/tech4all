@@ -8,6 +8,7 @@ export class RegistrazioneService {
     password: string,
     nome: string,
     cognome: string,
+    
   ): Promise<{ success: boolean; message: string }> {
     try {
       if (!email || !password || !nome || !cognome) {
@@ -28,7 +29,7 @@ export class RegistrazioneService {
 
       const ruolo = false; // Predefinito come booleano per "utente"
 
-      const nuovoUtente = new Utente(email, password, nome, cognome, ruolo);
+      const nuovoUtente = new Utente(email, password, nome, cognome, ruolo,0);
       await utenteDao.createUtente(nuovoUtente);
 
       return {
