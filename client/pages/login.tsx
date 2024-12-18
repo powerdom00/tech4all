@@ -1,23 +1,20 @@
 import { useState } from "react";
-import Header from "../src/app/Components/Header"; // Importa il componente Header
-import Footer from "../src/app/Components/Footer";
-import Link from 'next/link'; // Importa Link da Next.js
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
-      const res = await fetch("/api/login", {
+      console.log(JSON.stringify({ email, password }));
+      const res = await fetch('http://localhost:5000/auth/login', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!res.ok) {
@@ -26,10 +23,7 @@ export default function LoginPage() {
       }
 
       const data = await res.json();
-
-      // Mostra l'alert di benvenuto
-      alert(`Benvenuto, ${username}!`);
-
+      alert(`Benvenuto, ${data.user?.email || "utente"}!`);
     } catch (err: any) {
       setError(err.message);
     }
@@ -43,8 +37,8 @@ export default function LoginPage() {
           <label>Email:</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>

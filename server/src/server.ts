@@ -1,8 +1,15 @@
-import express from "express";
+import express, { Request, Response } from "express";
+import AuthRoutes from "./app/routes/auth";
+import cors from "cors";
 
 const app = express();
-const port = 5000;
+app.use(cors());
+// Middleware per il parsing del JSON
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// Rotte personalizzate
+app.use("/auth", AuthRoutes);
+app.listen(5000, (err?: any) => {
+    if (err) throw err;
+    console.log("Server avviato su http://localhost:5000");
+  });
