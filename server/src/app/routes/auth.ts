@@ -1,5 +1,6 @@
 import express from 'express';
 import { LoginService } from '../services/LoginServices';
+import { RegistrazioneService } from '../services/RegistrazioneServices';
 
 const router = express.Router();
 
@@ -24,15 +25,16 @@ router.post('/login', async (req, res) => {
 
 
 // Registrazione 
-/*
+
 router.post('/register', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password,nome,cognome } = req.body;
   try {
-    const user = await register(email, password);
+    const registrazioneService = new RegistrazioneService();
+    const user = await registrazioneService.registraUtente(email, password,nome, cognome);
     res.status(201).json({ message: 'Utente registrato con successo', user });
   } catch (error) {
     res.status(500).json({ message: 'Errore del server', error });
   }
 }); 
-*/
+
 export default router;
