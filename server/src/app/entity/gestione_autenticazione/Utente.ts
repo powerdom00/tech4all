@@ -5,13 +5,14 @@ export class Utente {
   private nome: string;
   private cognome: string;
   private ruolo: boolean;
+  private quizSuperati: number = 0; // Aggiunta della variabile quizSuperati
 
   constructor(
     email: string,
     password: string,
     nome: string,
     cognome: string,
-    ruolo: boolean,
+    ruolo: boolean
   ) {
     this.email = email;
     this.password = password;
@@ -42,7 +43,6 @@ export class Utente {
   }
 
   public getRuolo(): string {
-    // Converte il booleano in stringa
     return this.ruolo ? "admin" : "utente";
   }
 
@@ -65,5 +65,14 @@ export class Utente {
 
   public setRuolo(value: string) {
     this.ruolo = value === "admin";
+  }
+
+  // Getter e Setter per quizSuperati
+  public getQuizSuperati(): number {
+    return this.quizSuperati;
+  }
+
+  public setQuizSuperati(value: number) {
+    this.quizSuperati = value;
   }
 }
