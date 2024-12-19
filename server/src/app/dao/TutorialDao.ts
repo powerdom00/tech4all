@@ -12,7 +12,7 @@ export class TutorialDao {
   // Metodo per ottenere tutti i tutorial
   public async getAllTutorials(): Promise<Tutorial[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
-      "SELECT * FROM tutorial",
+      "SELECT * FROM tutorial"
     );
     return rows.map(
       (row: RowDataPacket) =>
@@ -22,8 +22,8 @@ export class TutorialDao {
           row.testo,
           row.categoria,
           row.valutazione,
-          row.id,
-        ),
+          row.id
+        )
     );
   }
 
@@ -31,7 +31,7 @@ export class TutorialDao {
   public async getTutorialById(id: number): Promise<Tutorial | null> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM tutorial WHERE id = ?",
-      id,
+      id
     );
     if (rows.length > 0) {
       const row = rows[0];
@@ -41,7 +41,7 @@ export class TutorialDao {
         row.testo,
         row.categoria,
         row.valutazione,
-        row.id,
+        row.id
       );
     }
     return null;
@@ -49,21 +49,21 @@ export class TutorialDao {
 
   // Metodo per creare un nuovo tutorial
   public async createTutorial(tutorial: Tutorial): Promise<void> {
-    const Titolo = tutorial.getTitolo;
+    const Titolo = tutorial.getTitolo();
     const grafica = tutorial.getGrafica();
     const testo = tutorial.getTesto();
     const categoria = tutorial.getCategoria();
     const valutazione = tutorial.getValutazione();
     await this.db.query(
       "INSERT INTO tutorial (titolo, grafica, testo, categoria, valutazione) VALUES (?, ?, ?, ?, ?)",
-      [Titolo, grafica, testo, categoria, valutazione],
+      [Titolo, grafica, testo, categoria, valutazione]
     );
   }
 
   // Metodo per aggiornare un tutorial esistente
   public async updateTutorial(tutorial: Tutorial): Promise<void> {
     const Id = tutorial.getId();
-    const Titolo = tutorial.getTitolo;
+    const Titolo = tutorial.getTitolo();
     const grafica = tutorial.getGrafica();
     const testo = tutorial.getTesto();
     const categoria = tutorial.getCategoria();
@@ -73,7 +73,7 @@ export class TutorialDao {
     }
     await this.db.query(
       "UPDATE tutorial SET titolo = ?, grafica = ?, testo = ?, categoria = ?, valutazione = ? WHERE id = ?",
-      [Id, Titolo, grafica, testo, categoria, valutazione],
+      [Titolo, grafica, testo, categoria, valutazione, Id]
     );
   }
 
