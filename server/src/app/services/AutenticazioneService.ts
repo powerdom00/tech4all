@@ -29,7 +29,8 @@ export class AutenticazioneService {
       }
 
       // Recupera l'utente dal database tramite il DAO
-      const user: Utente | null = await this.utenteDao.getUtenteByEmail(username);
+      const user: Utente | null =
+        await this.utenteDao.getUtenteByEmail(username);
 
       // Controllo dell'esistenza dell'utente
       if (!user) {
@@ -129,7 +130,7 @@ export class AutenticazioneService {
 
       const ruolo = false; // Predefinito come booleano per "utente"
 
-      const nuovoUtente = new Utente(email, password, nome, cognome, ruolo);
+      const nuovoUtente = new Utente(email, password, nome, cognome, ruolo, 0);
       await this.utenteDao.createUtente(nuovoUtente);
 
       return {
@@ -145,4 +146,3 @@ export class AutenticazioneService {
     }
   }
 }
-

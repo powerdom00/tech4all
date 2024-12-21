@@ -13,7 +13,7 @@ export class Svolgimento {
     utente: Utente,
     esito: boolean,
     dataConseguimento: Date,
-    risposteEsatte: number
+    risposteEsatte: number,
   ) {
     this.quiz = quiz;
     this.utente = utente;
