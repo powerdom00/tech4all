@@ -81,4 +81,41 @@ export class TutorialDao {
   public async deleteTutorial(id: number): Promise<void> {
     await this.db.query("DELETE FROM tutorial WHERE id = ?", [id]);
   }
+
+  public async getTutorialsByCategoria(categoria: string): Promise<Tutorial[]> {
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM tutorial WHERE categoria = ?",
+      [categoria],
+    );
+    return rows.map(
+      (row: RowDataPacket) =>
+        new Tutorial(
+          row.titolo,
+          row.grafica,
+          row.testo,
+          row.categoria,
+          row.valutazione,
+          row.id,
+        ),
+    );
+  }
+
+  public async getTutorialsByValutazione(
+    order: "asc" | "desc",
+  ): Promise<Tutorial[]> {
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      `SELECT * FROM tutorial ORDER BY valutazione ${order}`,
+    );
+    return rows.map(
+      (row: RowDataPacket) =>
+        new Tutorial(
+          row.titolo,
+          row.grafica,
+          row.testo,
+          row.categoria,
+          row.valutazione,
+          row.id,
+        ),
+    );
+  }
 }
