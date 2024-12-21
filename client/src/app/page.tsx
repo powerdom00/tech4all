@@ -12,33 +12,33 @@ const App: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-  const script = document.createElement("script");
-  script.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
-  script.type = "text/javascript";
-  script.onload = () => {
-    if ((window as any).voiceflow?.chat) {
-      (window as any).voiceflow.chat.load({
-        verify: { projectID: "6751625fc71e01f74bc3188e" },
-        url: "https://general-runtime.voiceflow.com",
-        versionID: "production",
-      });
-    } else {
-      console.error("Voiceflow non è stato caricato correttamente.");
-    }
-  };
-  document.body.appendChild(script);
+    const script = document.createElement("script");
+    script.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
+    script.type = "text/javascript";
+    script.onload = () => {
+      if ((window as any).voiceflow?.chat) {
+        (window as any).voiceflow.chat.load({
+          verify: { projectID: "6751625fc71e01f74bc3188e" },
+          url: "https://general-runtime.voiceflow.com",
+          versionID: "production",
+        });
+      } else {
+        console.error("Voiceflow non è stato caricato correttamente.");
+      }
+    };
+    document.body.appendChild(script);
 
-  return () => {
-    document.body.removeChild(script);
-  };
-}, []);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleChoice = (choice: string) => {
     if (choice === "si") {
       router.push("/register"); // Redirect alla pagina di registrazione
     } else if (choice === "no") {
       setMessage(
-        "Per imparare a registrarti, guarda il video tutorial che trovi al centro della pagina."
+        "Per imparare a registrarti, guarda il video tutorial che trovi al centro della pagina.",
       );
     }
   };
@@ -74,14 +74,15 @@ const App: React.FC = () => {
 
           <h2 className="card-title">Chi siamo?</h2>
           <p className="card-text">
-            Tech4All è un sito dedicato a migliorare l'alfabetizzazione digitale,
-            offrendo tutorial facili da seguire e interattivi. Il sito è progettato
-            per rendere la tecnologia accessibile a tutti, guidando gli utenti passo dopo
-            passo in vari argomenti legati al mondo digitale. Con contenuti chiari e
-            pratici, Tech4All aiuta le persone a sviluppare le competenze necessarie
-            per navigare, comprendere e sfruttare le risorse digitali in modo efficace
-            e sicuro. Registrati ora per accedere a tutti i contenuti esclusivi e inizia
-            il tuo viaggio verso una maggiore competenza digitale!
+            Tech4All è un sito dedicato a migliorare l'alfabetizzazione
+            digitale, offrendo tutorial facili da seguire e interattivi. Il sito
+            è progettato per rendere la tecnologia accessibile a tutti, guidando
+            gli utenti passo dopo passo in vari argomenti legati al mondo
+            digitale. Con contenuti chiari e pratici, Tech4All aiuta le persone
+            a sviluppare le competenze necessarie per navigare, comprendere e
+            sfruttare le risorse digitali in modo efficace e sicuro. Registrati
+            ora per accedere a tutti i contenuti esclusivi e inizia il tuo
+            viaggio verso una maggiore competenza digitale!
           </p>
 
           <button onClick={() => setPopupVisible(true)} className="card-button">
@@ -97,10 +98,16 @@ const App: React.FC = () => {
                 </button>
                 <p className="popup-text">Sai già come registrarti?</p>
                 <div className="popup-buttons">
-                  <button onClick={() => handleChoice("si")} className="popup-button">
+                  <button
+                    onClick={() => handleChoice("si")}
+                    className="popup-button"
+                  >
                     Sì
                   </button>
-                  <button onClick={() => handleChoice("no")} className="popup-button">
+                  <button
+                    onClick={() => handleChoice("no")}
+                    className="popup-button"
+                  >
                     No
                   </button>
                 </div>

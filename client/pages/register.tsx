@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "../src/app/Components/Header"; // Importa il componente Header
-import Footer from "../src/app/Components/Footer"; // Importa il componente Footer
-import Link from 'next/link'; // Importa Link da Next.js
+import Link from "next/link"; // Importa Link da Next.js
+import React from "react";
+import "../src/app/css/Register.css";
 
 const Register = () => {
   // Stato per i campi del form
@@ -67,16 +67,14 @@ const Register = () => {
 
   return (
     <>
-      <Header /> {/* Inserisci il Header */}
-      
-      <div style={styles.mainContainer}>
-        <div style={styles.container}>
-          <form onSubmit={handleSubmit} style={styles.form}>
+      <div className="main-container">
+        <div className="container">
+          <form onSubmit={handleSubmit} className="form">
             <h1>Registrazione</h1>
-            {error && <p style={styles.error}>{error}</p>}
-            {success && <p style={styles.success}>{success}</p>}
-            
-            <div style={styles.inputGroup}>
+            {error && <p className="error">{error}</p>}
+            {success && <p className="success">{success}</p>}
+
+            <div className="input-group">
               <label htmlFor="nome">Nome</label>
               <input
                 type="text"
@@ -84,11 +82,11 @@ const Register = () => {
                 name="nome"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
-                style={styles.input}
+                className="input"
               />
             </div>
-            
-            <div style={styles.inputGroup}>
+
+            <div className="input-group">
               <label htmlFor="cognome">Cognome</label>
               <input
                 type="text"
@@ -96,11 +94,11 @@ const Register = () => {
                 name="cognome"
                 value={cognome}
                 onChange={(e) => setCognome(e.target.value)}
-                style={styles.input}
+                className="input"
               />
             </div>
 
-            <div style={styles.inputGroup}>
+            <div className="input-group">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -108,11 +106,11 @@ const Register = () => {
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={styles.input}
+                className="input"
               />
             </div>
 
-            <div style={styles.inputGroup}>
+            <div className="input-group">
               <label htmlFor="password">Password</label>
               <input
                 type="password"
@@ -120,11 +118,11 @@ const Register = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={styles.input}
+                className="input"
               />
             </div>
 
-            <div style={styles.inputGroup}>
+            <div className="input-group">
               <label htmlFor="confirmPassword">Conferma Password</label>
               <input
                 type="password"
@@ -132,84 +130,23 @@ const Register = () => {
                 name="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                style={styles.input}
+                className="input"
               />
             </div>
 
-            <button type="submit" style={styles.button}>
+            <button type="submit" className="button">
               Registrati
             </button>
 
-            <h6 style={styles.link}>
-              Hai già un account? 
+            <h6 className="link">
+              Hai già un account?
               <Link href="/login">Accedi ora.</Link>
             </h6>
           </form>
         </div>
       </div>
-
-      <Footer /> {/* Inserisci il Footer */}
     </>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  mainContainer: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "100vh",
-  },
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1, // Occupare il resto dello spazio disponibile tra header e footer
-    marginTop: "30px",  // Margine sopra la card
-    marginBottom: "30px",  // Margine sotto la card
-  },
-  form: {
-    backgroundColor: "white",
-    padding: "2rem",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    width: "100%",
-    maxWidth: "400px",
-  },
-  inputGroup: {
-    marginBottom: "1.5rem",
-  },
-  input: {
-    width: "100%",
-    padding: "0.8rem",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-    marginTop: "0.5rem",
-  },
-  button: {
-    width: "100%",
-    padding: "0.8rem",
-    backgroundColor: "#1d5c31",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "1rem",
-  },
-  error: {
-    color: "red",
-    marginBottom: "1rem",
-    fontSize: "0.9rem",
-  },
-  success: {
-    color: "green",
-    marginBottom: "1rem",
-    fontSize: "0.9rem",
-  },
-  link: {
-    textAlign: "center",
-    marginTop: "1rem",
-    fontSize: "0.9rem",
-  }
 };
 
 export default Register;
