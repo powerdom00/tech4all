@@ -8,38 +8,83 @@ export class TutorialService {
     this.tutorialDao = new TutorialDao();
   }
 
-  public async getAllTutorials(): Promise<Tutorial[]> {
-    return this.tutorialDao.getAllTutorials();
+  // Creazione di un nuovo tutorial
+  async creazioneTutorial(
+    tutorial: Tutorial,
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      await this.tutorialDao.createTutorial(tutorial);
+      return {
+        success: true,
+        message: "Tutorial creato con successo.",
+      };
+    } catch (error) {
+      console.error("Errore durante la creazione del tutorial:", error);
+      return {
+        success: false,
+        message: "Errore interno del server. Riprova più tardi.",
+      };
+    }
   }
 
-  public async createTutorial(tutorialData: {
-    titolo: string;
-    testo: string;
-    categoria: string;
-  }): Promise<void> {
-    const { titolo, testo, categoria } = tutorialData;
-    const tutorial = new Tutorial(titolo, "", testo, categoria, 1);
-    await this.tutorialDao.createTutorial(tutorial);
-  }
-
-  public async getTutorialById(id: number): Promise<Tutorial | null> {
-    return this.tutorialDao.getTutorialById(id);
-  }
-
-  public async updateTutorial(
+  // Eliminazione di un tutorial
+  async cancellazioneTutorial(
     id: number,
-    tutorialData: {
-      titolo: string;
-      testo: string;
-      categoria: string;
-    },
-  ): Promise<void> {
-    const { titolo, testo, categoria } = tutorialData;
-    const tutorial = new Tutorial(titolo, "", testo, categoria, 1, id);
-    await this.tutorialDao.updateTutorial(tutorial);
+  ): Promise<{ success: boolean; message: string }> {
+    try {
+      await this.tutorialDao.deleteTutorial(id);
+      return {
+        success: true,
+        message: "Tutorial eliminato con successo.",
+      };
+    } catch (error) {
+      console.error("Errore durante l'eliminazione del tutorial:", error);
+      return {
+        success: false,
+        message: "Errore interno del server. Riprova più tardi.",
+      };
+    }
   }
 
-  public async deleteTutorial(id: number): Promise<void> {
-    await this.tutorialDao.deleteTutorial(id);
+  // Visualizzazione della lista di tutti i tutorial
+  async visualizzazioneListaTutorial(): Promise<Tutorial[]> {
+    try {
+      return await this.tutorialDao.getAllTutorials();
+    } catch (error) {
+      console.error("Errore durante la visualizzazione dei tutorial:", error);
+      throw new Error("Errore interno del server.");
+    }
+  }
+
+  // Visualizzazione di un tutorial specifico
+  async visualizzazioneTutorial(id: number): Promise<Tutorial | null> {
+    try {
+      return await this.tutorialDao.getTutorialById(id);
+    } catch (error) {
+      console.error("Errore durante la visualizzazione del tutorial:", error);
+      throw new Error("Errore interno del server.");
+    }
+  }
+
+  // Filtro tutorial per categoria o valutazione
+  async filtroTutorial(
+    categoria?: string,
+    valutazione?: "asc" | "desc",
+  ): Promise<Tutorial[]> {
+    try {
+      if (categoria) {
+        // Filtra direttamente dal database per categoria
+        return await this.tutorialDao.getTutorialsByCategoria(categoria);
+      } else if (valutazione) {
+        // Ordina direttamente dal database per valutazione
+        return await this.tutorialDao.getTutorialsByValutazione(valutazione);
+      }
+
+      // Se nessun parametro è fornito, restituisce tutti i tutorial
+      return await this.tutorialDao.getAllTutorials();
+    } catch (error) {
+      console.error("Errore durante il filtraggio dei tutorial:", error);
+      throw new Error("Errore interno del server.");
+    }
   }
 }
