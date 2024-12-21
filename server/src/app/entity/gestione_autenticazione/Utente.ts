@@ -13,7 +13,7 @@ export class Utente {
     nome: string,
     cognome: string,
     ruolo: boolean,
-    quizSuperati: number
+    quizSuperati: number,
   ) {
     this.email = email;
     this.password = password;

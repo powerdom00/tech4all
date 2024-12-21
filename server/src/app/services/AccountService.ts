@@ -14,7 +14,9 @@ export class AccountService {
    * @param userId - ID dell'utente.
    * @returns Una promessa che risolve un oggetto con i dati dell'utente o un messaggio di errore.
    */
-  async visualizzaDati(userId: number): Promise<{ success: boolean; utente?: Utente; message?: string }> {
+  async visualizzaDati(
+    userId: number,
+  ): Promise<{ success: boolean; utente?: Utente; message?: string }> {
     try {
       if (!userId) {
         return {
@@ -44,4 +46,3 @@ export class AccountService {
     }
   }
 }
-

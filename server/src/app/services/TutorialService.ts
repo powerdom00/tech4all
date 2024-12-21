@@ -32,7 +32,7 @@ export class TutorialService {
       titolo: string;
       testo: string;
       categoria: string;
-    }
+    },
   ): Promise<void> {
     const { titolo, testo, categoria } = tutorialData;
     const tutorial = new Tutorial(titolo, "", testo, categoria, 1, id);

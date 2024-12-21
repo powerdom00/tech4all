@@ -27,13 +27,15 @@ export class SvolgimentoDao {
         row.utente_id,
       );
       if (quiz && utente) {
-        svolgimenti.push(new Svolgimento(
-          quiz,
-          utente,
-          row.esito,
-          new Date(row.dataConseguimento),
-          row.risposteEsatte
-        ));
+        svolgimenti.push(
+          new Svolgimento(
+            quiz,
+            utente,
+            row.esito,
+            new Date(row.dataConseguimento),
+            row.risposteEsatte,
+          ),
+        );
       }
     }
     return svolgimenti;
@@ -64,13 +66,26 @@ export class SvolgimentoDao {
     }
     await this.db.query(
       "UPDATE svolgimento SET quizId = ?, utenteId = ?, esito = ?, dataConseguimento = ?, risposteEsatte = ? WHERE quizId = ? AND utenteId = ?",
-      [quiz.getId(), utente.getId(), esito, dataConseguimento, risposteEsatte, quiz.getId(), utente.getId()],
+      [
+        quiz.getId(),
+        utente.getId(),
+        esito,
+        dataConseguimento,
+        risposteEsatte,
+        quiz.getId(),
+        utente.getId(),
+      ],
     );
   }
 
   // Metodo per eliminare uno svolgimento
-  public async deleteSvolgimento(quizId: number, utenteId: number): Promise<void> {
-    await this.db.query("DELETE FROM svolgimento WHERE quizId = ? AND utenteId = ?", [quizId, utenteId]);
+  public async deleteSvolgimento(
+    quizId: number,
+    utenteId: number,
+  ): Promise<void> {
+    await this.db.query(
+      "DELETE FROM svolgimento WHERE quizId = ? AND utenteId = ?",
+      [quizId, utenteId],
+    );
   }
 }
-

@@ -12,7 +12,7 @@ export class TutorialDao {
   // Metodo per ottenere tutti i tutorial
   public async getAllTutorials(): Promise<Tutorial[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
-      "SELECT * FROM tutorial"
+      "SELECT * FROM tutorial",
     );
     return rows.map(
       (row: RowDataPacket) =>
@@ -22,8 +22,8 @@ export class TutorialDao {
           row.testo,
           row.categoria,
           row.valutazione,
-          row.id
-        )
+          row.id,
+        ),
     );
   }
 
@@ -31,7 +31,7 @@ export class TutorialDao {
   public async getTutorialById(id: number): Promise<Tutorial | null> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM tutorial WHERE id = ?",
-      id
+      id,
     );
     if (rows.length > 0) {
       const row = rows[0];
@@ -41,7 +41,7 @@ export class TutorialDao {
         row.testo,
         row.categoria,
         row.valutazione,
-        row.id
+        row.id,
       );
     }
     return null;
@@ -56,7 +56,7 @@ export class TutorialDao {
     const valutazione = tutorial.getValutazione();
     await this.db.query(
       "INSERT INTO tutorial (titolo, grafica, testo, categoria, valutazione) VALUES (?, ?, ?, ?, ?)",
-      [Titolo, grafica, testo, categoria, valutazione]
+      [Titolo, grafica, testo, categoria, valutazione],
     );
   }
 
@@ -73,7 +73,7 @@ export class TutorialDao {
     }
     await this.db.query(
       "UPDATE tutorial SET titolo = ?, grafica = ?, testo = ?, categoria = ?, valutazione = ? WHERE id = ?",
-      [Titolo, grafica, testo, categoria, valutazione, Id]
+      [Titolo, grafica, testo, categoria, valutazione, Id],
     );
   }
 
