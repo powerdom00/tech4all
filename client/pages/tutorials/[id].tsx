@@ -26,7 +26,9 @@ const TutorialPage = () => {
     if (id) {
       const fetchTutorial = async () => {
         try {
-          const response = await fetch(`http://localhost:5000/tutorials/${id}`);
+          const response = await fetch(
+            `http://localhost:5000/tutorials/tutorial/${id}`
+          );
           const data: Tutorial = await response.json();
           setTutorial(data);
           setTitolo(data.titolo);
@@ -42,9 +44,12 @@ const TutorialPage = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/tutorials/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `http://localhost:5000/tutorials/tutorial/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         router.push("/tutorials/listTutorials");
       } else {
@@ -66,13 +71,16 @@ const TutorialPage = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/tutorials/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ titolo, testo, categoria }),
-      });
+      const response = await fetch(
+        `http://localhost:5000/tutorials/tutorial/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ titolo, testo, categoria }),
+        }
+      );
       if (response.ok) {
         const result = await response.json();
         setTutorial(result.tutorial);
@@ -92,7 +100,6 @@ const TutorialPage = () => {
 
   return (
     <div className="container">
-      <Header />
       <main>
         {message && <p>{message}</p>}
         {isEditing ? (
@@ -128,14 +135,13 @@ const TutorialPage = () => {
         ) : (
           <>
             <h1>{tutorial.titolo}</h1>
-            <p>{tutorial.testo}</p>
+            <div dangerouslySetInnerHTML={{ __html: tutorial.testo }} />
             <p>Category: {tutorial.categoria}</p>
             <button onClick={handleDelete}>Delete Tutorial</button>
             <button onClick={handleUpdate}>Update Tutorial</button>
           </>
         )}
       </main>
-      <Footer />
     </div>
   );
 };
