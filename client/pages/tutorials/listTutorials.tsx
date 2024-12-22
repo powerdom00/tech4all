@@ -1,38 +1,16 @@
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Footer from "@/app/Components/Footer";
-import Header from "@/app/Components/Header";
-
-interface Tutorial {
-  id: number;
-  titolo: string;
-  testo: string;
-  categoria: string;
-  grafica: string;
-}
+import { useTutorials } from "@/hooks/useTutorials";
 
 const ListTutorials = () => {
-  const [tutorials, setTutorials] = useState<Tutorial[]>([]);
-  const [filteredTutorials, setFilteredTutorials] = useState<Tutorial[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const {
+    tutorials,
+    filteredTutorials,
+    selectedCategory,
+    setSelectedCategory,
+    setFilteredTutorials,
+  } = useTutorials();
 
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchTutorials = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/tutorials/tutorial"
-        );
-        const data: Tutorial[] = await response.json();
-        setTutorials(data);
-        setFilteredTutorials(data);
-      } catch (error) {
-        console.error("Error fetching tutorials", error);
-      }
-    };
-    fetchTutorials();
-  }, []);
 
   const handleCreateNewTutorial = () => {
     router.push("/tutorials/createTutorial");
@@ -65,7 +43,7 @@ const ListTutorials = () => {
             value={selectedCategory || ""}
             onChange={(e) => handleCategoryChange(e.target.value)}
           >
-            <option value="">All</option>
+            <option value=""></option>
             {Array.from(
               new Set(tutorials.map((tutorial) => tutorial.categoria))
             ).map((category) => (
@@ -83,8 +61,7 @@ const ListTutorials = () => {
             >
               <h2>{tutorial.titolo}</h2>
               <img
-                src={`http://localhost:5000/${tutorial.grafica}`}
-                // src={`C:/Users/cerch/Desktop/newProjects/myfork4/tech4all/server/uploads/1734866445378-MKF79691G.jpg`}
+                src={`https://picsum.photos/id/${tutorial.id}/350/250`}
                 alt={tutorial.titolo}
               />
             </li>
