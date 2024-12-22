@@ -81,4 +81,66 @@ export class TutorialDao {
   public async deleteTutorial(id: number): Promise<void> {
     await this.db.query("DELETE FROM tutorial WHERE id = ?", [id]);
   }
+
+  public async getTutorialsByCategoria(categoria: string): Promise<Tutorial[]> {
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM tutorial WHERE categoria = ?",
+      [categoria],
+    );
+    return rows.map(
+      (row: RowDataPacket) =>
+        new Tutorial(
+          row.titolo,
+          row.grafica,
+          row.testo,
+          row.categoria,
+          row.valutazione,
+          row.id,
+        ),
+    );
+  }
+
+  public async getTutorialsByValutazione(
+    order: "asc" | "desc",
+  ): Promise<Tutorial[]> {
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      `SELECT * FROM tutorial ORDER BY valutazione ${order}`,
+    );
+    return rows.map(
+      (row: RowDataPacket) =>
+        new Tutorial(
+          row.titolo,
+          row.grafica,
+          row.testo,
+          row.categoria,
+          row.valutazione,
+          row.id,
+        ),
+    );
+  }
+
+  // Metodo per cercare tutorial basati su una parola chiave
+  public async searchTutorials(parolaChiave: string): Promise<Tutorial[]> {
+    const query = `
+    SELECT * FROM tutorial
+    WHERE titolo LIKE ? OR testo LIKE ? OR categoria LIKE ?
+  `;
+    const parolaFormato = `%${parolaChiave}%`;
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      query,
+      [parolaFormato, parolaFormato],
+    );
+
+    return rows.map(
+      (row: RowDataPacket) =>
+        new Tutorial(
+          row.titolo,
+          row.grafica,
+          row.testo,
+          row.categoria,
+          row.valutazione,
+          row.id,
+        ),
+    );
+  }
 }
