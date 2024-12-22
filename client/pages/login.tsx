@@ -33,7 +33,7 @@ export default function LoginPage() {
       login(data.user);
 
       alert(`Benvenuto, ${data.user?.nome || "utente"}!`);
-      router.push("/tutorials/listTutorials");
+      router.push("/homepage");
     } catch (err: any) {
       setError(err.message);
     }
