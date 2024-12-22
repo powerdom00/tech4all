@@ -87,4 +87,13 @@ export class TutorialService {
       throw new Error("Errore interno del server.");
     }
   }
+  // Metodo per la ricerca di tutorial basata su una parola chiave
+  async ricercaTutorial(parolaChiave: string): Promise<Tutorial[]> {
+    try {
+      return await this.tutorialDao.searchTutorials(parolaChiave);
+    } catch (error) {
+      console.error("Errore durante la ricerca dei tutorial:", error);
+      throw new Error("Errore interno del server.");
+    }
+  }
 }

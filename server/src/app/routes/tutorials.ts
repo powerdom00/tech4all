@@ -80,4 +80,20 @@ router.get("/tutorial/filter", async (req, res) => {
   }
 });
 
+// Ricerca tutorial basata su una parola chiave
+router.get("/tutorial/search", async (req, res) => {
+  const { parolaChiave } = req.query;
+
+  try {
+    // Cast a string
+    const tutorials = await tutorialService.ricercaTutorial(
+      parolaChiave as string,
+    );
+    res.status(200).json(tutorials);
+  } catch (error) {
+    console.error("Errore durante la ricerca dei tutorial:", error);
+    res.status(500).json({ message: "Errore del server", error });
+  }
+});
+
 export default router;

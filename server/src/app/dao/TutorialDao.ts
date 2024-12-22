@@ -118,4 +118,29 @@ export class TutorialDao {
         ),
     );
   }
+
+  // Metodo per cercare tutorial basati su una parola chiave
+  public async searchTutorials(parolaChiave: string): Promise<Tutorial[]> {
+    const query = `
+    SELECT * FROM tutorial
+    WHERE titolo LIKE ? OR testo LIKE ? OR categoria LIKE ?
+  `;
+    const parolaFormato = `%${parolaChiave}%`;
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      query,
+      [parolaFormato, parolaFormato],
+    );
+
+    return rows.map(
+      (row: RowDataPacket) =>
+        new Tutorial(
+          row.titolo,
+          row.grafica,
+          row.testo,
+          row.categoria,
+          row.valutazione,
+          row.id,
+        ),
+    );
+  }
 }
