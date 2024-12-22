@@ -17,11 +17,7 @@ const Header: React.FC = () => {
         <img src="/Media/LogoT4A.jpeg" alt="Logo" />
       </div>
       <div className="search-bar-container">
-        <input
-          type="text"
-          placeholder="Cerca..."
-          className="search-bar"
-        />
+        <input type="text" placeholder="Cerca..." className="search-bar" />
       </div>
       <nav>
         <ul>
@@ -42,6 +38,11 @@ const Header: React.FC = () => {
                     <button style={{ color: "black" }} onClick={logout}>
                       Esci
                     </button>
+                    <Link href="/areaUtente">
+                      <button style={{ color: "black" }}>
+                        Visualizza area personale
+                      </button>
+                    </Link>
                   </div>
                 )}
               </div>

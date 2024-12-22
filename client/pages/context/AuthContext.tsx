@@ -1,8 +1,16 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 
 interface User {
+  cognome: string;
+  quiz_superati: string;
   id: number;
-  name: string;
+  nome: string;
   email: string;
 }
 
