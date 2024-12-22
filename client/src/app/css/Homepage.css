@@ -1,0 +1,52 @@
+/* Stili per la homepage */
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Contenitore principale della galleria */
+.imageGallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonne di uguale larghezza */
+    gap: 15px; /* Spazio tra le immagini */
+    margin-top: 20px;
+    justify-items: center; /* Centra gli elementi nelle celle della griglia */
+  }
+  
+  /* Stile per ciascuna card immagine */
+  .imageCard {
+    cursor: pointer;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Immagine all'interno della card */
+  .imageCard img {
+    width: 100%;  /* L'immagine occuperà tutta la larghezza disponibile nella cella */
+    height: auto; /* Mantiene le proporzioni */
+    max-width: 200px;  /* Imposta una larghezza massima per l'immagine */
+    border-radius: 8px; /* Rende i bordi dell'immagine arrotondati */
+    border: 2px solid #ddd; /* Bordo dell'immagine */
+  }
+  
+  /* Effetto hover per zoomare l'immagine */
+  .imageCard:hover {
+    transform: scale(1.05);
+  }
+  
+  
+  .imageCard p {
+    position: absolute;
+    bottom: 10px;         /* Posiziona il testo in basso */
+    left: 10px;           /* Aggiusta la distanza dal lato sinistro */
+    color: white;         /* Colore del testo */
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Aggiungi un'ombra al testo per renderlo visibile */
+    }
+  
