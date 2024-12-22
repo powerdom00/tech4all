@@ -1,35 +1,52 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import Footer from "@/app/Components/Footer";
-import Header from "@/app/Components/Header";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");
-  const [testo, setTesto] = useState("");
   const [categoria, setCategoria] = useState("");
+  const [grafica, setGrafica] = useState<File | null>(null);
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
+  const editorRef = useRef<HTMLDivElement>(null);
+  const [editor, setEditor] = useState<Quill | null>(null);
+
   const router = useRouter();
+
+  useEffect(() => {
+    if (editorRef.current) {
+      const quill = new Quill(editorRef.current, {
+        theme: "snow",
+      });
+      setEditor(quill);
+    }
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const testo = editor?.root.innerHTML;
+
     // Validazione dei campi
-    if (!titolo || !testo || !categoria) {
+    if (!titolo || !testo || !categoria || !grafica) {
       setError("Tutti i campi sono obbligatori.");
       setSuccess(null);
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/tutorials/create", {
+      const formData = new FormData();
+      formData.append("titolo", titolo);
+      formData.append("testo", testo);
+      formData.append("categoria", categoria);
+      formData.append("grafica", grafica);
+
+      const response = await fetch("http://localhost:5000/tutorials/tutorial", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ titolo, testo, categoria }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -40,8 +57,8 @@ const CreateTutorial = () => {
       setSuccess("Tutorial creato con successo!");
       setError(null);
       setTitolo("");
-      setTesto("");
       setCategoria("");
+      editor?.setText("");
 
       // Redirect to the list of tutorials
       router.push("/tutorials/listTutorials");
@@ -53,7 +70,6 @@ const CreateTutorial = () => {
 
   return (
     <div className="container">
-      <Header />
       <main>
         <h1>Crea un nuovo Tutorial</h1>
         <form onSubmit={handleSubmit}>
@@ -77,15 +93,19 @@ const CreateTutorial = () => {
           </div>
           <div>
             <label>Testo:</label>
-            <textarea
-              value={testo}
-              onChange={(e) => setTesto(e.target.value)}
-            ></textarea>
+            <div ref={editorRef} style={{ height: "300px" }}></div>
+          </div>
+          <div>
+            <label>Grafica:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setGrafica(e.target.files?.[0] || null)}
+            />
           </div>
           <button type="submit">Crea Tutorial</button>
         </form>
       </main>
-      <Footer />
     </div>
   );
 };
