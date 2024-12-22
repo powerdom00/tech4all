@@ -1,16 +1,19 @@
 import { useState } from "react";
 import React from "react";
 import "../src/app/css/Login.css";
+import { useRouter } from "next/router";
+import { useAuth } from "./context/AuthContext";
 
 export default function LoginPage() {
+  const { login } = useAuth(); // Usa il metodo login dal contesto
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log(JSON.stringify({ email, password }));
       const res = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
         headers: {
@@ -25,7 +28,12 @@ export default function LoginPage() {
       }
 
       const data = await res.json();
+
+      // Passa i dati dell'utente al contesto
+      login(data.user);
+
       alert(`Benvenuto, ${data.user?.nome || "utente"}!`);
+      router.push("/tutorials/listTutorials");
     } catch (err: any) {
       setError(err.message);
     }
