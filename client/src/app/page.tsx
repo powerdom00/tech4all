@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import "./page.css"; // Aggiungi qui il tuo CSS
-
+import { AuthProvider } from "../../pages/context/AuthContext";
 const App: React.FC = () => {
+  
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
@@ -49,6 +50,7 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
+      <AuthProvider>
       <Header />
       <main>
         <section className="hero">
@@ -62,14 +64,12 @@ const App: React.FC = () => {
 
         <section className="card">
           <div className="video-container">
-            <iframe
-              width="100%"
-              height="315"
-              src="https://www.youtube.com/embed/7yWTIPHhwaI"
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+          <iframe width="700" height="350" src="https://www.youtube.com/embed/UGemfFm23bY?si=Ioyq5iCyjI_TTynW" 
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen></iframe>
           </div>
 
           <h2 className="card-title">Chi siamo?</h2>
@@ -116,7 +116,8 @@ const App: React.FC = () => {
             </div>
           )}
         </section>
-      </main>
+        </main>
+        </AuthProvider>
       <Footer />
     </div>
   );

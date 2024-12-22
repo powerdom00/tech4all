@@ -3,6 +3,8 @@
 ---
 
 Lato Front-End:
+-npm install
+-npm install react
 -npm install --save-dev ts-loader (per far funzionare file esterni dal client es.Services)
 
 ---
@@ -11,7 +13,9 @@ Lato Front-End:
 
 # BE:
 
-- mysql2
+-npm install
+-npm install express
+-npm install mysql2
 
 #per far funzionare il db:
 
