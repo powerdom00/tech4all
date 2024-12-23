@@ -1,0 +1,141 @@
+.main-container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #333333;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.header-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #4caf50;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid #4caf50;
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #e8f5e9, #ffffff);
+  border-radius: 12px;
+}
+
+.content-container {
+  padding: 20px;
+}
+
+.form-message {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333333;
+}
+
+.form-input,
+.form-textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.form-textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.button-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.submit-button,
+.cancel-button,
+.delete-button,
+.update-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button {
+  background-color: #4caf50;
+}
+
+.submit-button:hover {
+  background-color: #388e3c;
+}
+
+.cancel-button {
+  background-color: #ff5722;
+}
+
+.cancel-button:hover {
+  background-color: #e64a19;
+}
+
+.delete-button {
+  background-color: #ff5722;
+}
+
+.delete-button:hover {
+  background-color: #e64a19;
+}
+
+.update-button {
+  background-color: #4caf50;
+}
+
+.update-button:hover {
+  background-color: #388e3c;
+}
+
+.tutorial-details {
+  text-align: left;
+}
+
+.tutorial-text {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.tutorial-category {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333333;
+}

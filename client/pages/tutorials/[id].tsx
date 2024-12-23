@@ -1,6 +1,7 @@
 import { Tutorial } from "@/interfacce/Tutorial";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import "../../src/app/css/Tutorial.css";
 
 const TutorialPage = () => {
   const [tutorial, setTutorial] = useState<Tutorial | null>(null);
@@ -91,47 +92,74 @@ const TutorialPage = () => {
   }
 
   return (
-    <div className="container">
-      <main>
-        {message && <p>{message}</p>}
+    <div className="main-container">
+      <header className="header-container">
+        <h1 className="page-title">
+          {isEditing ? "Modifica Tutorial" : tutorial.titolo}
+        </h1>
+      </header>
+      <main className="content-container">
+        {message && <p className="form-message">{message}</p>}
         {isEditing ? (
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>Title:</label>
+          <form className="edit-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="titolo">Titolo:</label>
               <input
+                id="titolo"
                 type="text"
+                className="form-input"
                 value={titolo}
                 onChange={(e) => setTitolo(e.target.value)}
               />
             </div>
-            <div>
-              <label>Text:</label>
+            <div className="form-group">
+              <label htmlFor="testo">Testo:</label>
               <textarea
+                id="testo"
+                className="form-textarea"
                 value={testo}
                 onChange={(e) => setTesto(e.target.value)}
               ></textarea>
             </div>
-            <div>
-              <label>Category:</label>
+            <div className="form-group">
+              <label htmlFor="categoria">Categoria:</label>
               <input
+                id="categoria"
                 type="text"
+                className="form-input"
                 value={categoria}
                 onChange={(e) => setCategoria(e.target.value)}
               />
             </div>
-            <button type="submit">Save</button>
-            <button type="button" onClick={handleCancel}>
-              Cancel
-            </button>
+            <div className="button-container">
+              <button type="submit" className="submit-button">
+                Salva
+              </button>
+              <button
+                type="button"
+                className="cancel-button"
+                onClick={handleCancel}
+              >
+                Annulla
+              </button>
+            </div>
           </form>
         ) : (
-          <>
-            <h1>{tutorial.titolo}</h1>
-            <div dangerouslySetInnerHTML={{ __html: tutorial.testo }} />
-            <p>Category: {tutorial.categoria}</p>
-            <button onClick={handleDelete}>Delete Tutorial</button>
-            <button onClick={handleUpdate}>Update Tutorial</button>
-          </>
+          <div className="tutorial-details">
+            <p className="tutorial-category">Categoria: {tutorial.categoria}</p>
+            <div
+              className="tutorial-text"
+              dangerouslySetInnerHTML={{ __html: tutorial.testo }}
+            />
+            <div className="button-container">
+              <button className="delete-button" onClick={handleDelete}>
+                Elimina Tutorial
+              </button>
+              <button className="update-button" onClick={handleUpdate}>
+                Modifica Tutorial
+              </button>
+            </div>
+          </div>
         )}
       </main>
     </div>
