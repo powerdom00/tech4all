@@ -1,5 +1,5 @@
 import express from "express";
-import { FeedbackService } from "@/services/FeedbackService";
+import { FeedbackService } from "../services/FeedbackService";
 
 const router = express.Router();
 
@@ -49,6 +49,7 @@ router.get("/visualizzaFeedback/:tutorialId", async (req, res) => {
     const feedback = await feedbackService.VisualizzaFeedbackTutorial(
       parseInt(tutorialId),
     );
+    console.log(feedback);
     res.status(200).json(feedback);
   } catch (error) {
     console.error("Errore durante la visualizzazione del feedback:", error);
@@ -90,3 +91,4 @@ router.get("/modificaFeedback/:feedbackId", async (req, res) => {
     res.status(500).json({ message: "Errore del server", error });
   }
 });
+export default router;

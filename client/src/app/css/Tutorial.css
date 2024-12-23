@@ -139,3 +139,172 @@
   margin-bottom: 20px;
   color: #333333;
 }
+/* Stile per la sezione dei tabs */
+.react-tabs {
+  margin-top: 30px;
+}
+
+.react-tabs__tab-list {
+  display: flex;
+  justify-content: space-around;
+  background-color: #4caf50;
+  border-radius: 12px;
+  padding: 10px;
+  list-style: none;
+  margin: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.react-tabs__tab {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.react-tabs__tab:hover {
+  background-color: #66bb6a;
+  transform: scale(1.05);
+}
+
+.react-tabs__tab--selected {
+  background-color: #2e7d32;
+  color: #e8f5e9;
+  box-shadow: inset 0 -3px 0 #e8f5e9;
+  font-weight: bold;
+  border: none;
+}
+
+.react-tabs__tab-panel {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #4caf50;
+}
+
+/* Stile aggiuntivo per i titoli e contenuti */
+.react-tabs__tab-panel h2 {
+  font-size: 24px;
+  color: #2e7d32;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #4caf50;
+  padding-bottom: 5px;
+}
+
+.react-tabs__tab-panel p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Stile responsive */
+@media (max-width: 768px) {
+  .react-tabs__tab-list {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .react-tabs__tab {
+    text-align: center;
+  }
+}
+/* Contenitore principale per i feedback */
+.feedback-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* Spaziatura tra i singoli feedback */
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  /* Colore di sfondo leggero */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Leggera ombra */
+}
+
+/* Stile per ogni singolo feedback */
+.feedback-item {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #4CAF50;
+  /* Barra laterale verde per evidenziare */
+}
+
+/* Titoli e testo dei feedback */
+.feedback-item p {
+  font-size: 1rem;
+  margin: 8px 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Stile per la valutazione (ad esempio, stelle o icone) */
+.feedback-item p:first-child {
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+/* Stile per il commento (maggiore enfasi) */
+.feedback-item p:nth-child(2) {
+  font-style: italic;
+  color: #555;
+}
+
+/* ID utente in grigio chiaro */
+.feedback-item p:last-child {
+  color: #888;
+}
+
+/* Stile per il contenitore di feedback vuoto */
+.feedback-container:empty {
+  text-align: center;
+  color: #777;
+}
+
+/* Stile responsivo: garantisce una buona visualizzazione su dispositivi mobili */
+@media (max-width: 600px) {
+  .feedback-container {
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .feedback-item {
+    padding: 10px;
+  }
+
+  .feedback-item p {
+    font-size: 0.9rem;
+  }
+}
+/* Stile del pulsante "Crea Nuovo Feedback" */
+.create-feedback-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  /* Verde */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-feedback-btn:hover {
+  background-color: #45a049;
+  /* Verde più scuro al passaggio del mouse */
+}
