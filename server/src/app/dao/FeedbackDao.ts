@@ -22,7 +22,6 @@ export class FeedbackDao {
           row.commento,
           row.utente_id,
           row.tutorial_id,
-          row.id,
         ),
     );
   }
@@ -43,7 +42,6 @@ export class FeedbackDao {
         row.commento,
         row.utente_id,
         row.tutorial_id,
-        row.id,
       );
     }
     return null;
@@ -63,29 +61,64 @@ export class FeedbackDao {
 
   // Metodo per aggiornare un feedback esistente
   public async updateFeedback(feedback: Feedback): Promise<void> {
-    const id = feedback.getId();
     const valutazione = feedback.getValutazione();
     const commento = feedback.getCommento();
     const idUtente = feedback.getUtenteId();
     const idTutorila = feedback.getTutorialId();
-    if (id === 0) {
+    if (idUtente === null || idTutorila === null) {
       throw new Error("Feedback ID is required for updating.");
       //andrà sostituita con un'eccezione personalizzata (vincoli);
     }
     await this.db.query(
-      "UPDATE feedback SET valutazione = ?, commento = ?, utente_id = ?, tutorial_id = ? WHERE id = ?",
-      [valutazione, commento, idUtente, idTutorila, id],
+      "UPDATE feedback SET valutazione = ?, commento = ? WHERE utente_id = ? AND tutorial_id = ?",
+      [valutazione, commento, idUtente, idTutorila],
     );
   }
 
   // Metodo per eliminare un feedback per utente e tutorial
   public async deleteFeedback(
-    utenteId: number,
+    userId: number,
     tutorialId: number,
   ): Promise<void> {
     await this.db.query(
       "DELETE FROM feedback WHERE utente_id = ? AND tutorial_id = ?",
-      [utenteId, tutorialId],
+      [userId, tutorialId],
+    );
+  }
+
+  //Metodo per trovare un feedback tramite l'id dell'utente
+
+  public async getFeedbackByUserId(userId: number): Promise<Feedback[]> {
+    const [rows] = await this.db.query<RowDataPacket[]>(
+      "SELECT * FROM feedback WHERE utente_id = ?",
+      [userId],
+    );
+    return rows.map(
+      (row: RowDataPacket) =>
+        new Feedback(
+          row.valutazione,
+          row.commento,
+          row.utente_id,
+          row.tutorial_id,
+        ),
+    );
+  }
+  //Metodo per trovare un feedback tramite l'id del tutorial
+  public async getFeedbackByTutorialId(
+    tutorialId: number,
+  ): Promise<Feedback[]> {
+    const [rows] = await this.db.query<RowDataPacket[]>(
+      "SELECT * FROM feedback WHERE tutorial_id = ?",
+      [tutorialId],
+    );
+    return rows.map(
+      (row: RowDataPacket) =>
+        new Feedback(
+          row.valutazione,
+          row.commento,
+          row.utente_id,
+          row.tutorial_id,
+        ),
     );
   }
 }
