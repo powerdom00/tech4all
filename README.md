@@ -1,25 +1,24 @@
-# tech4all
+# Tech4all
+
+## Installazioni da condividere per il funzionamento
+
+### Lato Front-End
+
+```bash
+npm install
+```
 
 ---
 
-Lato Front-End:
--npm install
--npm install react
--npm install --save-dev ts-loader (per far funzionare file esterni dal client es.Services)
+### Lato Back-End
 
----
+```bash
+npm install
+```
 
-#Installazioni da condividere per il funzionamento
+#### Per far funzionare il db
 
-# BE:
-
--npm install
--npm install express
--npm install mysql2
-
-#per far funzionare il db:
-
-- copiare e incollare su mysql, runnare il codice su mysql e creare il db
+- Copiare e incollare su MySQL, runnare il codice su MySQL e creare il db.
 - Creare (o inserire in) un file di nome ".env" in server inserendo i dati di accesso del proprio DB nelle seguenti variabili:
 
   ```env
@@ -29,5 +28,5 @@ Lato Front-End:
   DB_NAME=""
   ```
 
-- in caso di tentativi di test inserire il file nella cartella "test" in server.
-- Per runnare solo la cartella indicata scrivere nel terminare appostio : npx ts-node nomeFileTest.ts e premere invio
+- In caso di tentativi di test inserire il file nella cartella "test" in server.
+- Per runnare solo la cartella indicata scrivere nel terminare apposito : npx ts-node nomeFileTest.ts e premere invio.
