@@ -1,14 +1,6 @@
-import Footer from "@/app/Components/Footer";
-import Header from "@/app/Components/Header";
+import { Tutorial } from "@/interfacce/Tutorial";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-
-interface Tutorial {
-  id: number;
-  titolo: string;
-  testo: string;
-  categoria: string;
-}
+import { useState, useEffect } from "react";
 
 const TutorialPage = () => {
   const [tutorial, setTutorial] = useState<Tutorial | null>(null);
