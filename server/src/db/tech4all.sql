@@ -62,14 +62,14 @@ CREATE TABLE tutorial (
 
 -- Creazione della tabella feedback
 CREATE TABLE feedback (
-    id INT PRIMARY KEY AUTO_INCREMENT,
     valutazione INT NOT NULL CHECK (valutazione BETWEEN 1 AND 5),
     commento VARCHAR(280) NOT NULL,
     utente_id INT NOT NULL,
     tutorial_id INT NOT NULL,
     UNIQUE (utente_id, tutorial_id),
     FOREIGN KEY (utente_id) REFERENCES utente(id) ON DELETE CASCADE,
-    FOREIGN KEY (tutorial_id) REFERENCES tutorial(id) ON DELETE CASCADE
+    FOREIGN KEY (tutorial_id) REFERENCES tutorial(id) ON DELETE CASCADE,
+    PRIMARY KEY (utente_id, tutorial_id)
 );
 
 -- Trigger per aggiornare la valutazione media dei tutorial
