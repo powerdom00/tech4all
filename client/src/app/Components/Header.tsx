@@ -35,14 +35,14 @@ const Header: React.FC = () => {
                 />
                 {isDropdownVisible && (
                   <div className="dropdown-menu">
-                    <button style={{ color: "black" }} onClick={logout}>
-                      Esci
-                    </button>
                     <Link href="/areaUtente">
                       <button style={{ color: "black" }}>
                         Visualizza area personale
                       </button>
                     </Link>
+                    <button style={{ color: "black" }} onClick={logout}>
+                      Esci
+                    </button>
                   </div>
                 )}
               </div>
