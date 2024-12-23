@@ -3,10 +3,6 @@
  */
 export class Feedback {
   /**
-   * The unique identifier of the feedback.
-   */
-  private id?: number;
-  /**
    * The rating given in the feedback.
    */
   private valutazione: number;
@@ -25,7 +21,6 @@ export class Feedback {
 
   /**
    * Creates an instance of Feedback.
-   * @param id - The unique identifier of the feedback.
    * @param valutazione - The rating given in the feedback.
    * @param commento - The comment provided in the feedback.
    * @param utenteId - The unique identifier of the user who provided the feedback.
@@ -36,23 +31,14 @@ export class Feedback {
     commento: string,
     utenteId: number,
     tutorialId: number,
-    id?: number,
   ) {
     this.valutazione = valutazione;
     this.commento = commento;
     this.utenteId = utenteId;
     this.tutorialId = tutorialId;
-    this.id = id;
   }
 
   // Getter
-  /**
-   * Gets the unique identifier of the feedback.
-   */
-  public getId(): number | undefined {
-    return this.id;
-  }
-
   /**
    * Gets the rating given in the feedback.
    */
@@ -82,13 +68,6 @@ export class Feedback {
   }
 
   // Setter
-  /**
-   * Sets the unique identifier of the feedback.
-   */
-  public setId(value: number | undefined) {
-    this.id = value;
-  }
-
   /**
    * Sets the rating given in the feedback.
    */
