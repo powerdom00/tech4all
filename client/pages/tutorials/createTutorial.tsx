@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+import "../../src/app/css/CreaTutorial.css";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");
@@ -43,10 +44,21 @@ const CreateTutorial = () => {
       formData.append("testo", testo);
       formData.append("categoria", categoria);
       formData.append("grafica", grafica);
+      formData.append("valutazione", "1");
 
       const response = await fetch("http://localhost:5000/tutorials/tutorial", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: formData,
+        body: JSON.stringify({
+          titolo,
+          testo,
+          categoria,
+          grafica: "nessuna",
+          valutazione: "1",
+        }),
       });
 
       if (!response.ok) {
@@ -69,41 +81,53 @@ const CreateTutorial = () => {
   };
 
   return (
-    <div className="container">
-      <main>
-        <h1>Crea un nuovo Tutorial</h1>
-        <form onSubmit={handleSubmit}>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          {success && <p style={{ color: "green" }}>{success}</p>}
-          <div>
-            <label>Titolo:</label>
+    <div className="main-container">
+      <header className="header-container">
+        <h1 className="page-title">Crea un nuovo Tutorial</h1>
+      </header>
+      <main className="form-container">
+        <form className="tutorial-form" onSubmit={handleSubmit}>
+          {error && <p className="form-message error">{error}</p>}
+          {success && <p className="form-message success">{success}</p>}
+          <div className="form-group">
+            <label htmlFor="titolo">Titolo:</label>
             <input
+              id="titolo"
               type="text"
+              className="form-input"
               value={titolo}
               onChange={(e) => setTitolo(e.target.value)}
             />
           </div>
-          <div>
-            <label>Categoria:</label>
+          <div className="form-group">
+            <label htmlFor="categoria">Categoria:</label>
             <input
+              id="categoria"
               type="text"
+              className="form-input"
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
             />
           </div>
-          <div>
-            <label>Testo:</label>
-            <div ref={editorRef} style={{ height: "300px" }}></div>
+          <div className="form-group">
+            <label htmlFor="editor">Testo:</label>
+            <div id="editor" ref={editorRef} className="quill-editor"></div>
           </div>
-          <div>
-            <label>Grafica:</label>
+          <div className="form-group">
+            <label htmlFor="grafica">Grafica:</label>
             <input
+              id="grafica"
               type="file"
+              className="form-input"
               accept="image/*"
               onChange={(e) => setGrafica(e.target.files?.[0] || null)}
             />
           </div>
-          <button type="submit">Crea Tutorial</button>
+          <div className="button-container">
+            <button type="submit" className="submit-button">
+              Crea Tutorial
+            </button>
+          </div>
         </form>
       </main>
     </div>

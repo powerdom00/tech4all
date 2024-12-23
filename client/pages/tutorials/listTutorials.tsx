@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useTutorials } from "@/hooks/useTutorials";
+import "../../src/app/css/ListaTutorial.css";
 
 const ListTutorials = () => {
   const {
@@ -32,38 +33,49 @@ const ListTutorials = () => {
   };
 
   return (
-    <div className="container">
-      <main>
-        <h1>All Tutorials</h1>
-        <button onClick={handleCreateNewTutorial}>Create New Tutorial</button>
-        <div>
-          <label htmlFor="category">Filter by Category:</label>
-          <select
-            id="category"
-            value={selectedCategory || ""}
-            onChange={(e) => handleCategoryChange(e.target.value)}
-          >
-            <option value=""></option>
-            {Array.from(
-              new Set(tutorials.map((tutorial) => tutorial.categoria))
-            ).map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
-        <ul>
+    <div className="main-container">
+      <header className="header-container">
+        <h1 className="page-title">Lista Tutorial</h1>
+        <button className="create-button" onClick={handleCreateNewTutorial}>
+          Crea Nuovo Tutorial
+        </button>
+      </header>
+      <div className="filter-container">
+        <label className="filter-label" htmlFor="category">
+          Filtra per Categoria:
+        </label>
+        <select
+          className="filter-select"
+          id="category"
+          value={selectedCategory || ""}
+          onChange={(e) => handleCategoryChange(e.target.value)}
+        >
+          <option value="">Tutte</option>
+          {Array.from(
+            new Set(tutorials.map((tutorial) => tutorial.categoria))
+          ).map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+      <main className="content-container">
+        <ul className="tutorial-list">
           {filteredTutorials.map((tutorial) => (
             <li
+              className="tutorial-item"
               key={tutorial.id}
               onClick={() => handleTutorialClick(tutorial.id)}
             >
-              <h2>{tutorial.titolo}</h2>
-              <img
-                src={`https://picsum.photos/id/${tutorial.id}/350/250`}
-                alt={tutorial.titolo}
-              />
+              <h2 className="tutorial-title">{tutorial.titolo}</h2>
+              <div className="thumbnail-container">
+                <img
+                  className="tutorial-thumbnail"
+                  src={`https://picsum.photos/id/${tutorial.id}/1280/720`}
+                  alt={tutorial.titolo}
+                />
+              </div>
             </li>
           ))}
         </ul>
