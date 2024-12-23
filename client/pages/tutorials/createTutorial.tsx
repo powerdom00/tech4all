@@ -44,10 +44,21 @@ const CreateTutorial = () => {
       formData.append("testo", testo);
       formData.append("categoria", categoria);
       formData.append("grafica", grafica);
+      formData.append("valutazione", "1");
 
       const response = await fetch("http://localhost:5000/tutorials/tutorial", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: formData,
+        body: JSON.stringify({
+          titolo,
+          testo,
+          categoria,
+          grafica: "nessuna",
+          valutazione: "1",
+        }),
       });
 
       if (!response.ok) {
