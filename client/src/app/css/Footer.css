@@ -15,4 +15,9 @@ footer {
     font-weight: bold;
     color: #166e3b; /* Verde per richiamare il logo */
   }
+
+  footer a {
+    text-decoration: none; /* Rimuove la sottolineatura */
+    color: inherit; /* Inherit permette al colore del link di seguire quello del testo circostante */
+}
   
