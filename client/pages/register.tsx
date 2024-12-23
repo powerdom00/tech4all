@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Link from "next/link"; // Importa Link da Next.js
 import React from "react";
+// eslint-disable-next-line prettier/prettier
+import { useRouter } from "next/router";
 import "../src/app/css/Register.css";
 
 const Register = () => {
@@ -13,6 +15,8 @@ const Register = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
+  const router = useRouter();
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -59,6 +63,7 @@ const Register = () => {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+      router.push("/homepage");
     } catch (err: any) {
       setError(err.message);
       setSuccess(null);

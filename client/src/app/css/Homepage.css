@@ -40,8 +40,8 @@
   }
   
   
-  .imageCard p {
-    position: absolute;
+  .imageGallery p {
+    position: relative;
     bottom: 10px;         /* Posiziona il testo in basso */
     left: 10px;           /* Aggiusta la distanza dal lato sinistro */
     color: white;         /* Colore del testo */
