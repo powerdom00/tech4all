@@ -31,7 +31,7 @@ export class TutorialDao {
   public async getTutorialById(id: number): Promise<Tutorial | null> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM tutorial WHERE id = ?",
-      id,
+      [id]
     );
     if (rows.length > 0) {
       const row = rows[0];
@@ -46,7 +46,7 @@ export class TutorialDao {
     }
     return null;
   }
-
+  
   // Metodo per creare un nuovo tutorial
   public async createTutorial(tutorial: Tutorial): Promise<void> {
     const Titolo = tutorial.getTitolo();
