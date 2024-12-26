@@ -29,6 +29,7 @@ export default function LoginPage() {
 
       const data = await res.json();
 
+      console.log("Dati utente ricevuti dal backend:", data);
       // Passa i dati dell'utente al contesto
       login(data.user);
 
