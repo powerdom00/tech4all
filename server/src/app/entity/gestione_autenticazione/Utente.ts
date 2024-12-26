@@ -8,6 +8,7 @@ export class Utente {
   private quizSuperati: number = 0; // Aggiunta della variabile quizSuperati
 
   constructor(
+    id: number | undefined,
     email: string,
     password: string,
     nome: string,

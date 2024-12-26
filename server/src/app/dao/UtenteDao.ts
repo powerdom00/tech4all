@@ -15,6 +15,7 @@ export class UtenteDao {
     return rows.map(
       (row: RowDataPacket) =>
         new Utente(
+          row.id,
           row.email,
           row.password,
           row.nome,
@@ -34,6 +35,7 @@ export class UtenteDao {
     if (rows.length > 0) {
       const row = rows[0];
       return new Utente(
+        row.id,
         row.email,
         row.password,
         row.nome,
@@ -69,6 +71,7 @@ export class UtenteDao {
     if (rows.length > 0) {
       const row = rows[0];
       return new Utente(
+        row.id,
         row.email,
         row.password,
         row.nome,
