@@ -18,7 +18,7 @@ const ListTutorials = () => {
   };
 
   const handleTutorialClick = (id: number) => {
-    router.push(`/tutorials/${id}`);
+    router.push(`/tutorials/${id}`).then(() => router.reload());
   };
 
   const handleCategoryChange = (category: string) => {

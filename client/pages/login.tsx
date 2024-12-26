@@ -34,7 +34,7 @@ export default function LoginPage() {
       login(data.user);
 
       alert(`Benvenuto, ${data.user?.nome || "utente"}!`);
-      router.push("/homepage");
+      router.push("/homepage").then(() => router.reload());
     } catch (err: any) {
       setError(err.message);
     }

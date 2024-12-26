@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import "../css/Header.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Importa il router corretto per l'App Router
 import { useAuth } from "../../../pages/context/AuthContext"; // Importa il contesto
 
 const Header: React.FC = () => {
   const { user, logout } = useAuth(); // Usa il contesto per ottenere l'utente e la funzione logout
   const [isDropdownVisible, setDropdownVisible] = useState(false); // Stato per il menu a tendina
+  const router = useRouter(); // Usa il router di next/navigation
+
+  const handleLogout = () => {
+    logout(); // Esegui il logout
+    router.push("/"); // Reindirizza alla home (localhost:3000)
+  };
 
   const toggleDropdown = () => {
     setDropdownVisible((prev) => !prev); // Toggle della visibilità del menu a tendina
@@ -48,7 +55,7 @@ const Header: React.FC = () => {
                         </button>
                       </Link>
                     )}
-                    <button style={{ color: "black" }} onClick={logout}>
+                    <button style={{ color: "black" }} onClick={handleLogout}>
                       Esci
                     </button>
                   </div>
