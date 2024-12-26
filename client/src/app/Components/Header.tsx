@@ -35,11 +35,19 @@ const Header: React.FC = () => {
                 />
                 {isDropdownVisible && (
                   <div className="dropdown-menu">
-                    <Link href="/areaUtente">
-                      <button style={{ color: "black" }}>
-                        Visualizza area personale
-                      </button>
-                    </Link>
+                    {user.ruolo == "admin" ? ( // Se l'utente è amministratore
+                      <Link href="/areaAmministratore">
+                        <button style={{ color: "black" }}>
+                          Visualizza Area Amministratore
+                        </button>
+                      </Link>
+                    ) : (
+                      <Link href="/areaUtente">
+                        <button style={{ color: "black" }}>
+                          Visualizza Area Personale
+                        </button>
+                      </Link>
+                    )}
                     <button style={{ color: "black" }} onClick={logout}>
                       Esci
                     </button>
