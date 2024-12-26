@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Visualizza i dati dell'utente
 router.get("/dati/:userId", async (req, res) => {
-  const userId = parseInt(req.params.userId);  // Ottieni l'ID utente dai parametri della rotta
+  const userId = parseInt(req.params.userId); // Ottieni l'ID utente dai parametri della rotta
 
   try {
     const accountService = new AccountService();

@@ -42,7 +42,9 @@ router.post("/execute/:quizId", async (req, res) => {
     const quizService = new QuizService();
     const svolgimento = await quizService.eseguiQuiz(quizId, risposte);
 
-    res.status(200).json({ message: "Quiz eseguito con successo", svolgimento });
+    res
+      .status(200)
+      .json({ message: "Quiz eseguito con successo", svolgimento });
   } catch (error) {
     console.error("Errore durante l'esecuzione del quiz:", error);
     res.status(500).json({ message: "Errore interno del server", error });

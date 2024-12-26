@@ -33,7 +33,7 @@ export class QuizService {
       // 2. Creazione delle domande associate al quiz
       for (const domanda of domande) {
         await this.domandaDao.createDomanda(domanda);
-        
+
         // 3. Creazione delle risposte per ogni domanda
         for (const risposta of domanda.getRisposte()) {
           await this.rispostaDao.createRisposta(risposta);
@@ -54,7 +54,9 @@ export class QuizService {
   }
 
   // Eliminazione di un quiz (e relative domande e risposte)
-  async eliminaQuiz(id: number): Promise<{ success: boolean; message: string }> {
+  async eliminaQuiz(
+    id: number,
+  ): Promise<{ success: boolean; message: string }> {
     try {
       const quiz = await this.quizDao.getQuizById(id);
       if (!quiz) {
@@ -116,12 +118,15 @@ export class QuizService {
       let risposteEsatte = 0;
       for (let i = 0; i < domande.length; i++) {
         const domanda = domande[i];
-        const rispostaCorretta = domanda.getRisposte().find(
-          (risposta) => risposta.getCorretta()
-        );
+        const rispostaCorretta = domanda
+          .getRisposte()
+          .find((risposta) => risposta.getCorretta());
 
         // Controlla se la risposta fornita dall'utente è corretta
-        if (rispostaCorretta && rispostaCorretta.getId() === risposteFornite[i]) {
+        if (
+          rispostaCorretta &&
+          rispostaCorretta.getId() === risposteFornite[i]
+        ) {
           risposteEsatte++;
         }
       }
@@ -135,7 +140,7 @@ export class QuizService {
         utente,
         esito,
         new Date(),
-        risposteEsatte
+        risposteEsatte,
       );
       await this.svolgimentoDao.createSvolgimento(svolgimento);
 

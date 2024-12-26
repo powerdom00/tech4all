@@ -130,7 +130,16 @@ export class AutenticazioneService {
 
       const ruolo = false; // Predefinito come booleano per "utente"
 
-      const nuovoUtente = new Utente(email, password, nome, cognome, ruolo, 0);
+      const nuovoUtente = new Utente(
+        -1,
+        email,
+        password,
+        nome,
+        cognome,
+        ruolo,
+        0,
+      );
+
       await this.utenteDao.createUtente(nuovoUtente);
 
       return {
