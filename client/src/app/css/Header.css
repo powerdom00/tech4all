@@ -83,12 +83,22 @@ nav ul li a:hover {
 }
 
 .user-avatar {
-  width: 30px;
-  /* Rimpicciolisci l'icona */
-  height: 30px;
+  width: 40px;
+  /* Dimensione dell'icona */
+  height: 40px;
+  /* Dimensione dell'icona */
   border-radius: 50%;
   /* Rende l'immagine rotonda */
   object-fit: cover;
+  /* Taglia l'immagine per adattarla */
+  image-rendering: auto;
+  /* Migliora il rendering dell'immagine */
+  overflow: hidden;
+  /* Evita che parti esterne siano visibili */
+  border: 2px solid #ffffff;
+  /* Aggiunge un bordo per un aspetto pulito */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  /* Effetto ombra per evidenziare l'immagine */
 }
 
 .dropdown-menu {
