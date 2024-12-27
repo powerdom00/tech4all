@@ -1,12 +1,13 @@
 import express from "express";
 import { QuizService } from "../services/QuizService";
 import { Utente } from "../entity/gestione_autenticazione/Utente";
+import { UtenteDao } from "../dao/UtenteDao";
 
 const router = express.Router();
 const quizService = new QuizService();
 
 // 1. Creazione di un nuovo quiz
-router.post("/quiz", async (req, res) => {
+router.post("/creaQuiz", async (req, res) => {
   const { tutorialId, domande } = req.body;
 
   // Controllo dei dati inviati nel body
@@ -17,7 +18,7 @@ router.post("/quiz", async (req, res) => {
   }
 
   try {
-    const result = await quizService.creazioneQuiz({ tutorialId, domande });
+    const result = await quizService.creaQuiz({ tutorialId, domande });
     if (result.success) {
       return res.status(201).json(result); // Restituisci una risposta di successo
     } else {
@@ -32,7 +33,7 @@ router.post("/quiz", async (req, res) => {
 });
 
 // 2. Eliminazione di un quiz
-router.delete("/quiz/:id", async (req, res) => {
+router.delete("/eliminaQuiz/:id", async (req, res) => {
   const { id } = req.params;
 
   // Verifica se l'ID è valido
@@ -44,7 +45,7 @@ router.delete("/quiz/:id", async (req, res) => {
   }
 
   try {
-    const result = await quizService.cancellazioneQuiz(quizId);
+    const result = await quizService.eliminaQuiz(quizId);
     if (result.success) {
       return res.status(200).json(result); // Quiz eliminato correttamente
     } else {
@@ -80,7 +81,7 @@ router.post("/quiz/:id/esecuzione", async (req, res) => {
     }
 
     // Chiamata al servizio per eseguire il quiz
-    const result = await quizService.esecuzioneQuiz(
+    const result = await quizService.eseguiQuiz(
       parseInt(id),
       utente,
       risposteUtente,
@@ -93,6 +94,35 @@ router.post("/quiz/:id/esecuzione", async (req, res) => {
     }
   } catch (error) {
     console.error("Errore durante l'esecuzione del quiz:", error);
+    return res
+      .status(500)
+      .json({ message: "Errore interno del server", error });
+  }
+});
+
+// 4. Visualizzazione dei quiz di un tutorial
+router.get("/quiz/tutorial/:tutorialId", async (req, res) => {
+  const { tutorialId } = req.params;
+
+  // Verifica se il tutorialId è valido
+  const parsedTutorialId = parseInt(tutorialId);
+  if (isNaN(parsedTutorialId)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "ID del tutorial non valido." });
+  }
+
+  try {
+    // Chiamata al servizio per recuperare i quiz associati al tutorial
+    const result = await quizService.getQuizByTutorialId(parsedTutorialId);
+
+    if (result.success) {
+      return res.status(200).json(result); // Quiz recuperati correttamente
+    } else {
+      return res.status(404).json(result); // Nessun quiz trovato per il tutorial
+    }
+  } catch (error) {
+    console.error("Errore durante la visualizzazione dei quiz:", error);
     return res
       .status(500)
       .json({ message: "Errore interno del server", error });
