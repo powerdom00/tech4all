@@ -4,6 +4,7 @@ import pool from "../../db";
 
 export class UtenteDao {
   private db: Pool;
+  static updateUtente: (utente: Utente) => Promise<void>;
 
   constructor() {
     this.db = pool; // Utilizza il modulo di connessione al database
