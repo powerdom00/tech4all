@@ -1,15 +1,22 @@
-/* Header.css */
-
-/* Stile generali per l'header */
+/* Contenitore principale dell'header */
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   background-color: #ffffff;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  /* Ombra */
 }
+
+/* Contenitore di navigazione */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+/* Barra di ricerca */
 .search-bar-container {
   flex: 1;
   display: flex;
@@ -26,57 +33,46 @@
   font-size: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-/* Stile per il logo */
-.header .logo img {
+
+/* Logo */
+.logo img {
   width: 70px;
   height: 70px;
 }
 
-/* Navigazione */
-nav {
+/* Lista dei link */
+.nav-links {
   display: flex;
-}
-
-nav ul {
+  align-items: center;
   list-style: none;
-  display: flex;
   margin: 0;
   padding: 0;
+  margin-left: auto; /* Spinge i link verso destra */
 }
 
-nav ul li {
+/* Link di navigazione */
+.nav-links li {
   margin: 0 15px;
 }
 
-nav ul li a {
+.nav-links li a {
   text-decoration: none;
   color: #1d5c31;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
-nav ul li a:hover {
+.nav-links li a:hover {
   color: #4caf50;
 }
 
-/* Responsive design: per schermi più piccoli */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  nav ul li {
-    margin: 10px 0;
-  }
+/* Sezione utente e avatar */
+.user-section {
+  margin-left: auto; /* Spinge questa sezione tutta a destra */
+  display: flex;
+  align-items: center;
 }
 
-/* Stili per l'icona dell'utente */
 .user-avatar-container {
   position: relative;
   cursor: pointer;
@@ -84,23 +80,14 @@ nav ul li a:hover {
 
 .user-avatar {
   width: 40px;
-  /* Dimensione dell'icona */
   height: 40px;
-  /* Dimensione dell'icona */
   border-radius: 50%;
-  /* Rende l'immagine rotonda */
   object-fit: cover;
-  /* Taglia l'immagine per adattarla */
-  image-rendering: auto;
-  /* Migliora il rendering dell'immagine */
-  overflow: hidden;
-  /* Evita che parti esterne siano visibili */
   border: 2px solid #ffffff;
-  /* Aggiunge un bordo per un aspetto pulito */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  /* Effetto ombra per evidenziare l'immagine */
 }
 
+/* Dropdown menu */
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -134,4 +121,30 @@ nav ul li a:hover {
 
 .dropdown-menu button:focus {
   outline: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .nav-container {
+    flex-direction: column;
+  }
+
+  .search-bar-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-links {
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .user-section {
+    margin-left: 0;
+    margin-top: 15px;
+  }
 }
