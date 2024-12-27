@@ -3,22 +3,25 @@ import { DomandaDao } from "../dao/DomandaDao";
 import { RispostaDao } from "../dao/RispostaDao";
 import { Quiz } from "../entity/gestione_quiz/Quiz";
 import { Domanda } from "../entity/gestione_quiz/Domanda";
-import { Risposta } from "../entity/gestione_quiz/Risposta";
+//import { Risposta } from "../entity/gestione_quiz/Risposta";
 import { SvolgimentoDao } from "../dao/SvolgimentoDao";
 import { Svolgimento } from "../entity/gestione_quiz/Svolgimento";
 import { Utente } from "../entity/gestione_autenticazione/Utente";
+import { UtenteDao } from "../dao/UtenteDao";
 
 export class QuizService {
   private quizDao: QuizDao;
   private domandaDao: DomandaDao;
   private rispostaDao: RispostaDao;
   private svolgimentoDao: SvolgimentoDao;
+  private utenteDao: UtenteDao;
 
   constructor() {
     this.quizDao = new QuizDao();
     this.domandaDao = new DomandaDao();
     this.rispostaDao = new RispostaDao();
     this.svolgimentoDao = new SvolgimentoDao();
+    this.utenteDao = new UtenteDao();
   }
 
   // Creazione di un nuovo quiz con domande e risposte
@@ -143,6 +146,10 @@ export class QuizService {
         risposteEsatte,
       );
       await this.svolgimentoDao.createSvolgimento(svolgimento);
+      if (esito) {
+        utente.setQuizSuperati(utente.getQuizSuperati() + 1);
+        this.utenteDao.updateQuizSuperati(utente);
+      }
 
       return {
         success: true,

@@ -157,19 +157,17 @@ export class FeedbackService {
   }
 
   async EliminaFeedback(
-    feedback: Feedback,
+    utenteId: number | undefined,
+    TutorialId: number | undefined,
   ): Promise<{ success: boolean; message?: string }> {
     try {
-      if (!feedback) {
+      if (!utenteId || !TutorialId) {
         return {
           success: false,
           message: "Feedback obbligatorio.",
         };
       }
-      await this.FeedbackDao.deleteFeedback(
-        feedback.getUtenteId(),
-        feedback.getTutorialId(),
-      );
+      await this.FeedbackDao.deleteFeedback(utenteId, TutorialId);
       return {
         success: true,
       };
