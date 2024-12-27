@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import "../css/Header.css";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Importa il router corretto per l'App Router
-import { useAuth } from "../../../pages/context/AuthContext"; // Importa il contesto
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../../pages/context/AuthContext";
 
 const Header: React.FC = () => {
-  const { user, logout } = useAuth(); // Usa il contesto per ottenere l'utente e la funzione logout
-  const [isDropdownVisible, setDropdownVisible] = useState(false); // Stato per il menu a tendina
-  const router = useRouter(); // Usa il router di next/navigation
+  const { user, logout } = useAuth();
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const router = useRouter();
 
   const handleLogout = () => {
-    logout(); // Esegui il logout
-    router.push("/"); // Reindirizza alla home (localhost:3000)
+    logout();
+    router.push("/");
   };
 
   const toggleDropdown = () => {
-    setDropdownVisible((prev) => !prev); // Toggle della visibilità del menu a tendina
+    setDropdownVisible((prev) => !prev);
   };
 
   return (
@@ -23,26 +23,38 @@ const Header: React.FC = () => {
       <div className="logo">
         <img src="/Media/LogoT4A.jpeg" alt="Logo" />
       </div>
-      <div className="search-bar-container">
-        <input type="text" placeholder="Cerca..." className="search-bar" />
-      </div>
-      <nav>
-        <ul>
+      <nav className="nav-container">
+        {user && (
+          <div className="search-bar-container">
+            <input
+              type="text"
+              placeholder="Cerca..."
+              className="search-bar"
+            />
+          </div>
+        )}
+
+        <ul className="nav-links">
           {!user ? (
             <li>
-              <Link href="/login">Login</Link>
+              <Link href="/login" className="login-button">
+                Login
+              </Link>
             </li>
           ) : (
-            <li>
-              <div className="user-avatar-container" onClick={toggleDropdown}>
+            <li className="user-section">
+              <div
+                className="user-avatar-container"
+                onClick={toggleDropdown}
+              >
                 <img
-                  src={"/Media/icona.png"} // Mostra l'immagine dell'utente o una di default
+                  src={"/Media/icona.png"}
                   alt="User Avatar"
-                  className="user-avatar" // Aggiungi una classe per lo stile
+                  className="user-avatar"
                 />
                 {isDropdownVisible && (
                   <div className="dropdown-menu">
-                    {user.ruolo == "admin" ? ( // Se l'utente è amministratore
+                    {user.ruolo === "admin" ? (
                       <Link href="/areaAmministratore">
                         <button style={{ color: "black" }}>
                           Visualizza Area Amministratore
@@ -55,7 +67,10 @@ const Header: React.FC = () => {
                         </button>
                       </Link>
                     )}
-                    <button style={{ color: "black" }} onClick={handleLogout}>
+                    <button
+                      style={{ color: "black" }}
+                      onClick={handleLogout}
+                    >
                       Esci
                     </button>
                   </div>
