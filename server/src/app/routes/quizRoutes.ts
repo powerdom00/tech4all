@@ -11,7 +11,9 @@ router.post("/quiz", async (req, res) => {
 
   // Controllo dei dati inviati nel body
   if (!tutorialId || !Array.isArray(domande) || domande.length === 0) {
-    return res.status(400).json({ success: false, message: "Dati del quiz non validi." });
+    return res
+      .status(400)
+      .json({ success: false, message: "Dati del quiz non validi." });
   }
 
   try {
@@ -23,7 +25,9 @@ router.post("/quiz", async (req, res) => {
     }
   } catch (error) {
     console.error("Errore durante la creazione del quiz:", error);
-    return res.status(500).json({ message: "Errore interno del server", error });
+    return res
+      .status(500)
+      .json({ message: "Errore interno del server", error });
   }
 });
 
@@ -34,7 +38,9 @@ router.delete("/quiz/:id", async (req, res) => {
   // Verifica se l'ID è valido
   const quizId = parseInt(id);
   if (isNaN(quizId)) {
-    return res.status(400).json({ success: false, message: "ID del quiz non valido." });
+    return res
+      .status(400)
+      .json({ success: false, message: "ID del quiz non valido." });
   }
 
   try {
@@ -46,7 +52,9 @@ router.delete("/quiz/:id", async (req, res) => {
     }
   } catch (error) {
     console.error("Errore durante la cancellazione del quiz:", error);
-    return res.status(500).json({ message: "Errore interno del server", error });
+    return res
+      .status(500)
+      .json({ message: "Errore interno del server", error });
   }
 });
 
@@ -57,18 +65,26 @@ router.post("/quiz/:id/esecuzione", async (req, res) => {
 
   // Verifica se i dati sono completi
   if (!Array.isArray(risposteUtente) || risposteUtente.length === 0) {
-    return res.status(400).json({ success: false, message: "Risposte utente non valide." });
+    return res
+      .status(400)
+      .json({ success: false, message: "Risposte utente non valide." });
   }
 
   try {
     // Recupera l'utente dal database
     const utente = await new UtenteDao().getUtenteById(utenteId);
     if (!utente) {
-      return res.status(404).json({ success: false, message: "Utente non trovato." });
+      return res
+        .status(404)
+        .json({ success: false, message: "Utente non trovato." });
     }
 
     // Chiamata al servizio per eseguire il quiz
-    const result = await quizService.esecuzioneQuiz(parseInt(id), utente, risposteUtente);
+    const result = await quizService.esecuzioneQuiz(
+      parseInt(id),
+      utente,
+      risposteUtente,
+    );
 
     if (result.success) {
       return res.status(200).json(result); // Risultato dell'esecuzione del quiz
@@ -77,10 +93,10 @@ router.post("/quiz/:id/esecuzione", async (req, res) => {
     }
   } catch (error) {
     console.error("Errore durante l'esecuzione del quiz:", error);
-    return res.status(500).json({ message: "Errore interno del server", error });
+    return res
+      .status(500)
+      .json({ message: "Errore interno del server", error });
   }
 });
 
 export default router;
-
-
