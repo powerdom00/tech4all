@@ -25,4 +25,20 @@ router.get("/dati/:userId", async (req, res) => {
   }
 });
 
+// lista utenti
+
+router.get("/visualizzaUtenti", async (req, res) => {
+  try {
+    const accountService = new AccountService();
+    const users = await accountService.visualizzaUtenti();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(
+      "Errore durante la visualizzazione della lista utenti:",
+      error,
+    );
+    res.status(500).json({ message: "Errore del server", error });
+  }
+});
+
 export default router;

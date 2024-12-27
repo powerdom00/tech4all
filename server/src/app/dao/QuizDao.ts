@@ -95,4 +95,18 @@ export class QuizDao {
   public async deleteQuiz(id: number): Promise<void> {
     await this.db.query("DELETE FROM quiz WHERE id = ?", [id]);
   }
+
+  //get quiz by tutorial id
+  public async getQuizByTutorialId(tutorialId: number): Promise<Quiz | null> {
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM quiz WHERE tutorial_id = ?",
+      [tutorialId],
+    );
+    if (rows.length > 0) {
+      const row = rows[0];
+      const domande = await this.getDomandeByQuizId(row.id);
+      return new Quiz(row.tutorial_id, domande, row.id);
+    }
+    return null;
+  }
 }

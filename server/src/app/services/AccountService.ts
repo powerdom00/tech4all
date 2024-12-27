@@ -45,4 +45,32 @@ export class AccountService {
       };
     }
   }
+
+  //visualizzza tutti gli utenti
+
+  async visualizzaUtenti(): Promise<{
+    success: boolean;
+    utenti?: Utente[];
+    message?: string;
+  }> {
+    try {
+      const utenti = await this.utenteDao.getAllUtenti();
+      if (!utenti) {
+        return {
+          success: false,
+          message: "Utenti non trovati.",
+        };
+      }
+      return {
+        success: true,
+        utenti: utenti,
+      };
+    } catch (error) {
+      console.error("Errore durante la visualizzazione degli utenti:", error);
+      return {
+        success: false,
+        message: "Errore interno del server. Riprova più tardi.",
+      };
+    }
+  }
 }
