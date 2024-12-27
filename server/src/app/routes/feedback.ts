@@ -23,10 +23,13 @@ router.post("/creaFeedback", async (req, res) => {
 
 //Eliminazione Feedback
 router.delete("/eliminaFeedback/:utenteId/:tutorialId", async (req, res) => {
-  const { utenteId, tutorialId } = req.params;  // Usa i parametri dall'URL
+  const { utenteId, tutorialId } = req.params; // Usa i parametri dall'URL
   try {
     const feedbackService = new FeedbackService();
-    const result = await feedbackService.EliminaFeedback(parseInt(utenteId), parseInt(tutorialId));
+    const result = await feedbackService.EliminaFeedback(
+      parseInt(utenteId),
+      parseInt(tutorialId),
+    );
 
     if (result.success) {
       res.status(200).json({ message: result.message });
