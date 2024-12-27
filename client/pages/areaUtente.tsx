@@ -171,8 +171,7 @@ const UserPage: React.FC = () => {
                 {feedbackList.map((feedback, index) => (
                   <li key={index}>
                     <strong>Valutazione:</strong> {feedback.valutazione} <br />
-                    <strong>Commento:</strong> {feedback.commento} <br />
-                    <strong>Tutorial:</strong> {feedback.tutorial_id}
+                    <strong>Commento:</strong> {feedback.commento}
                   </li>
                 ))}
               </ul>

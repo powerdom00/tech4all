@@ -23,9 +23,6 @@ const Header: React.FC = () => {
       <div className="logo">
         <img src="/Media/LogoT4A.jpeg" alt="Logo" />
       </div>
-      <div className="search-bar-container">
-        <input type="text" placeholder="Cerca..." className="search-bar" />
-      </div>
       <nav>
         <ul>
           {!user ? (

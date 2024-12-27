@@ -18,27 +18,27 @@ const AreaAmministratore: React.FC = () => {
   const utenti = [
     {
       id: 1,
-      nome: "Giuseppe",
-      cognome: "Verdi",
-      email: "giuseppe.verdi@example.com",
-      quiz_superati: 5,
-      ruolo: true, // admin
+      nome: "Mario",
+      cognome: "Rossi",
+      email: "user1@example.com",
+      quiz_superati: 0,
+      ruolo: false, // admin
     },
     {
       id: 2,
-      nome: "Maria",
-      cognome: "Rossi",
-      email: "maria.rossi@example.com",
-      quiz_superati: 3,
+      nome: "Luigi",
+      cognome: "Verdi",
+      email: "user2@example.com",
+      quiz_superati: 0,
       ruolo: false, // utente
     },
     {
       id: 3,
-      nome: "Luca",
-      cognome: "Bianchi",
-      email: "luca.bianchi@example.com",
-      quiz_superati: 2,
-      ruolo: false, // utente
+      nome: "Admin",
+      cognome: "User",
+      email: "admin@example.com",
+      quiz_superati: 0,
+      ruolo: true,
     },
   ];
 
