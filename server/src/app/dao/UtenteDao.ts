@@ -62,6 +62,29 @@ export class UtenteDao {
     );
   }
 
+  // Metodo per aggiornare il numero di quiz superati
+  public async updateQuizSuperati(utente: Utente): Promise<void> {
+    if (utente.getId() === undefined) {
+      throw new Error("ID dell'utente non definito");
+    }
+  
+    // Verifica che l'utente esista
+    const [rows] = await this.db.query<RowDataPacket[]>(
+      "SELECT * FROM utente WHERE id = ?",
+      [utente.getId()]
+    );
+  
+    if (rows.length === 0) {
+      throw new Error("Utente non trovato");
+    }
+  
+    // Esegui l'update
+    await this.db.query(
+      "UPDATE utente SET quiz_superati = ? WHERE id = ?",
+      [utente.getQuizSuperati(), utente.getId()]
+    );
+  }
+  
   //metodo per trovare l'utente tramite l'id, usato per ora in SolvigemtoDao
   public async getUtenteById(id: number): Promise<Utente | null> {
     const [rows] = await this.db.query<RowDataPacket[]>(
@@ -83,3 +106,4 @@ export class UtenteDao {
     return null;
   }
 }
+

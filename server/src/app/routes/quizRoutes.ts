@@ -1,54 +1,86 @@
 import express from "express";
 import { QuizService } from "../services/QuizService";
-import { Quiz } from "../entity/gestione_quiz/Quiz";
-import { Risposta } from "../entity/gestione_quiz/Risposta";
+import { Utente } from "../entity/gestione_autenticazione/Utente";
 
 const router = express.Router();
+const quizService = new QuizService();
 
-// Creazione di un nuovo quiz
-router.post("/create", async (req, res) => {
-  const quizData: Quiz = req.body;
+// 1. Creazione di un nuovo quiz
+router.post("/quiz", async (req, res) => {
+  const { tutorialId, domande } = req.body;
+
+  // Controllo dei dati inviati nel body
+  if (!tutorialId || !Array.isArray(domande) || domande.length === 0) {
+    return res.status(400).json({ success: false, message: "Dati del quiz non validi." });
+  }
+
   try {
-    const quizService = new QuizService();
-    const quiz = await quizService.creaQuiz(quizData);
-
-    res.status(201).json({ message: "Quiz creato con successo", quiz });
+    const result = await quizService.creazioneQuiz({ tutorialId, domande });
+    if (result.success) {
+      return res.status(201).json(result); // Restituisci una risposta di successo
+    } else {
+      return res.status(500).json(result); // Restituisci errore interno
+    }
   } catch (error) {
     console.error("Errore durante la creazione del quiz:", error);
-    res.status(500).json({ message: "Errore interno del server", error });
+    return res.status(500).json({ message: "Errore interno del server", error });
   }
 });
 
-// Eliminazione di un quiz per ID
-router.delete("/delete/:quizId", async (req, res) => {
-  const quizId = parseInt(req.params.quizId);
-  try {
-    const quizService = new QuizService();
-    await quizService.eliminaQuiz(quizId);
+// 2. Eliminazione di un quiz
+router.delete("/quiz/:id", async (req, res) => {
+  const { id } = req.params;
 
-    res.status(200).json({ message: "Quiz eliminato con successo" });
+  // Verifica se l'ID è valido
+  const quizId = parseInt(id);
+  if (isNaN(quizId)) {
+    return res.status(400).json({ success: false, message: "ID del quiz non valido." });
+  }
+
+  try {
+    const result = await quizService.cancellazioneQuiz(quizId);
+    if (result.success) {
+      return res.status(200).json(result); // Quiz eliminato correttamente
+    } else {
+      return res.status(404).json(result); // Quiz non trovato
+    }
   } catch (error) {
-    console.error("Errore durante l'eliminazione del quiz:", error);
-    res.status(500).json({ message: "Errore interno del server", error });
+    console.error("Errore durante la cancellazione del quiz:", error);
+    return res.status(500).json({ message: "Errore interno del server", error });
   }
 });
 
-// Esecuzione di un quiz
-router.post("/execute/:quizId", async (req, res) => {
-  const quizId = parseInt(req.params.quizId);
-  const risposte: Risposta[] = req.body.risposte;
+// 3. Esecuzione di un quiz
+router.post("/quiz/:id/esecuzione", async (req, res) => {
+  const { id } = req.params;
+  const { risposteUtente, utenteId } = req.body;
+
+  // Verifica se i dati sono completi
+  if (!Array.isArray(risposteUtente) || risposteUtente.length === 0) {
+    return res.status(400).json({ success: false, message: "Risposte utente non valide." });
+  }
 
   try {
-    const quizService = new QuizService();
-    const svolgimento = await quizService.eseguiQuiz(quizId, risposte);
+    // Recupera l'utente dal database
+    const utente = await new UtenteDao().getUtenteById(utenteId);
+    if (!utente) {
+      return res.status(404).json({ success: false, message: "Utente non trovato." });
+    }
 
-    res
-      .status(200)
-      .json({ message: "Quiz eseguito con successo", svolgimento });
+    // Chiamata al servizio per eseguire il quiz
+    const result = await quizService.esecuzioneQuiz(parseInt(id), utente, risposteUtente);
+
+    if (result.success) {
+      return res.status(200).json(result); // Risultato dell'esecuzione del quiz
+    } else {
+      return res.status(500).json(result); // Errore durante l'esecuzione del quiz
+    }
   } catch (error) {
     console.error("Errore durante l'esecuzione del quiz:", error);
-    res.status(500).json({ message: "Errore interno del server", error });
+    return res.status(500).json({ message: "Errore interno del server", error });
   }
 });
 
 export default router;
+
+
