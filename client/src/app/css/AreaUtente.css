@@ -150,3 +150,119 @@
 .cancel-button:hover {
   background-color: #388e3c;
 }
+
+.users-container {
+  background-color: #ffffff; /* Sfondo bianco */
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  width: 80%;
+}
+
+.users-container h2 {
+  color: #388e3c; /* Verde scuro */
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-item {
+  background-color: #f9f9f9; /* Sfondo leggermente grigio per contrasto */
+  border: 1px solid #4caf50; /* Bordo verde chiaro */
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.user-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.user-item div {
+  font-size: 16px;
+  color: #333333; /* Testo nero/grigio scuro */
+}
+
+.user-item strong {
+  color: #388e3c; /* Verde scuro per i titoli */
+}
+
+p {
+  text-align: center;
+  color: #666666; /* Grigio per messaggi tipo "Nessun utente trovato" */
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .user-item {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .users-container h2 {
+    font-size: 20px;
+  }
+}
+
+.feedback-container {
+  background-color: #ffffff; /* Sfondo bianco */
+  border: 1px solid #e0e0e0; /* Bordo leggero */
+  border-radius: 10px; /* Angoli arrotondati */
+  padding: 20px; /* Spaziatura interna */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Effetto ombra */
+  width: 80%; /* Larghezza massima */
+  margin: 20px auto; /* Centrare il contenitore */
+  font-family: Arial, sans-serif; /* Font semplice e leggibile */
+}
+
+.feedback-container h2 {
+  color: #388e3c; /* Verde scuro per il titolo */
+  text-align: center; /* Testo centrato */
+  font-size: 24px; /* Dimensione del font */
+  margin-bottom: 10px; /* Spaziatura inferiore */
+}
+
+.feedback-container p {
+  color: #000000; /* Verde principale per i testi descrittivi */
+  font-size: 16px; /* Dimensione del testo */
+  margin-bottom: 15px; /* Spaziatura inferiore */
+  text-align: center; /* Testo centrato */
+}
+
+.feedback-container ul {
+  list-style: none; /* Rimuove i pallini di default */
+  padding: 0; /* Rimuove il padding */
+}
+
+.feedback-container li {
+  background-color: #f9f9f9; /* Sfondo leggermente grigio per ogni feedback */
+  border: 1px solid #e0e0e0; /* Bordo sottile */
+  border-radius: 8px; /* Angoli arrotondati */
+  padding: 15px; /* Spaziatura interna */
+  margin-bottom: 10px; /* Spaziatura tra i feedback */
+  transition: box-shadow 0.3s ease; /* Transizione per l'effetto hover */
+}
+
+.feedback-container li:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effetto hover */
+}
+
+.feedback-container li strong {
+  color: #388e3c; /* Verde scuro per i titoli dei feedback */
+  display: block; /* Ogni riga separata */
+  margin-bottom: 5px; /* Spaziatura inferiore */
+  font-size: 16px; /* Dimensione del font */
+}
