@@ -23,8 +23,18 @@ const Header: React.FC = () => {
       <div className="logo">
         <img src="/Media/LogoT4A.jpeg" alt="Logo" />
       </div>
-      <nav>
-        <ul>
+      <nav className="nav-container">
+        {user && (
+          <div className="search-bar-container">
+            <input
+              type="text"
+              placeholder="Cerca..."
+              className="search-bar"
+            />
+          </div>
+        )}
+
+        <ul className="nav-links">
           {!user ? (
             <li>
               <Link href="/login" className="login-button">
