@@ -165,4 +165,18 @@ export class QuizService {
       };
     }
   }
+
+  // recupera quiz per tutorial id
+  async getQuizByTutorialId(tutorialId: number): Promise<Quiz[]> {
+    try {
+      const quizzes = await this.quizDao.getQuizByTutorialId(tutorialId);
+      if (!quizzes) {
+        return [];
+      }
+      return Array.isArray(quizzes) ? quizzes : [quizzes];
+    } catch (error) {
+      console.error("Errore durante il recupero del quiz:", error);
+      return [];
+    }
+  }
 }
