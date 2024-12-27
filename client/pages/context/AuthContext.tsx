@@ -31,18 +31,27 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    // Recupera l'utente da localStorage al caricamento iniziale
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser) {
+    const parsedUser = JSON.parse(storedUser);
+    if (parsedUser.id) {
+      setUser(parsedUser);
+    } else {
+      console.error("L'utente salvato nel localStorage non contiene un ID valido:", parsedUser);
     }
-  }, []);
+  }
+}, []);
 
-  const login = (user: User) => {
-    setUser(user);
-    localStorage.setItem("user", JSON.stringify(user)); // Salva l'utente in localStorage
-  };
+
+const login = (user: User) => {
+  if (!user.id) {
+    console.error("L'utente passato a login non contiene un ID:", user);
+    return;
+  }
+  setUser(user);
+  localStorage.setItem("user", JSON.stringify(user));
+};
 
   const logout = () => {
     setUser(null);

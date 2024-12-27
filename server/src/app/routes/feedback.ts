@@ -22,12 +22,11 @@ router.post("/creaFeedback", async (req, res) => {
 });
 
 //Eliminazione Feedback
-router.post("/eliminaFeedback", async (req, res) => {
-  const { feedback } = req.body;
+router.delete("/eliminaFeedback/:utenteId/:tutorialId", async (req, res) => {
+  const { utenteId, tutorialId } = req.params;  // Usa i parametri dall'URL
   try {
     const feedbackService = new FeedbackService();
-    const result = await feedbackService.EliminaFeedback(feedback);
-    //si è supposto il passaggio dell'oggetto feedback
+    const result = await feedbackService.EliminaFeedback(parseInt(utenteId), parseInt(tutorialId));
 
     if (result.success) {
       res.status(200).json({ message: result.message });
