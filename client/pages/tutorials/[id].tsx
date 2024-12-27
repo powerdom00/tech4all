@@ -12,6 +12,39 @@ const TutorialPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
+  const [quizExists, setQuizExists] = useState(false);
+
+  useEffect(() => {
+    if (id) {
+      const quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
+      const quiz = quizzes.find((q: any) => q.tutorialId === Number(id));
+      setQuizExists(!!quiz);
+    }
+  }, [id]);
+
+  const handleCreateQuiz = () => {
+    if (id) {
+      router.push(`/CreaQuiz/${id}`);
+    }
+  };
+
+  const handleUpdateQuiz = () => {
+    if (id) {
+      router.push(`/UpdateQuiz/${id}`);
+    }
+  };
+
+  const handleDeleteQuiz = () => {
+    if (id) {
+      const quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
+      const updatedQuizzes = quizzes.filter(
+        (q: any) => q.tutorialId !== Number(id)
+      );
+      localStorage.setItem("quizzes", JSON.stringify(updatedQuizzes));
+      setQuizExists(false);
+    }
+  };
+
   if (!id) {
     return <div>Loading...</div>;
   }
@@ -36,7 +69,38 @@ const TutorialPage = () => {
 
           {/* Sezione Quiz */}
           <TabPanel>
-            <Quiz />
+            <div className="quiz-actions">
+              {quizExists ? (
+                <>
+                  <button
+                    onClick={handleUpdateQuiz}
+                    className="update-quiz-button"
+                  >
+                    Modifica Quiz
+                  </button>
+                  <button
+                    onClick={handleDeleteQuiz}
+                    className="delete-quiz-button"
+                  >
+                    Elimina Quiz
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={handleCreateQuiz}
+                  className="create-quiz-button"
+                >
+                  Crea Quiz
+                </button>
+              )}
+            </div>
+            {quizExists ? (
+              <Quiz tutorialId={parseInt(id as string)} />
+            ) : (
+              <p className="no-quiz-message">
+                Nessun quiz disponibile. Crea un nuovo quiz.
+              </p>
+            )}
           </TabPanel>
 
           {/* Sezione Feedback */}
