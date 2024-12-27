@@ -111,7 +111,7 @@ export class AutenticazioneService {
     password: string,
     nome: string,
     cognome: string,
-  ): Promise<{ success: boolean; message: string }> {
+  ): Promise<{ success: boolean; message: string; user?: Utente }> {
     try {
       if (!email || !password || !nome || !cognome) {
         return {
@@ -131,7 +131,7 @@ export class AutenticazioneService {
       const ruolo = false; // Predefinito come booleano per "utente"
 
       const nuovoUtente = new Utente(
-        -1,
+        undefined,
         email,
         password,
         nome,

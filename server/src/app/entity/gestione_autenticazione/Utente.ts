@@ -16,6 +16,7 @@ export class Utente {
     ruolo: boolean,
     quizSuperati: number,
   ) {
+    this.id = id;
     this.email = email;
     this.password = password;
     this.nome = nome;
