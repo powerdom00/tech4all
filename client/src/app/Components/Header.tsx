@@ -26,11 +26,7 @@ const Header: React.FC = () => {
       <nav className="nav-container">
         {user && (
           <div className="search-bar-container">
-            <input
-              type="text"
-              placeholder="Cerca..."
-              className="search-bar"
-            />
+            <input type="text" placeholder="Cerca..." className="search-bar" />
           </div>
         )}
 
