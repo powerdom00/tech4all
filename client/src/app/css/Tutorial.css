@@ -238,7 +238,7 @@
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #4CAF50;
+  border-left: 4px solid #4caf50;
   /* Barra laterale verde per evidenziare */
 }
 
@@ -253,7 +253,7 @@
 /* Stile per la valutazione (ad esempio, stelle o icone) */
 .feedback-item p:first-child {
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
 }
 
 /* Stile per il commento (maggiore enfasi) */
@@ -293,7 +293,7 @@
   display: inline-block;
   margin-bottom: 20px;
   padding: 10px 20px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   /* Verde */
   color: #fff;
   border: none;
@@ -307,4 +307,56 @@
 .create-feedback-btn:hover {
   background-color: #45a049;
   /* Verde più scuro al passaggio del mouse */
+}
+
+/* Stile Quiz */
+.quiz-actions {
+  display: flex;
+  /* justify-content: center; */
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.create-quiz-button,
+.update-quiz-button,
+.delete-quiz-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-quiz-button,
+.update-quiz-button {
+  background-color: #4caf50;
+}
+
+.create-quiz-button:hover,
+.update-quiz-button:hover {
+  background-color: #388e3c;
+}
+
+.delete-quiz-button {
+  background-color: #ff5722;
+}
+
+.delete-quiz-button:hover {
+  background-color: #e64a19;
+}
+
+.no-quiz-message {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff5722;
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff3e0;
+  border: 1px solid #ffccbc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

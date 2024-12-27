@@ -1,0 +1,120 @@
+.crea-quiz-container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #333333;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.crea-quiz-titolo {
+  font-size: 36px;
+  font-weight: bold;
+  color: #4caf50;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid #4caf50;
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #e8f5e9, #ffffff);
+  border-radius: 12px;
+}
+
+.domanda-container {
+  margin-bottom: 20px;
+}
+
+.domanda-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.risposta-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.risposta-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+}
+
+.corretta-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #a8d5ba; /* Verde chiaro tendente al grigio */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.corretta-button.selezionata {
+  background-color: #4caf50;
+}
+
+.corretta-button:hover {
+  background-color: #8cbfa1; /* Verde chiaro tendente al grigio più scuro */
+}
+
+.button-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.aggiungi-button,
+.rimuovi-button,
+.salva-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.aggiungi-button {
+  background-color: #4caf50;
+}
+
+.aggiungi-button:hover {
+  background-color: #388e3c;
+}
+
+.rimuovi-button {
+  background-color: #ff5722;
+}
+
+.rimuovi-button:hover {
+  background-color: #e64a19;
+}
+
+.salva-button {
+  background-color: #2196f3;
+}
+
+.salva-button:hover {
+  background-color: #1976d2;
+}
+
+.salva-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

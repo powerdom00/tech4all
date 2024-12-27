@@ -1,0 +1,115 @@
+.quiz-container {
+  width: 100%;
+  margin: 20px 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.quiz-titolo {
+  font-size: 36px;
+  font-weight: bold;
+  color: #4caf50;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid #4caf50;
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #e8f5e9, #ffffff);
+  border-radius: 12px;
+}
+
+.quiz-descrizione {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.domanda-container {
+  margin-bottom: 20px;
+}
+
+.domanda-testo {
+  width: 55%;
+  font-size: 25px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #e8f5e9;
+  border-left: 5px solid #4caf50;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.risposte-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.risposta-button {
+  display: block;
+  width: 50%;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.risposta-button.selezionata {
+  background-color: #cce5ff;
+}
+
+.risposta-button.non-selezionata {
+  background-color: #e0e0e0;
+}
+
+.risposta-button.corretta-selezionata {
+  background-color: #d4edda;
+}
+
+.risposta-button.errata-selezionata {
+  background-color: #f8d7da;
+}
+
+.risposta-button.selezionata-bold {
+  font-weight: bold;
+}
+
+.risultato-testo {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.button-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #388e3c;
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
