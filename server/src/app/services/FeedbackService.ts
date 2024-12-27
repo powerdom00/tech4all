@@ -1,7 +1,6 @@
 //import entità e dao
 import { Feedback } from "../entity/gestione_feedback/Feedback";
 import { FeedbackDao } from "../dao/FeedbackDao";
-import { Utente } from "../entity/gestione_autenticazione/Utente";
 
 export class FeedbackService {
   private FeedbackDao: FeedbackDao;
@@ -85,7 +84,7 @@ export class FeedbackService {
    * Metodo per aggiungere un feedback.
    * @param valutazione - Valutazione del tutorial.
    * @param commento - Commento del tutorial.
-   * @param user - utente.
+   * @param userId - ID dell'utente.
    * @param tutorialId - ID del tutorial.
    * @returns Una promessa che risolve un oggetto con i dati del feedback aggiunto o un messaggio di errore.
    */
@@ -93,22 +92,15 @@ export class FeedbackService {
   async creaFeedback(
     valutazione: number,
     commento: string,
-    user: Utente,
+    userId: number,
     tutorialId: number,
   ): Promise<{ success: boolean; feedback?: Feedback; message?: string }> {
     try {
-      if (!valutazione || !commento || !user || !tutorialId) {
+      if (!valutazione || !commento || !userId || !tutorialId) {
         return {
           success: false,
           message:
             "Valutazione, commento, ID utente e ID tutorial obbligatori.",
-        };
-      }
-      const userId = user.getId();
-      if (userId === undefined) {
-        return {
-          success: false,
-          message: "ID utente non valido.",
         };
       }
       const feedback = new Feedback(valutazione, commento, userId, tutorialId);
@@ -138,22 +130,15 @@ export class FeedbackService {
   async AggiornaFeedback(
     valutazione: number,
     commento: string,
-    user: Utente,
+    userId: number,
     tutorialId: number,
   ): Promise<{ success: boolean; feedback?: Feedback; message?: string }> {
     try {
-      if (!valutazione || !commento || !user || !tutorialId) {
+      if (!valutazione || !commento || !userId || !tutorialId) {
         return {
           success: false,
           message:
             "Valutazione, commento, ID utente e ID tutorial obbligatori.",
-        };
-      }
-      const userId = user.getId();
-      if (userId === undefined) {
-        return {
-          success: false,
-          message: "ID utente non valido.",
         };
       }
       const feedback = new Feedback(valutazione, commento, userId, tutorialId);
