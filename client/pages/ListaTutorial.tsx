@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useTutorials } from "@/hooks/useTutorials";
-import "../../src/app/css/ListaTutorial.css";
+import "../src/app/css/ListaTutorial.css";
 
 const ListTutorials = () => {
   const {
@@ -11,14 +11,16 @@ const ListTutorials = () => {
     setFilteredTutorials,
   } = useTutorials();
 
+  console.log(tutorials);
+
   const router = useRouter();
 
   const handleCreateNewTutorial = () => {
-    router.push("/tutorials/createTutorial");
+    router.push("/CreaTutorial");
   };
 
   const handleTutorialClick = (id: number) => {
-    router.push(`/tutorials/${id}`).then(() => router.reload());
+    router.push(`/Contenuto/${id}`).then(() => router.reload());
   };
 
   const handleCategoryChange = (category: string) => {
@@ -32,6 +34,12 @@ const ListTutorials = () => {
     }
   };
 
+  /* Svuota il localStorage
+  const handleClearLocalStorage = () => {
+    localStorage.removeItem("tutorials");
+    router.reload();
+  }; */
+
   return (
     <div className="main-container">
       <header className="header-container">
@@ -39,6 +47,9 @@ const ListTutorials = () => {
         <button className="create-button" onClick={handleCreateNewTutorial}>
           Crea Nuovo Tutorial
         </button>
+        {/* <button className="clear-button" onClick={handleClearLocalStorage}>
+          Cancella Tutti i Tutorial (temporaneo)
+        </button> */}
       </header>
       <div className="filter-container">
         <label className="filter-label" htmlFor="category">
@@ -71,8 +82,9 @@ const ListTutorials = () => {
               <h2 className="tutorial-title">{tutorial.titolo}</h2>
               <div className="thumbnail-container">
                 <img
-                  className="tutorial-thumbnail"
+                  className="tutorial-thumbnail resized-image"
                   src={`https://picsum.photos/id/${tutorial.id}/1280/720`}
+                  // src={tutorial.grafica}
                   alt={tutorial.titolo}
                 />
               </div>

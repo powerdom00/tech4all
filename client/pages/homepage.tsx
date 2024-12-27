@@ -14,7 +14,7 @@ export default function Homepage() {
     {
       src: "/Media/f1.webp",
       alt: "Tutorials",
-      link: "/tutorials/listTutorials", // Collegamento alla pagina Tutorials
+      link: "/ListaTutorial", // Collegamento alla pagina Tutorials
     },
   ];
 

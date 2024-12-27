@@ -81,7 +81,7 @@ const UpdateQuizPage: React.FC = () => {
     );
     localStorage.setItem("quizzes", JSON.stringify(updatedQuizzes));
 
-    router.push(`/tutorials/${tutorialId}`);
+    router.push(`/Contenuto/${tutorialId}`);
   };
 
   const isFormValid = () => {

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import "../../src/app/css/CreaTutorial.css";
+import "../src/app/css/CreaTutorial.css";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");
@@ -26,6 +26,7 @@ const CreateTutorial = () => {
     }
   }, []);
 
+  // handleSubmit per una richiesta POST /tutorial
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -73,12 +74,84 @@ const CreateTutorial = () => {
       editor?.setText("");
 
       // Redirect to the list of tutorials
-      router.push("/tutorials/listTutorials");
+      router.push("/ListaTutorial");
     } catch (err: any) {
       setError(err.message);
       setSuccess(null);
     }
   };
+
+  //  handleSubmit che inserisce il tutorial nel localStorage e carica l'immagine in public/Media con una richiesta POST /upload
+  // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+
+  //   const testo = editor?.root.innerHTML;
+
+  //   // Validazione dei campi
+  //   if (!titolo || !testo || !categoria || !grafica) {
+  //     setError("Tutti i campi sono obbligatori.");
+  //     setSuccess(null);
+  //     return;
+  //   }
+
+  //   /* blocco try per il caricamento dell'immagine tramite chiamata POST /upload
+
+  //   try {
+  //     // Carica l'immagine sul server
+  //     const formData = new FormData();
+  //     formData.append("file", grafica);
+
+  //     const uploadResponse = await fetch("http://localhost:5000/upload", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     if (!uploadResponse.ok) {
+  //       const { error } = await uploadResponse.json();
+  //       throw new Error(
+  //         error || "Errore durante il caricamento dell'immagine."
+  //       );
+  //     }
+
+  //     const { filePath } = await uploadResponse.json();
+  //     */
+
+  //   // Recupera i tutorial esistenti dal localStorage
+  //   const tutorials = JSON.parse(localStorage.getItem("tutorials") || "[]");
+
+  //   // Assegna un ID incrementale al nuovo tutorial
+  //   const newId =
+  //     tutorials.length > 0 ? tutorials[tutorials.length - 1].id + 1 : 1;
+
+  //   const tutorial = {
+  //     id: newId,
+  //     titolo,
+  //     testo,
+  //     categoria,
+  //     // grafica: filePath, <- path locale della grafica di copertina
+  //     grafica: "nessuna",
+  //     valutazione: "1",
+  //   };
+
+  //   // Salva il nuovo tutorial nel localStorage
+  //   tutorials.push(tutorial);
+  //   localStorage.setItem("tutorials", JSON.stringify(tutorials));
+
+  //   setSuccess("Tutorial creato con successo!");
+  //   setError(null);
+  //   setTitolo("");
+  //   setCategoria("");
+  //   editor?.setText("");
+
+  //   // Redirect alla lista di tutorial
+  //   router.push("/ListaTutorial");
+  //   /* blocco catch
+
+  //   } catch (err: any) {
+  //     setError(err.message);
+  //     setSuccess(null);
+  //   } */
+  // };
 
   return (
     <div className="main-container">

@@ -67,7 +67,7 @@ const CreaQuizPage: React.FC = () => {
     existingQuizzes.push(quizData);
     localStorage.setItem("quizzes", JSON.stringify(existingQuizzes));
 
-    router.push(`/tutorials/${tutorialId}`);
+    router.push(`/Contenuto/${tutorialId}`);
   };
 
   const isFormValid = () => {

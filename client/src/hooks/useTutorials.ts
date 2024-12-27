@@ -7,6 +7,7 @@ export const useTutorials = () => {
   const [filteredTutorials, setFilteredTutorials] = useState<Tutorial[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
+  // richiama un GET /tutorials
   useEffect(() => {
     const loadTutorials = async () => {
       try {
@@ -19,6 +20,20 @@ export const useTutorials = () => {
     };
     loadTutorials();
   }, []);
+
+  /* Ottieni i tutorials dal localStorage
+  useEffect(() => {
+    const loadTutorials = () => {
+      try {
+        const data = JSON.parse(localStorage.getItem("tutorials") || "[]");
+        setTutorials(data);
+        setFilteredTutorials(data);
+      } catch (error) {
+        console.error("Error loading tutorials from localStorage", error);
+      }
+    };
+    loadTutorials();
+  }, []); */
 
   return {
     tutorials,
