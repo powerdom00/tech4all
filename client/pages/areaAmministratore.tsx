@@ -13,34 +13,9 @@ const AreaAmministratore: React.FC = () => {
     quiz_superati: "",
   });
   const [activeTab, setActiveTab] = useState("Anagrafica");
-
-  // Dati statici degli utenti
-  const utenti = [
-    {
-      id: 1,
-      nome: "Mario",
-      cognome: "Rossi",
-      email: "user1@example.com",
-      quiz_superati: 0,
-      ruolo: false, // admin
-    },
-    {
-      id: 2,
-      nome: "Luigi",
-      cognome: "Verdi",
-      email: "user2@example.com",
-      quiz_superati: 0,
-      ruolo: false, // utente
-    },
-    {
-      id: 3,
-      nome: "Admin",
-      cognome: "User",
-      email: "admin@example.com",
-      quiz_superati: 0,
-      ruolo: true,
-    },
-  ];
+  const [utenti, setUtenti] = useState<any[]>([]); // Stato per gli utenti
+  const [isLoading, setIsLoading] = useState(false); // Stato per il caricamento
+  const [error, setError] = useState<string | null>(null); // Stato per errori
 
   useEffect(() => {
     if (user) {
@@ -53,6 +28,32 @@ const AreaAmministratore: React.FC = () => {
       });
     }
   }, [user]);
+
+  // Funzione per ottenere la lista degli utenti dal backend
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/accounts/visualizzaUtenti"
+      );
+      const data = await response.json();
+      console.log("Risposta dal server:", data); // Verifica la struttura della risposta
+      if (data.success) {
+        setUtenti(data.utenti); // Imposta l'array nel tuo stato
+      } else {
+        setUtenti([]); // In caso di errore, imposta un array vuoto
+      }
+    } catch (error) {
+      console.error("Errore durante il recupero degli utenti:", error);
+      setUtenti([]);
+    }
+  };
+
+  // Recupera gli utenti solo quando la tab "Gestisci Utenti" è attiva
+  useEffect(() => {
+    if (activeTab === "Gestisci Utenti") {
+      fetchUsers();
+    }
+  }, [activeTab]);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -83,20 +84,22 @@ const AreaAmministratore: React.FC = () => {
         return (
           <div className="users-container">
             <h2>Gestisci Utenti</h2>
-            {utenti.length === 0 ? (
+            {isLoading ? (
+              <p>Caricamento in corso...</p>
+            ) : error ? (
+              <p className="error-message">{error}</p>
+            ) : utenti.length === 0 ? (
               <p>Nessun utente trovato.</p>
             ) : (
               <ul className="user-list">
                 {utenti.map((utente) => (
                   <li key={utente.id} className="user-item">
                     <div>
-                      <strong>Nome:</strong> {utente.nome} {utente.cognome}
+                      <strong>Nome e Cognome:</strong> {utente.nome}{" "}
+                      {utente.cognome}
                     </div>
                     <div>
                       <strong>Email:</strong> {utente.email}
-                    </div>
-                    <div>
-                      <strong>Quiz Superati:</strong> {utente.quiz_superati}
                     </div>
                     <div>
                       <strong>Ruolo:</strong>{" "}

@@ -45,7 +45,7 @@ const Header: React.FC = () => {
                 />
                 {isDropdownVisible && (
                   <div className="dropdown-menu">
-                    {user.ruolo == "admin" ? ( // Se l'utente è amministratore
+                    {user.ruolo ? ( // Se l'utente è amministratore
                       <Link href="/areaAmministratore">
                         <button style={{ color: "black" }}>
                           Visualizza Area Amministratore

@@ -3,6 +3,7 @@ import path from "path";
 import AuthRoutes from "./app/routes/auth";
 import TutorialRoutes from "./app/routes/tutorials";
 import FeedbackRoutes from "./app/routes/feedback";
+import AccountsRoutes from "./app/routes/accounts";
 import cors from "cors";
 const app = express();
 app.use(cors());
@@ -14,7 +15,7 @@ app.use(express.json());
 app.use("/auth", AuthRoutes);
 app.use("/tutorials", TutorialRoutes);
 app.use("/feedback", FeedbackRoutes);
-// Servire i file statici dalla cartella uploads
+app.use("/accounts", AccountsRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.listen(5000, (err?: any) => {
