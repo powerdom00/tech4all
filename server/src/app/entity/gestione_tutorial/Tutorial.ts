@@ -23,7 +23,7 @@ export class Tutorial {
   /**
    * Valutazione media del tutorial da parte degli utenti, su una scala da 1 a 5.
    */
-  private valutazione: number;
+  private valutazione: number | undefined;
 
   /**
    * Costruttore della classe Tutorial.
@@ -45,9 +45,9 @@ export class Tutorial {
     /** Categoria del tutorial */
     categoria: string,
     /** Valutazione iniziale */
-    valutazione: number,
+    valutazione?: number | undefined,
     /** Identificativo unico */
-    id?: number | undefined,
+    id?: number | undefined
   ) {
     /** Assegna il titolo */
     this.titolo = titolo;
@@ -102,7 +102,7 @@ export class Tutorial {
   /**
    * Restituisce la valutazione del tutorial.
    */
-  public getValutazione(): number {
+  public getValutazione(): number | undefined {
     return this.valutazione;
   }
 
@@ -167,14 +167,16 @@ export class Tutorial {
    * @returns La valutazione validata.
    * @throws RangeError Se la valutazione non è compresa tra 1 e 5.
    */
-  private validateValutazione(value: number): number {
-    /** Verifica se la valutazione è valida */
-    if (value >= 1 && value <= 5) {
-      /** Se è valida, la restituisce */
-      return value;
-    } else {
-      /** Altrimenti, lancia un'eccezione */
-      throw new RangeError("La valutazione deve essere compresa tra 1 e 5");
+  private validateValutazione(value: number | undefined): number | undefined {
+    if (value) {
+      /** Verifica se la valutazione è valida */
+      if (value >= 1 && value <= 5) {
+        /** Se è valida, la restituisce */
+        return value;
+      } else {
+        /** Altrimenti, lancia un'eccezione */
+        throw new RangeError("La valutazione deve essere compresa tra 1 e 5");
+      }
     }
   }
 }

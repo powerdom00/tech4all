@@ -83,8 +83,8 @@ const ListTutorials = () => {
               <div className="thumbnail-container">
                 <img
                   className="tutorial-thumbnail resized-image"
-                  src={`https://picsum.photos/id/${tutorial.id}/1280/720`}
-                  // src={tutorial.grafica}
+                  // src={`https://picsum.photos/id/${tutorial.id}/1280/720`}
+                  src={`http://localhost:5000/${tutorial.grafica}`}
                   alt={tutorial.titolo}
                 />
               </div>

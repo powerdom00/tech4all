@@ -57,7 +57,7 @@ const TutorialPageComponent = ({ id }: Props) => {
       <p>Copertina: </p>
       <img
         className="resized-image"
-        // src={tutorial.grafica}
+        src={`http://localhost:5000/${tutorial.grafica}`}
         alt={tutorial.grafica}
       />
       <p>Categoria: {tutorial.categoria}</p>

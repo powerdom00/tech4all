@@ -4,4 +4,5 @@ export interface Tutorial {
   grafica: string;
   testo: string;
   categoria: string;
+  valutazione: number | undefined;
 }
