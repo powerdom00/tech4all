@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useTutorials } from "@/hooks/useTutorials";
 import "../src/app/css/ListaTutorial.css";
 import { useAuth } from "./context/AuthContext"; // Assicurati di importare correttamente il contesto
+import Link from "next/link";
 
 const ListTutorials = () => {
   const {
@@ -87,6 +88,11 @@ const ListTutorials = () => {
           ))}
         </ul>
       </main>
+        <div className="home-button-container">
+          <Link href="/homepage">
+            <button className="home-button">Torna alla home</button>
+          </Link>
+        </div>
     </div>
   );
 };

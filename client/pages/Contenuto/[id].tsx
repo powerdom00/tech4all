@@ -7,6 +7,7 @@ import TutorialPageComponent from "@/app/Components/TutorialPageComponent";
 import Quiz from "@/app/Components/Quiz";
 import Feedback from "@/app/Components/Feedback";
 import FeedbackComponent from "@/app/Components/Feedback";
+import Link from "next/link";
 
 const TutorialPage = () => {
   const router = useRouter();
@@ -109,6 +110,11 @@ const TutorialPage = () => {
           </TabPanel>
         </Tabs>
       </main>
+          <div className="home-button-container">
+          <Link href="/ListaTutorial">
+            <button className="home-button">Torna alla lista dei tutorial</button>
+          </Link>
+        </div>
     </div>
   );
 };
