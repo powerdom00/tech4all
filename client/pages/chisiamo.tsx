@@ -1,5 +1,6 @@
 import React from "react";
 import "../src/app/css/ChiSiamo.css";
+import Link from "next/link";
 
 const ChiSiamo: React.FC = () => {
   const mainImages = [
@@ -19,7 +20,7 @@ const ChiSiamo: React.FC = () => {
   ];
 
   return (
-    <div className="chi-siamo-container">
+    <><div className="chi-siamo-container">
       <header className="hero-section">
         <h1 className="hero-title">Chi Siamo</h1>
         <p className="hero-subtitle">
@@ -52,6 +53,12 @@ const ChiSiamo: React.FC = () => {
         </div>
       </section>
     </div>
+      <center><div className="home-button-container">
+        <Link href="/homepage">
+          <button className="home-button">Torna alla homepage</button>
+        </Link>
+      </div>
+      </center></>
   );
 };
 

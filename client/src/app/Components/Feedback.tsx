@@ -105,12 +105,18 @@ const handleDeleteFeedback = async (utenteId: number, tutorialId: string) => {
   if (!feedback) {
     return <div>Caricamento...</div>;
   }
+const getBorderClass = (valutazione: number) => {
+  if (valutazione <= 2) return "border-red";
+  if (valutazione === 3) return "border-yellow";
+  if (valutazione >= 4) return "border-green";
+  return "";
+};
 
   return (
     <>
       <div className="feedback-container">
         {feedback.map((item, index) => (
-          <div key={`${item.utenteId}-${index}`} className="feedback-item">
+          <div key={`${item.utenteId}-${index}`} className={`feedback-item ${getBorderClass(item.valutazione)}`}>
             <p>Valutazione: {item.valutazione || "Non disponibile"}</p>
             <p>Commento: {item.commento || "Non disponibile"}</p>
             <p>ID Utente: {item.utenteId ?? "Anonimo"}</p>
@@ -131,7 +137,7 @@ const handleDeleteFeedback = async (utenteId: number, tutorialId: string) => {
         Crea Nuovo Feedback
       </button>
     </>
-  );
+);
 };
 
 export default FeedbackComponent;

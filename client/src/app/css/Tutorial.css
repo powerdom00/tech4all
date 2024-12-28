@@ -372,8 +372,39 @@
   padding: 5px 10px;
   cursor: pointer;
   margin-top: 10px;
+  border-radius: 5px;
 }
 
 .delete-feedback-btn:hover {
   background-color: darkred;
+}
+.home-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  background-color: #4caf50;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover,
+.home-button:hover {
+  background-color: #388e3c;
+}
+.border-red {
+  border-left: 4px solid #ff0000;
+  /* Rosso */
+}
+
+.border-yellow {
+  border-left: 4px solid #ffd700;
+  /* Giallo */
+}
+
+.border-green {
+  border-left: 4px solid #008000;
+  /* Verde */
 }
