@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useTutorials } from "@/hooks/useTutorials";
 import "../src/app/css/ListaTutorial.css";
+import { useAuth } from "./context/AuthContext"; // Assicurati di importare correttamente il contesto
 
 const ListTutorials = () => {
   const {
@@ -11,8 +12,7 @@ const ListTutorials = () => {
     setFilteredTutorials,
   } = useTutorials();
 
-  console.log(tutorials);
-
+  const { user } = useAuth(); // Recupera il ruolo dell'utente dal contesto
   const router = useRouter();
 
   const handleCreateNewTutorial = () => {
@@ -34,22 +34,17 @@ const ListTutorials = () => {
     }
   };
 
-  /* Svuota il localStorage
-  const handleClearLocalStorage = () => {
-    localStorage.removeItem("tutorials");
-    router.reload();
-  }; */
-
   return (
     <div className="main-container">
       <header className="header-container">
         <h1 className="page-title">Lista Tutorial</h1>
-        <button className="create-button" onClick={handleCreateNewTutorial}>
-          Crea Nuovo Tutorial
-        </button>
-        {/* <button className="clear-button" onClick={handleClearLocalStorage}>
-          Cancella Tutti i Tutorial (temporaneo)
-        </button> */}
+        
+        {/* Mostra il bottone solo se user.ruolo è "admin" o un altro valore specifico */}
+        {user?.ruolo && (
+          <button className="create-button" onClick={handleCreateNewTutorial}>
+            Crea Nuovo Tutorial
+          </button>
+        )}
       </header>
       <div className="filter-container">
         <label className="filter-label" htmlFor="category">
