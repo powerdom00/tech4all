@@ -1,21 +1,40 @@
 import express from "express";
+import multer from "multer";
+import path from "path";
+import sharp from "sharp";
 import { TutorialService } from "../services/TutorialService";
 import { Tutorial } from "../entity/gestione_tutorial/Tutorial";
 
 const router = express.Router();
 const tutorialService = new TutorialService();
 
+// Configurazione di multer per il caricamento delle immagini
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
+
 // Creazione di un nuovo tutorial
-router.post("/tutorial", async (req, res) => {
-  const { titolo, grafica, testo, categoria, valutazione } = req.body;
+router.post("/tutorial", upload.single("grafica"), async (req, res) => {
+  const { titolo, testo, categoria } = req.body;
+  let grafica = req.file ? req.file.path : null;
+
   try {
-    const nuovoTutorial = new Tutorial(
-      titolo,
-      grafica,
-      testo,
-      categoria,
-      valutazione,
-    );
+    if (grafica) {
+      const outputFilePath = `uploads/resized-${Date.now()}-${
+        req.file?.originalname || "default"
+      }`;
+      await sharp(grafica).resize(1280, 720).toFile(outputFilePath);
+      grafica = outputFilePath.replace(/\\/g, "/");
+    }
+
+    const nuovoTutorial = new Tutorial(titolo, grafica || "", testo, categoria);
     const result = await tutorialService.creazioneTutorial(nuovoTutorial);
     res.status(201).json(result);
   } catch (error) {
@@ -52,7 +71,7 @@ router.get("/tutorial/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const tutorial = await tutorialService.visualizzazioneTutorial(
-      parseInt(id),
+      parseInt(id)
     );
     if (tutorial) {
       res.status(200).json(tutorial);
@@ -71,7 +90,7 @@ router.get("/tutorial/filter", async (req, res) => {
   try {
     const tutorials = await tutorialService.filtroTutorial(
       categoria as string,
-      valutazione as "asc" | "desc",
+      valutazione as "asc" | "desc"
     );
     res.status(200).json(tutorials);
   } catch (error) {
@@ -87,7 +106,7 @@ router.get("/tutorial/search", async (req, res) => {
   try {
     // Cast a string
     const tutorials = await tutorialService.ricercaTutorial(
-      parolaChiave as string,
+      parolaChiave as string
     );
     res.status(200).json(tutorials);
   } catch (error) {
