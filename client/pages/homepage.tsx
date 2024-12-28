@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link"; // Usa Link invece di useRouter
 import "../src/app/css/Homepage.css";
 import Footer from "@/app/Components/Footer";
@@ -17,6 +17,30 @@ export default function Homepage() {
       link: "/ListaTutorial", // Collegamento alla pagina Tutorials
     },
   ];
+
+  useEffect(() => {
+    // Load Voiceflow script dynamically
+    const script = document.createElement("script");
+    script.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
+    script.type = "text/javascript";
+    script.async = true; // Add async attribute for better performance
+    script.onload = () => {
+      if (window.voiceflow?.chat) {
+        window.voiceflow.chat.load({
+          verify: { projectID: "6751625fc71e01f74bc3188e" },
+          url: "https://general-runtime.voiceflow.com",
+          versionID: "production",
+        });
+      } else {
+        console.error("Voiceflow non è stato caricato correttamente.");
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <>

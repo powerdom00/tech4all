@@ -10,29 +10,6 @@ const App: React.FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
-    script.type = "text/javascript";
-    script.onload = () => {
-      if ((window as any).voiceflow?.chat) {
-        (window as any).voiceflow.chat.load({
-          verify: { projectID: "6751625fc71e01f74bc3188e" },
-          url: "https://general-runtime.voiceflow.com",
-          versionID: "production",
-        });
-      } else {
-        console.error("Voiceflow non è stato caricato correttamente.");
-      }
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   const handleChoice = (choice: string) => {
     if (choice === "si") {
       router.push("/register"); // Redirect alla pagina di registrazione
