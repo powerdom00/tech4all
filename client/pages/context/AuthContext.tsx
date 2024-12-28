@@ -8,7 +8,7 @@ import React, {
 
 interface User {
   cognome: string;
-  quiz_superati: string;
+  quizSuperati: number;
   id: number;
   nome: string;
   email: string;

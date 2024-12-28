@@ -10,7 +10,7 @@ const UserPage: React.FC = () => {
     nome: "",
     cognome: "",
     email: "",
-    quiz_superati: "",
+    quiz_superati: 0,
   });
   const [feedbackList, setFeedbackList] = useState<any[]>([]); // Per gestire i feedback ricevuti
   const [isEditing, setIsEditing] = useState(false);
@@ -24,25 +24,20 @@ const UserPage: React.FC = () => {
         nome: user.nome || "",
         cognome: user.cognome || "",
         email: user.email || "",
-        quiz_superati: user.quiz_superati || "0",
+        quiz_superati: user.quizSuperati || 0,
       });
-      // Carica i feedback quando la tab Feedback è attiva
       if (activeTab === "Feedback") {
-        console.log(user.id);
         fetchUserFeedback(user.id);
       }
     }
   }, [user, activeTab]);
 
-  // Funzione per ottenere i feedback dell'utente
   const fetchUserFeedback = async (userId: number) => {
-    console.log(userId);
     try {
       const response = await fetch(
         `http://localhost:5000/feedback/visualizzaFeedbackUtente/${userId}`
       );
       const data = await response.json();
-      console.log(data);
 
       if (data.success) {
         setFeedbackList(data.Feedback);
@@ -176,6 +171,58 @@ const UserPage: React.FC = () => {
                 ))}
               </ul>
             )}
+          </div>
+        );
+      case "Obiettivi":
+        const renderBadge = () => {
+          const badges = [
+            {
+              threshold: 1,
+              label: "Livello:Principiante",
+              image: "/Media/badge-1.png",
+            },
+            {
+              threshold: 3,
+              label: "Livello:Intermedio",
+              image: "/Media/badge-2.jpg",
+            },
+            {
+              threshold: 5,
+              label: "Livello:Esperto",
+              image: "/Media/badge-3.png",
+            },
+          ];
+
+          const unlockedBadge = badges
+            .reverse()
+            .find((badge) => user.quizSuperati >= badge.threshold);
+
+          return unlockedBadge ? (
+            <div className="badge">
+              <img src={unlockedBadge.image} alt={unlockedBadge.label} />
+              <p>{unlockedBadge.label}</p>
+            </div>
+          ) : (
+            <p>
+              Non hai ancora ottenuto alcun badge. Completa più quiz per
+              sbloccarli!
+            </p>
+          );
+        };
+
+        return (
+          <div className="goals-container">
+            <h2>Obiettivi</h2>
+            <p>Completa quiz per ottenere badge esclusivi!</p>
+            <div className="legend">
+              <h3>Legenda:</h3>
+              <ul>
+                <li>1 Quiz superato: Primo Badge</li>
+                <li>3 Quiz superati: Secondo Badge</li>
+                <li>5 Quiz superati: Terzo Badge</li>
+              </ul>
+            </div>
+            <div className="badge-container">{renderBadge()}</div>
           </div>
         );
       default:
