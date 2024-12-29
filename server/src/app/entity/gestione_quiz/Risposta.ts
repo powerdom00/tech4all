@@ -9,7 +9,7 @@ export class Risposta {
   /**
    * The identifier of the domanda associated with the risposta.
    */
-  private domandaId: number;
+  private domandaId?: number;
   /**
    * The text of the risposta.
    */
@@ -27,10 +27,10 @@ export class Risposta {
    * @param id - The unique identifier of the risposta.
    */
   constructor(
-    domandaId: number,
     risposta: string,
     corretta: boolean,
-    id?: number,
+    domandaId?: number,
+    id?: number
   ) {
     this.domandaId = domandaId;
     this.risposta = risposta;
@@ -49,7 +49,7 @@ export class Risposta {
   /**
    * Gets the identifier of the domanda associated with the risposta.
    */
-  public getDomandaId(): number {
+  public getDomandaId(): number | undefined {
     return this.domandaId;
   }
 

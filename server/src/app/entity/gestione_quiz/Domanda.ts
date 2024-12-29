@@ -11,7 +11,7 @@ export class Domanda {
   /**
    * The identifier of the quiz associated with the domanda.
    */
-  private quizId: number;
+  private quizId?: number;
   /**
    * The text of the domanda.
    */
@@ -29,10 +29,10 @@ export class Domanda {
    * @param risposte - The list of answers to the question.
    */
   constructor(
-    quizId: number,
     domanda: string,
     risposte: Risposta[],
-    id?: number,
+    quizId?: number,
+    id?: number
   ) {
     this.quizId = quizId;
     this.domanda = domanda;
@@ -51,7 +51,7 @@ export class Domanda {
   /**
    * Gets the identifier of the quiz associated with the domanda.
    */
-  public getQuizId(): number {
+  public getQuizId(): number | undefined {
     return this.quizId;
   }
 

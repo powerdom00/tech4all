@@ -12,11 +12,11 @@ export class RispostaDao {
   // Metodo per ottenere tutte le risposte
   public async getAllRisposte(): Promise<Risposta[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
-      "SELECT * FROM risposta",
+      "SELECT * FROM risposta"
     );
     return rows.map(
       (row: RowDataPacket) =>
-        new Risposta(row.id, row.domanda_id, row.risposta, row.corretta),
+        new Risposta(row.id, row.domanda_id, row.risposta, row.corretta)
     );
   }
 
@@ -24,7 +24,7 @@ export class RispostaDao {
   public async getRisposta(id: number): Promise<Risposta | null> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM risposta WHERE id = ?",
-      id,
+      id
     );
     if (rows.length > 0) {
       const row = rows[0];
@@ -34,25 +34,28 @@ export class RispostaDao {
   }
 
   // Metodo per creare una nuova risposta
-  public async createRisposta(risposta: Risposta): Promise<void> {
-    const idDomanda = risposta.getDomandaId;
-    const risp = risposta.getRisposta;
-    const corretta = risposta.getCorretta;
-    await this.db.query(
+  public async createRisposta(
+    risposta: Risposta,
+    domandaId: number | undefined
+  ): Promise<void> {
+    const risp = risposta.getRisposta();
+    const corretta = risposta.getCorretta();
+    const [result]: any = await this.db.query(
       "INSERT INTO risposta (domanda_id, risposta, corretta) VALUES (?, ?, ?)",
-      [idDomanda, risp, corretta],
+      [domandaId, risp, corretta]
     );
+    risposta.setId(result.insertId);
   }
 
   // Metodo per aggiornare una risposta esistente
   public async updateRisposta(risposta: Risposta): Promise<void> {
     const id = risposta.getId();
-    const domandaId = risposta.getDomandaId;
-    const risp = risposta.getRisposta;
+    const domandaId = risposta.getDomandaId();
+    const risp = risposta.getRisposta();
     const corretta = risposta.getCorretta();
     await this.db.query(
       "UPDATE risposta SET domanda_id = ?, risposta = ?, corretta = ? WHERE id = ?",
-      [id, domandaId, risp, corretta],
+      [id, domandaId, risp, corretta]
     );
   }
 
