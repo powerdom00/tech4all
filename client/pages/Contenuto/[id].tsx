@@ -8,19 +8,49 @@ import Quiz from "@/app/Components/Quiz";
 import Feedback from "@/app/Components/Feedback";
 import FeedbackComponent from "@/app/Components/Feedback";
 import Link from "next/link";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 const TutorialPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
+  const { user } = useAuth();
+  const ruolo = user?.ruolo;
+
   const [quizExists, setQuizExists] = useState(false);
+  const [quizId, setQuizId] = useState<number | null>(null);
 
   useEffect(() => {
-    if (id) {
-      const quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
-      const quiz = quizzes.find((q: any) => q.tutorialId === Number(id));
-      setQuizExists(!!quiz);
-    }
+    const checkQuizExists = async () => {
+      if (id) {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/quiz/visualizzaQuiz/${id}`
+          );
+          setQuizExists(
+            response.status === 200 && response.data.domande.length > 0
+          );
+          setQuizId(response.data.id);
+        } catch (error) {
+          if (
+            axios.isAxiosError(error) &&
+            error.response &&
+            error.response.status === 404
+          ) {
+            setQuizExists(false);
+            setQuizId(null);
+          } else {
+            console.error(
+              "Errore nel controllo dell'esistenza del quiz:",
+              error
+            );
+          }
+        }
+      }
+    };
+
+    checkQuizExists();
   }, [id]);
 
   const handleCreateQuiz = () => {
@@ -29,20 +59,24 @@ const TutorialPage = () => {
     }
   };
 
-  const handleUpdateQuiz = () => {
-    if (id) {
-      router.push(`/UpdateQuiz/${id}`);
-    }
-  };
-
-  const handleDeleteQuiz = () => {
-    if (id) {
-      const quizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
-      const updatedQuizzes = quizzes.filter(
-        (q: any) => q.tutorialId !== Number(id)
-      );
-      localStorage.setItem("quizzes", JSON.stringify(updatedQuizzes));
-      setQuizExists(false);
+  const handleDeleteQuiz = async () => {
+    if (quizId) {
+      try {
+        const response = await axios.delete(
+          `http://localhost:5000/quiz/eliminaQuiz/${quizId}`
+        );
+        if (response.status === 200) {
+          setQuizExists(false);
+          setQuizId(null);
+        } else {
+          console.error(
+            "Errore nella cancellazione del quiz:",
+            response.data.message
+          );
+        }
+      } catch (error) {
+        console.error("Errore del server nella cancellazione del quiz:", error);
+      }
     }
   };
 
@@ -71,36 +105,32 @@ const TutorialPage = () => {
           {/* Sezione Quiz */}
           <TabPanel>
             <div className="quiz-actions">
-              {quizExists ? (
+              {ruolo && (
                 <>
-                  <button
-                    onClick={handleUpdateQuiz}
-                    className="update-quiz-button"
-                  >
-                    Modifica Quiz
-                  </button>
-                  <button
-                    onClick={handleDeleteQuiz}
-                    className="delete-quiz-button"
-                  >
-                    Elimina Quiz
-                  </button>
+                  {quizExists ? (
+                    <>
+                      <button
+                        onClick={handleDeleteQuiz}
+                        className="delete-quiz-button"
+                      >
+                        Elimina Quiz
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={handleCreateQuiz}
+                      className="create-quiz-button"
+                    >
+                      Crea Quiz
+                    </button>
+                  )}
                 </>
-              ) : (
-                <button
-                  onClick={handleCreateQuiz}
-                  className="create-quiz-button"
-                >
-                  Crea Quiz
-                </button>
               )}
             </div>
             {quizExists ? (
               <Quiz tutorialId={parseInt(id as string)} />
             ) : (
-              <p className="no-quiz-message">
-                Nessun quiz disponibile. Crea un nuovo quiz.
-              </p>
+              <p className="no-quiz-message">Nessun quiz disponibile.</p>
             )}
           </TabPanel>
 
@@ -110,11 +140,11 @@ const TutorialPage = () => {
           </TabPanel>
         </Tabs>
       </main>
-          <div className="home-button-container">
-          <Link href="/ListaTutorial">
-            <button className="home-button">Torna alla lista dei tutorial</button>
-          </Link>
-        </div>
+      <div className="home-button-container">
+        <Link href="/ListaTutorial">
+          <button className="home-button">Torna alla lista dei tutorial</button>
+        </Link>
+      </div>
     </div>
   );
 };
