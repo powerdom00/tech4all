@@ -20,8 +20,8 @@ export class QuizService {
     this.quizDao = new QuizDao();
     this.domandaDao = new DomandaDao();
     this.rispostaDao = new RispostaDao();
-    this.svolgimentoDao = new SvolgimentoDao();
     this.utenteDao = new UtenteDao();
+    this.svolgimentoDao = new SvolgimentoDao(this.quizDao, this.utenteDao);
   }
 
   // Creazione di un nuovo quiz con domande e risposte
@@ -98,7 +98,7 @@ export class QuizService {
   // Esecuzione del quiz (per un utente specifico)
   async eseguiQuiz(
     quizId: number,
-    utente: Utente,
+    utenteId: number,
     risposteFornite: number[] // Lista di ID delle risposte scelte dall'utente
   ): Promise<{ success: boolean; message: string; esito: boolean }> {
     try {
@@ -134,18 +134,51 @@ export class QuizService {
       // Determina se il quiz è stato superato (ad esempio, almeno 70% di risposte corrette)
       const esito = risposteEsatte / domande.length >= 0.7;
 
-      // 1. Registra il risultato dello svolgimento
-      const svolgimento = new Svolgimento(
-        quiz,
-        utente,
-        esito,
-        new Date(),
-        risposteEsatte
+      // Recupera l'utente dall'utenteId
+      const utente = await this.utenteDao.getUtenteById(utenteId);
+      if (!utente) {
+        return {
+          success: false,
+          message: "Utente non trovato.",
+          esito: false,
+        };
+      }
+
+      // Verifica se esiste già uno svolgimento per questo quiz e utente
+      let svolgimento = await this.svolgimentoDao.getSvolgimento(
+        quizId,
+        utenteId
       );
-      await this.svolgimentoDao.createSvolgimento(svolgimento);
-      if (esito) {
-        utente.setQuizSuperati(utente.getQuizSuperati() + 1);
-        this.utenteDao.updateQuizSuperati(utente);
+
+      if (svolgimento) {
+        // Verifica se il quiz è già stato superato
+        if (!svolgimento.getEsito()) {
+          // Aggiorna lo svolgimento esistente solo se non è stato superato
+          svolgimento.setEsito(esito);
+          svolgimento.setDataConseguimento(new Date());
+          svolgimento.setRisposteEsatte(risposteEsatte);
+          await this.svolgimentoDao.updateSvolgimento(svolgimento);
+
+          if (esito) {
+            utente.setQuizSuperati(utente.getQuizSuperati() + 1);
+            await this.utenteDao.updateQuizSuperati(utente);
+          }
+        }
+      } else {
+        // Crea un nuovo svolgimento
+        svolgimento = new Svolgimento(
+          quiz,
+          utente,
+          esito,
+          new Date(),
+          risposteEsatte
+        );
+        await this.svolgimentoDao.createSvolgimento(svolgimento);
+
+        if (esito) {
+          utente.setQuizSuperati(utente.getQuizSuperati() + 1);
+          await this.utenteDao.updateQuizSuperati(utente);
+        }
       }
 
       return {
