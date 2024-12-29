@@ -25,21 +25,18 @@ export class QuizService {
   }
 
   // Creazione di un nuovo quiz con domande e risposte
-  async creaQuiz(
-    quiz: Quiz,
-    domande: Domanda[], // Una lista di domande con risposte
-  ): Promise<{ success: boolean; message: string }> {
+  async creaQuiz(quiz: Quiz): Promise<{ success: boolean; message: string }> {
     try {
       // 1. Creazione del quiz
       await this.quizDao.createQuiz(quiz);
 
       // 2. Creazione delle domande associate al quiz
-      for (const domanda of domande) {
-        await this.domandaDao.createDomanda(domanda);
+      for (const domanda of quiz.getDomande()) {
+        await this.domandaDao.createDomanda(domanda, quiz.getId());
 
         // 3. Creazione delle risposte per ogni domanda
         for (const risposta of domanda.getRisposte()) {
-          await this.rispostaDao.createRisposta(risposta);
+          await this.rispostaDao.createRisposta(risposta, domanda.getId());
         }
       }
 
@@ -58,7 +55,7 @@ export class QuizService {
 
   // Eliminazione di un quiz (e relative domande e risposte)
   async eliminaQuiz(
-    id: number,
+    id: number
   ): Promise<{ success: boolean; message: string }> {
     try {
       const quiz = await this.quizDao.getQuizById(id);
@@ -102,7 +99,7 @@ export class QuizService {
   async eseguiQuiz(
     quizId: number,
     utente: Utente,
-    risposteFornite: number[], // Lista di ID delle risposte scelte dall'utente
+    risposteFornite: number[] // Lista di ID delle risposte scelte dall'utente
   ): Promise<{ success: boolean; message: string; esito: boolean }> {
     try {
       const quiz = await this.quizDao.getQuizById(quizId);
@@ -143,7 +140,7 @@ export class QuizService {
         utente,
         esito,
         new Date(),
-        risposteEsatte,
+        risposteEsatte
       );
       await this.svolgimentoDao.createSvolgimento(svolgimento);
       if (esito) {
@@ -167,16 +164,13 @@ export class QuizService {
   }
 
   // recupera quiz per tutorial id
-  async getQuizByTutorialId(tutorialId: number): Promise<Quiz[]> {
+  async getQuizByTutorialId(tutorialId: number): Promise<Quiz | null> {
     try {
-      const quizzes = await this.quizDao.getQuizByTutorialId(tutorialId);
-      if (!quizzes) {
-        return [];
-      }
-      return Array.isArray(quizzes) ? quizzes : [quizzes];
+      const quiz = await this.quizDao.getQuizByTutorialId(tutorialId);
+      return quiz;
     } catch (error) {
       console.error("Errore durante il recupero del quiz:", error);
-      return [];
+      return null;
     }
   }
 }

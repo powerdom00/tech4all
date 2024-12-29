@@ -13,8 +13,9 @@ export class QuizDao {
 
   // Metodo per ottenere tutti i quiz
   public async getAllQuiz(): Promise<Quiz[]> {
-    const [rows]: [RowDataPacket[], FieldPacket[]] =
-      await this.db.query("SELECT * FROM quiz");
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM quiz"
+    );
     const quizList: Quiz[] = [];
 
     for (const row of rows) {
@@ -29,7 +30,7 @@ export class QuizDao {
   public async getQuizById(id: number): Promise<Quiz | null> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM quiz WHERE id = ?",
-      [id],
+      [id]
     );
     if (rows.length > 0) {
       const row = rows[0];
@@ -43,13 +44,13 @@ export class QuizDao {
   private async getDomandeByQuizId(quizId: number): Promise<Domanda[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM domanda WHERE quiz_id = ?",
-      [quizId],
+      [quizId]
     );
     const domande: Domanda[] = [];
 
     for (const row of rows) {
       const risposte = await this.getRisposteByDomandaId(row.id);
-      domande.push(new Domanda(row.quiz_id, row.domanda, risposte, row.id));
+      domande.push(new Domanda(row.domanda, risposte, row.quiz_id, row.id));
     }
 
     return domande;
@@ -59,11 +60,11 @@ export class QuizDao {
   private async getRisposteByDomandaId(domandaId: number): Promise<Risposta[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM risposta WHERE domanda_id = ?",
-      [domandaId],
+      [domandaId]
     );
     return rows.map(
       (row: RowDataPacket) =>
-        new Risposta(row.id, row.testo, row.correct, row.domanda_id),
+        new Risposta(row.id, row.testo, row.correct, row.domanda_id)
     );
   }
 
@@ -72,7 +73,7 @@ export class QuizDao {
     const idTutorial = quiz.getTutorialId();
     const [result]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "INSERT INTO quiz (tutorial_id) VALUES (?)",
-      [idTutorial],
+      [idTutorial]
     );
     const insertedId = (result as RowDataPacket).insertId;
     quiz.setId(insertedId);
@@ -96,11 +97,11 @@ export class QuizDao {
     await this.db.query("DELETE FROM quiz WHERE id = ?", [id]);
   }
 
-  //get quiz by tutorial id
+  // Metodo per ottenere un quiz specifico per tutorial ID
   public async getQuizByTutorialId(tutorialId: number): Promise<Quiz | null> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM quiz WHERE tutorial_id = ?",
-      [tutorialId],
+      [tutorialId]
     );
     if (rows.length > 0) {
       const row = rows[0];
