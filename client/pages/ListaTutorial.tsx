@@ -39,7 +39,7 @@ const ListTutorials = () => {
     <div className="main-container">
       <header className="header-container">
         <h1 className="page-title">Lista Tutorial</h1>
-        
+
         {/* Mostra il bottone solo se user.ruolo è "admin" o un altro valore specifico */}
         {user?.ruolo && (
           <button className="create-button" onClick={handleCreateNewTutorial}>
@@ -88,11 +88,11 @@ const ListTutorials = () => {
           ))}
         </ul>
       </main>
-        <div className="home-button-container">
-          <Link href="/homepage">
-            <button className="home-button">Torna alla home</button>
-          </Link>
-        </div>
+      <div className="home-button-container">
+        <Link href="/homepage">
+          <button className="home-button">Torna alla home</button>
+        </Link>
+      </div>
     </div>
   );
 };

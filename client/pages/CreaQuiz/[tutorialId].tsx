@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import "../../src/app/css/CreaQuiz.css";
+import axios from "axios";
 
 const CreaQuizPage: React.FC = () => {
   const router = useRouter();
@@ -56,18 +57,33 @@ const CreaQuizPage: React.FC = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const quizData = {
       tutorialId: Number(tutorialId),
-      domande: nuoveDomande,
+      domande: nuoveDomande.map((domanda) => ({
+        domanda: domanda.domanda,
+        risposte: domanda.risposte.map((risposta, index) => ({
+          risposta,
+          corretta: index === domanda.corretta,
+        })),
+      })),
     };
 
-    // Salva i dati del quiz nel localStorage
-    const existingQuizzes = JSON.parse(localStorage.getItem("quizzes") || "[]");
-    existingQuizzes.push(quizData);
-    localStorage.setItem("quizzes", JSON.stringify(existingQuizzes));
-
-    router.push(`/Contenuto/${tutorialId}`);
+    try {
+      const response = await axios.post("http://localhost:5000/quiz/creaQuiz", {
+        quiz: quizData,
+      });
+      if (response.status === 201) {
+        router.push(`/Contenuto/${tutorialId}`);
+      } else {
+        console.error(
+          "Errore nella creazione del quiz:",
+          response.data.message
+        );
+      }
+    } catch (error) {
+      console.error("Errore del server:", error);
+    }
   };
 
   const isFormValid = () => {
