@@ -64,7 +64,7 @@ export class QuizDao {
     );
     return rows.map(
       (row: RowDataPacket) =>
-        new Risposta(row.id, row.testo, row.correct, row.domanda_id)
+        new Risposta(row.risposta, row.corretta, row.domanda_id, row.id)
     );
   }
 

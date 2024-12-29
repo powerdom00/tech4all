@@ -3,7 +3,7 @@ import { DomandaDao } from "../dao/DomandaDao";
 import { RispostaDao } from "../dao/RispostaDao";
 import { Quiz } from "../entity/gestione_quiz/Quiz";
 import { Domanda } from "../entity/gestione_quiz/Domanda";
-//import { Risposta } from "../entity/gestione_quiz/Risposta";
+import { Risposta } from "../entity/gestione_quiz/Risposta";
 import { SvolgimentoDao } from "../dao/SvolgimentoDao";
 import { Svolgimento } from "../entity/gestione_quiz/Svolgimento";
 import { Utente } from "../entity/gestione_autenticazione/Utente";
@@ -167,7 +167,30 @@ export class QuizService {
   async getQuizByTutorialId(tutorialId: number): Promise<Quiz | null> {
     try {
       const quiz = await this.quizDao.getQuizByTutorialId(tutorialId);
-      return quiz;
+      if (quiz) {
+        const domande = quiz.getDomande().map((domanda) => {
+          const risposte = domanda
+            .getRisposte()
+            .map(
+              (risposta) =>
+                new Risposta(
+                  risposta.getRisposta(),
+                  risposta.getCorretta(),
+                  risposta.getDomandaId(),
+                  risposta.getId()
+                )
+            );
+          return new Domanda(
+            domanda.getDomanda(),
+            risposte,
+            domanda.getQuizId(),
+            domanda.getId()
+          );
+        });
+        quiz.setDomande(domande);
+        return quiz;
+      }
+      return null;
     } catch (error) {
       console.error("Errore durante il recupero del quiz:", error);
       return null;
