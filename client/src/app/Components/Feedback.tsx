@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Feedback } from "@/interfacce/Feedback";
 import { useAuth } from "../../../pages/context/AuthContext";
+import "../css/Feedback.css";
 
 type Props = {
   id: string; // tutorialId passato dalla pagina specifica del tutorial
@@ -8,11 +9,22 @@ type Props = {
 
 const FeedbackComponent = ({ id }: Props) => {
   const [feedback, setFeedback] = useState<Feedback[] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Stato per il modal
+  const [valutazione, setValutazione] = useState<number | "">(""); // Stato per la valutazione
+  const [commento, setCommento] = useState(""); // Stato per il commento
+
   const { user } = useAuth(); // Ottieni i dati dell'utente autenticato dal contesto
 
   useEffect(() => {
     console.log("Stato dell'utente nel contesto:", user);
   }, [user]);
+
+  // Funzione per aprire il modal e resettare i valori
+  const openModal = () => {
+    setValutazione(""); // Resetta la valutazione
+    setCommento(""); // Resetta il commento
+    setIsModalOpen(true); // Apre il modal
+  };
 
   // Estrai fetchFeedback come funzione riutilizzabile
   const fetchFeedback = async () => {
@@ -43,11 +55,18 @@ const FeedbackComponent = ({ id }: Props) => {
     }
     const utenteId = user.id;
 
-    const valutazione = prompt("Inserisci la tua valutazione (1-5):");
-    const commento = prompt("Inserisci il tuo commento:");
-
     if (!valutazione || !commento) {
       alert("Valutazione e commento sono obbligatori!");
+      return;
+    }
+
+    if (commento.length < 2 || commento.length > 500) {
+      alert("Il commento deve contenere tra 2 e 500 caratteri.");
+      return;
+    }
+
+    if (valutazione < 1 || valutazione > 5) {
+      alert("La valutazione deve essere compresa tra 1 e 5.");
       return;
     }
 
@@ -58,7 +77,7 @@ const FeedbackComponent = ({ id }: Props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          valutazione: parseInt(valutazione, 10),
+          valutazione,
           commento,
           utenteId,
           tutorialId: id,
@@ -68,6 +87,7 @@ const FeedbackComponent = ({ id }: Props) => {
       const result = await response.json();
       if (response.ok) {
         alert("Feedback creato con successo!");
+        setIsModalOpen(false); // Chiudi il modal
         fetchFeedback(); // Aggiorna i feedback dopo la creazione
       } else {
         alert(`Errore: ${result.message}`);
@@ -77,40 +97,37 @@ const FeedbackComponent = ({ id }: Props) => {
       alert("Errore del server");
     }
   };
-const handleDeleteFeedback = async (utenteId: number, tutorialId: string) => {
-  try {
-    // Costruisci l'URL usando utenteId e tutorialId
-    const response = await fetch(`http://localhost:5000/feedback/eliminaFeedback/${utenteId}/${tutorialId}`, {
-      method: "DELETE",
-    });
 
-    if (response.ok) {
-      alert("Feedback eliminato con successo!");
+  const handleDeleteFeedback = async (utenteId: number, tutorialId: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/feedback/eliminaFeedback/${utenteId}/${tutorialId}`, {
+        method: "DELETE",
+      });
 
-      // Aggiorna lo stato per rimuovere il feedback dalla lista
-      setFeedback((prev) =>
-        prev ? prev.filter((item) => item.utenteId !== utenteId || item.tutorialId !== parseInt(tutorialId, 10)) : null
-      );
-    } else {
-      alert("Errore durante l'eliminazione del feedback");
+      if (response.ok) {
+        alert("Feedback eliminato con successo!");
+        setFeedback((prev) =>
+          prev ? prev.filter((item) => item.utenteId !== utenteId || item.tutorialId !== parseInt(tutorialId, 10)) : null
+        );
+      } else {
+        alert("Errore durante l'eliminazione del feedback");
+      }
+    } catch (error) {
+      console.error("Errore durante l'eliminazione del feedback", error);
+      alert("Errore del server");
     }
-  } catch (error) {
-    console.error("Errore durante l'eliminazione del feedback", error);
-    alert("Errore del server");
-  }
-};
-
-
+  };
 
   if (!feedback) {
     return <div>Caricamento...</div>;
   }
-const getBorderClass = (valutazione: number) => {
-  if (valutazione <= 2) return "border-red";
-  if (valutazione === 3) return "border-yellow";
-  if (valutazione >= 4) return "border-green";
-  return "";
-};
+
+  const getBorderClass = (valutazione: number) => {
+    if (valutazione <= 2) return "border-red";
+    if (valutazione === 3) return "border-yellow";
+    if (valutazione >= 4) return "border-green";
+    return "";
+  };
 
   return (
     <>
@@ -133,11 +150,39 @@ const getBorderClass = (valutazione: number) => {
         ))}
       </div>
       <br />
-      <button className="create-feedback-btn" onClick={handleCreateFeedback}>
+      <button className="create-feedback-btn" onClick={openModal}>
         Crea Nuovo Feedback
       </button>
+
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Inserisci un nuovo feedback</h2>
+            <label>
+              Valutazione (1-5):
+              <input
+                type="number"
+                value={valutazione}
+                onChange={(e) => setValutazione(parseInt(e.target.value, 10))}
+              />
+            </label>
+            <label>
+              Commento:
+              <textarea
+                value={commento}
+                onChange={(e) => setCommento(e.target.value)}
+                maxLength={500}
+              ></textarea>
+            </label>
+            <div className="modal-buttons">
+              <button onClick={handleCreateFeedback}>Conferma</button>
+              <button onClick={() => setIsModalOpen(false)}>Annulla</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
-);
+  );
 };
 
 export default FeedbackComponent;
