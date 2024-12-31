@@ -49,11 +49,11 @@ const DomandaComponent: React.FC<{
                   ? isCorrect && isSelected
                     ? "corretta-selezionata"
                     : isSelected
-                    ? "errata-selezionata"
-                    : "non-selezionata"
+                      ? "errata-selezionata"
+                      : "non-selezionata"
                   : isSelected
-                  ? "selezionata"
-                  : "non-selezionata"
+                    ? "selezionata"
+                    : "non-selezionata"
               } ${isSelected ? "selezionata-bold" : ""}`}
             >
               {risposta.risposta}
@@ -72,7 +72,7 @@ const RisultatoComponent: React.FC<{
   return risultato ? (
     <p className="risultato-testo">
       Quiz {risultato}! Hai risposto correttamente a {risposteCorrette}{" "}
-      {risposteCorrette == 1 ? "domanda" : "domande"}.
+      {risposteCorrette === 1 ? "domanda" : "domande"}.
     </p>
   ) : null;
 };
@@ -122,6 +122,12 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
     fetchQuizData();
   }, [tutorialId]);
 
+  const tutteRisposteDate = () => {
+    return domandeQuiz.every((domanda) =>
+      Object.keys(risposteSelezionate).includes(domanda.id.toString())
+    );
+  };
+
   const handleCambioRisposta = (
     domandaId: number,
     rispostaId: number
@@ -154,7 +160,6 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
     setBloccato(true);
     setEvidenzia(true);
 
-    // Invio della richiesta POST alla rotta /quiz/eseguiQuiz
     const risposteUtente = Object.values(risposteSelezionate);
     const quizId = domandeQuiz[0]?.quiz_id;
 
@@ -223,10 +228,15 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
         <button
           className="submit-button"
           onClick={handleSubmit}
-          disabled={bloccato}
+          disabled={bloccato || !tutteRisposteDate()}
         >
           Conferma
         </button>
+        {!tutteRisposteDate() && (
+          <p className="error-message">
+            Rispondi a tutte le domande prima di confermare.
+          </p>
+        )}
       </div>
       <RisultatoComponent
         risultato={risultato}

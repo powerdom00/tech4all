@@ -16,30 +16,62 @@ const Register = () => {
   const [success, setSuccess] = useState<string | null>(null);
 
   const router = useRouter();
-  
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
 
-    // Validazione dei campi
-    if (!nome || !cognome || !email || !password || !confirmPassword) {
-      setError("Tutti i campi sono obbligatori.");
-      setSuccess(null);
-      return;
+  const sanitizeInput = (input: string): string => {
+    // Rimuove script o tag HTML
+    return input.replace(/<\/?[^>]+(>|$)/g, "").trim();
+  };
+
+  const validateInputs = (): string | null => {
+    const sanitizedNome = sanitizeInput(nome);
+    const sanitizedCognome = sanitizeInput(cognome);
+    const sanitizedEmail = sanitizeInput(email);
+
+    if (
+      !sanitizedNome ||
+      sanitizedNome.length > 50 ||
+      /\d|\W/.test(sanitizedNome)
+    ) {
+      return "Il nome deve contenere solo lettere e massimo 50 caratteri.";
+    }
+
+    if (
+      !sanitizedCognome ||
+      sanitizedCognome.length > 50 ||
+      /\d|\W/.test(sanitizedCognome)
+    ) {
+      return "Il cognome deve contenere solo lettere e massimo 50 caratteri.";
+    }
+
+    if (
+      !sanitizedEmail.includes("@") ||
+      !/\.(com|it)$/.test(sanitizedEmail) ||
+      sanitizedEmail.length > 60
+    ) {
+      return "L'email deve essere valida, contenere '@' e terminare con '.com' o '.it' (max 60 caratteri).";
+    }
+
+    if (!password || password.length < 8) {
+      return "La password deve essere di almeno 8 caratteri.";
     }
 
     if (password !== confirmPassword) {
-      setError("Le password non corrispondono.");
-      setSuccess(null);
-      return;
+      return "Le password non corrispondono.";
     }
 
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("L'email non è valida.");
-      setSuccess(null);
+    return null;
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    // Sanifica e valida gli input
+    setError(null);
+    const validationError = validateInputs();
+    if (validationError) {
+      setError(validationError);
       return;
     }
-
-    setError(null); // Clear errors
 
     try {
       // Invio dei dati al server
@@ -48,7 +80,12 @@ const Register = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ nome, cognome, email, password }),
+        body: JSON.stringify({
+          nome: sanitizeInput(nome),
+          cognome: sanitizeInput(cognome),
+          email: sanitizeInput(email),
+          password: sanitizeInput(password),
+        }),
       });
 
       if (!response.ok) {

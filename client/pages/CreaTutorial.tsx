@@ -32,8 +32,39 @@ const CreateTutorial = () => {
     const testo = editor?.root.innerHTML;
 
     // Validazione dei campi
+    const categorieValide = [
+      "Internet",
+      "Social Media",
+      "Tecnologia",
+      "Sicurezza",
+    ];
     if (!titolo || !testo || !categoria || !grafica) {
       setError("Tutti i campi sono obbligatori.");
+      setSuccess(null);
+      return;
+    }
+
+    if (!categorieValide.includes(categoria)) {
+      setError(
+        "La categoria deve essere una tra 'Internet', 'Social Media', 'Tecnologia' o 'Sicurezza'."
+      );
+      setSuccess(null);
+      return;
+    }
+
+    if (categoria.length > 25) {
+      setError("La categoria non può superare i 25 caratteri.");
+      setSuccess(null);
+      return;
+    }
+
+    const fileType = grafica.type;
+    if (
+      !["image/jpeg", "image/png", "image/gif", "video/mp4"].includes(fileType)
+    ) {
+      setError(
+        "Il file deve essere un'immagine (JPEG/PNG/GIF) o un video MP4."
+      );
       setSuccess(null);
       return;
     }
@@ -103,12 +134,12 @@ const CreateTutorial = () => {
             <div id="editor" ref={editorRef} className="quill-editor"></div>
           </div>
           <div className="form-group">
-            <label htmlFor="grafica">Grafica:</label>
+            <label htmlFor="grafica">Grafica (immagine o video MP4):</label>
             <input
               id="grafica"
               type="file"
               className="form-input"
-              accept="image/*"
+              accept="image/*,video/mp4"
               onChange={(e) => setGrafica(e.target.files?.[0] || null)}
             />
           </div>

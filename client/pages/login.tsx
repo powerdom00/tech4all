@@ -11,20 +11,52 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const validateEmail = (email: string): string | null => {
+    if (!email.includes("@")) return "L'email deve contenere il simbolo '@'.";
+    if (email.length > 60) return "L'email non può superare i 60 caratteri.";
+    if (!/\.(com|it)$/.test(email))
+      return "L'email deve terminare con '.com' o '.it'.";
+    return null;
+  };
+
+  const sanitizeInput = (input: string): string => {
+    // Rimuove script o tag HTML
+    return input.replace(/<\/?[^>]+(>|$)/g, "");
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const sanitizedEmail = sanitizeInput(email);
+    const sanitizedPassword = sanitizeInput(password);
+
+    const emailError = validateEmail(sanitizedEmail);
+
+    if (emailError) {
+      setError(emailError);
+      return;
+    }
+
+    if (!sanitizedPassword) {
+      setError("La password non può essere vuota.");
+      return;
+    }
+
     try {
       const res = await fetch("http://localhost:5000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email: sanitizedEmail,
+          password: sanitizedPassword,
+        }),
       });
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.message || "Errore durante il login");
+        throw new Error(data.message || "Email o password errati.");
       }
 
       const data = await res.json();
