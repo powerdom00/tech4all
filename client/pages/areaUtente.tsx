@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import "../src/css/AreaUtente.css";
 import Link from "next/link";
+import ApiFacade from "@/facade/ApiFacade";
 
 const UserPage: React.FC = () => {
   const { user, updateUser } = useAuth();
@@ -34,16 +35,8 @@ const UserPage: React.FC = () => {
 
   const fetchUserFeedback = async (userId: number) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/feedback/visualizzaFeedbackUtente/${userId}`
-      );
-      const data = await response.json();
-
-      if (data.success) {
-        setFeedbackList(data.Feedback);
-      } else {
-        setFeedbackList([]);
-      }
+      const feedback = await ApiFacade.getFeedbackByUserId(userId);
+      setFeedbackList(feedback);
     } catch (error) {
       console.error("Errore durante il recupero dei feedback:", error);
       setFeedbackList([]);

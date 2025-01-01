@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import "../src/css/CreaTutorial.css";
+import ApiFacade from "@/facade/ApiFacade";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");
@@ -76,15 +77,7 @@ const CreateTutorial = () => {
       formData.append("categoria", categoria);
       formData.append("grafica", grafica);
 
-      const response = await fetch("http://localhost:5000/tutorials/tutorial", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const { error } = await response.json();
-        throw new Error(error || "Errore durante la creazione del tutorial.");
-      }
+      await ApiFacade.createTutorial(formData);
 
       setSuccess("Tutorial creato con successo!");
       setError(null);

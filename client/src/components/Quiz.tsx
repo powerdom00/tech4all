@@ -2,19 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../css/Quiz.css";
 import axios from "axios";
 import { useAuth } from "../../pages/context/AuthContext";
-
-type Domanda = {
-  id: number;
-  quiz_id: number;
-  domanda: string;
-};
-
-type Risposta = {
-  id: number;
-  domanda_id: number;
-  risposta: string;
-  corretta: boolean;
-};
+import { Domanda, Risposta } from "@/interfacce/Quiz";
+import ApiFacade from "@/facade/ApiFacade";
 
 const DomandaComponent: React.FC<{
   domanda: Domanda;
@@ -92,26 +81,9 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
   useEffect(() => {
     const fetchQuizData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/quiz/visualizzaQuiz/${tutorialId}`
+        const { domande, risposte } = await ApiFacade.getQuizByTutorialId(
+          tutorialId
         );
-        const quiz = response.data;
-
-        const domande = quiz.domande.map((d: any) => ({
-          id: d.id,
-          quiz_id: d.quizId,
-          domanda: d.domanda,
-        }));
-
-        const risposte = quiz.domande.flatMap((d: any) =>
-          d.risposte.map((r: any) => ({
-            id: r.id,
-            domanda_id: r.domandaId,
-            risposta: r.risposta,
-            corretta: r.corretta,
-          }))
-        );
-
         setDomandeQuiz(domande);
         setRisposteQuiz(risposte);
       } catch (error) {
@@ -163,27 +135,18 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
     const risposteUtente = Object.values(risposteSelezionate);
     const quizId = domandeQuiz[0]?.quiz_id;
 
-    if (quizId) {
+    if (quizId && utenteId) {
       try {
-        const response = await axios.post(
-          "http://localhost:5000/quiz/eseguiQuiz",
-          {
-            quizId,
-            risposteUtente,
-            utenteId,
-          }
+        const { success, message } = await ApiFacade.executeQuiz(
+          quizId,
+          risposteUtente,
+          utenteId
         );
 
-        if (response.status === 200) {
-          console.log(
-            "Risultato del quiz inviato con successo:",
-            response.data
-          );
+        if (success) {
+          console.log("Risultato del quiz inviato con successo");
         } else {
-          console.error(
-            "Errore nell'invio del risultato del quiz:",
-            response.data.message
-          );
+          console.error("Errore nell'invio del risultato del quiz:", message);
         }
       } catch (error) {
         console.error(

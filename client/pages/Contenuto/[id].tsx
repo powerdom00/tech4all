@@ -10,6 +10,7 @@ import FeedbackComponent from "@/components/Feedback";
 import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import ApiFacade from "@/facade/ApiFacade";
 
 const TutorialPage = () => {
   const router = useRouter();
@@ -24,29 +25,11 @@ const TutorialPage = () => {
   useEffect(() => {
     const checkQuizExists = async () => {
       if (id) {
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/quiz/visualizzaQuiz/${id}`
-          );
-          setQuizExists(
-            response.status === 200 && response.data.domande.length > 0
-          );
-          setQuizId(response.data.id);
-        } catch (error) {
-          if (
-            axios.isAxiosError(error) &&
-            error.response &&
-            error.response.status === 404
-          ) {
-            setQuizExists(false);
-            setQuizId(null);
-          } else {
-            console.error(
-              "Errore nel controllo dell'esistenza del quiz:",
-              error
-            );
-          }
-        }
+        const { exists, quizId } = await ApiFacade.checkQuizExists(
+          parseInt(id as string)
+        );
+        setQuizExists(exists);
+        setQuizId(quizId);
       }
     };
 
@@ -61,22 +44,20 @@ const TutorialPage = () => {
 
   const handleDeleteQuiz = async () => {
     if (quizId) {
-      try {
-        const response = await axios.delete(
-          `http://localhost:5000/quiz/eliminaQuiz/${quizId}`
-        );
-        if (response.status === 200) {
-          setQuizExists(false);
-          setQuizId(null);
-        } else {
-          console.error(
-            "Errore nella cancellazione del quiz:",
-            response.data.message
-          );
-        }
-      } catch (error) {
-        console.error("Errore del server nella cancellazione del quiz:", error);
+      const { success, message } = await ApiFacade.deleteQuiz(quizId);
+      if (success) {
+        setQuizExists(false);
+        setQuizId(null);
+      } else {
+        console.error("Errore nella cancellazione del quiz:", message);
       }
+    }
+  };
+
+  const handleDeleteTutorial = async () => {
+    if (id) {
+      await ApiFacade.deleteTutorial(parseInt(id as string));
+      router.push("/ListaTutorial");
     }
   };
 
@@ -99,6 +80,14 @@ const TutorialPage = () => {
 
           {/* Sezione Tutorial */}
           <TabPanel>
+            {ruolo && (
+              <button
+                onClick={handleDeleteTutorial}
+                className="delete-quiz-button"
+              >
+                Elimina Tutorial
+              </button>
+            )}
             <TutorialPageComponent id={id as string} />
           </TabPanel>
 

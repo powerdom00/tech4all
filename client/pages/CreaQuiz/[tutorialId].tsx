@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import "../../src/css/CreaQuiz.css";
 import axios from "axios";
+import ApiFacade from "@/facade/ApiFacade";
 
 const CreaQuizPage: React.FC = () => {
   const router = useRouter();
@@ -58,31 +59,13 @@ const CreaQuizPage: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    const quizData = {
-      tutorialId: Number(tutorialId),
-      domande: nuoveDomande.map((domanda) => ({
-        domanda: domanda.domanda,
-        risposte: domanda.risposte.map((risposta, index) => ({
-          risposta,
-          corretta: index === domanda.corretta,
-        })),
-      })),
-    };
-
-    try {
-      const response = await axios.post("http://localhost:5000/quiz/creaQuiz", {
-        quiz: quizData,
-      });
-      if (response.status === 201) {
+    if (tutorialId) {
+      try {
+        await ApiFacade.createQuiz(Number(tutorialId), nuoveDomande);
         router.push(`/Contenuto/${tutorialId}`);
-      } else {
-        console.error(
-          "Errore nella creazione del quiz:",
-          response.data.message
-        );
+      } catch (error) {
+        console.error("Errore nella creazione del quiz:", error);
       }
-    } catch (error) {
-      console.error("Errore del server:", error);
     }
   };
 
