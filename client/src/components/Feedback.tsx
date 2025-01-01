@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Feedback } from "@/interfacce/Feedback";
 import { useAuth } from "../../pages/context/AuthContext";
 import "../css/Feedback.css";
+import ApiFacade from "@/facade/ApiFacade";
 
 type Props = {
   id: string; // tutorialId passato dalla pagina specifica del tutorial
@@ -29,16 +30,9 @@ const FeedbackComponent = ({ id }: Props) => {
   // Estrai fetchFeedback come funzione riutilizzabile
   const fetchFeedback = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/feedback/visualizzaFeedback/${id}`
-      );
-      const result = await response.json();
+      const result = await ApiFacade.getFeedbackByTutorialId(parseInt(id, 10));
       console.log("Risultato feedback:", result);
-      if (result.success) {
-        setFeedback(result.Feedback); // Salva i feedback nel state
-      } else {
-        console.error("Feedback non trovato");
-      }
+      setFeedback(result);
     } catch (error) {
       console.error("Errore durante il recupero dei feedback", error);
     }
@@ -71,30 +65,16 @@ const FeedbackComponent = ({ id }: Props) => {
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/feedback/creaFeedback",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            valutazione,
-            commento,
-            utenteId,
-            tutorialId: id,
-          }),
-        }
+      await ApiFacade.createFeedback(
+        valutazione as number,
+        commento,
+        utenteId,
+        parseInt(id, 10)
       );
 
-      const result = await response.json();
-      if (response.ok) {
-        alert("Feedback creato con successo!");
-        setIsModalOpen(false); // Chiudi il modal
-        fetchFeedback(); // Aggiorna i feedback dopo la creazione
-      } else {
-        alert(`Errore: ${result.message}`);
-      }
+      alert("Feedback creato con successo!");
+      setIsModalOpen(false); // Chiudi il modal
+      fetchFeedback(); // Aggiorna i feedback dopo la creazione
     } catch (error) {
       console.error("Errore durante la creazione del feedback", error);
       alert("Errore del server");
@@ -103,14 +83,12 @@ const FeedbackComponent = ({ id }: Props) => {
 
   const handleDeleteFeedback = async (utenteId: number, tutorialId: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/feedback/eliminaFeedback/${utenteId}/${tutorialId}`,
-        {
-          method: "DELETE",
-        }
+      const result = await ApiFacade.deleteFeedback(
+        utenteId,
+        parseInt(tutorialId, 10)
       );
 
-      if (response.ok) {
+      if (result.success) {
         alert("Feedback eliminato con successo!");
         setFeedback((prev) =>
           prev
