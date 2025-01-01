@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../css/Header.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // Importa il router corretto per l'App Router
-import { useAuth } from "../../../pages/context/AuthContext"; // Importa il contesto
+import { useAuth } from "../../pages/context/AuthContext"; // Importa il contesto
 
 const Header: React.FC = () => {
   const { user, logout } = useAuth(); // Usa il contesto per ottenere l'utente e la funzione logout

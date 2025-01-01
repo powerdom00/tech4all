@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import "../../src/app/css/UpdateQuiz.css";
+import "../../src/css/UpdateQuiz.css";
 
 const UpdateQuizPage: React.FC = () => {
   const router = useRouter();

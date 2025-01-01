@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import "../../src/app/css/CreaQuiz.css";
+import "../../src/css/CreaQuiz.css";
 import axios from "axios";
 
 const CreaQuizPage: React.FC = () => {

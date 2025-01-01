@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css"; // Stile base per i tab
-import "../../src/app/css/Tutorial.css";
-import TutorialPageComponent from "@/app/Components/TutorialPageComponent";
-import Quiz from "@/app/Components/Quiz";
-import Feedback from "@/app/Components/Feedback";
-import FeedbackComponent from "@/app/Components/Feedback";
+import "../../src/css/Tutorial.css";
+import TutorialPageComponent from "@/components/TutorialPageComponent";
+import Quiz from "@/components/Quiz";
+import Feedback from "@/components/Feedback";
+import FeedbackComponent from "@/components/Feedback";
 import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";

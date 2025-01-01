@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
-import "../src/app/css/AreaUtente.css";
+import "../src/css/AreaUtente.css";
 import Link from "next/link";
 
 const UserPage: React.FC = () => {
