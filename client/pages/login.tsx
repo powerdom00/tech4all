@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import "../src/app/css/Login.css";
+import "../src/css/Login.css";
 import { useRouter } from "next/router";
 import { useAuth } from "./context/AuthContext";
 

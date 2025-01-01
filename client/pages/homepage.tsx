@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Link from "next/link"; // Usa Link invece di useRouter
-import "../src/app/css/Homepage.css";
-import Footer from "@/app/Components/Footer";
-import Header from "@/app/Components/Header";
+import "../src/css/Homepage.css";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 export default function Homepage() {
   const images = [

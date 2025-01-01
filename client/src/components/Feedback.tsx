@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Feedback } from "@/interfacce/Feedback";
-import { useAuth } from "../../../pages/context/AuthContext";
+import { useAuth } from "../../pages/context/AuthContext";
 import "../css/Feedback.css";
 
 type Props = {
@@ -71,18 +71,21 @@ const FeedbackComponent = ({ id }: Props) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/feedback/creaFeedback", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          valutazione,
-          commento,
-          utenteId,
-          tutorialId: id,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/feedback/creaFeedback",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            valutazione,
+            commento,
+            utenteId,
+            tutorialId: id,
+          }),
+        }
+      );
 
       const result = await response.json();
       if (response.ok) {
@@ -100,14 +103,23 @@ const FeedbackComponent = ({ id }: Props) => {
 
   const handleDeleteFeedback = async (utenteId: number, tutorialId: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/feedback/eliminaFeedback/${utenteId}/${tutorialId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `http://localhost:5000/feedback/eliminaFeedback/${utenteId}/${tutorialId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         alert("Feedback eliminato con successo!");
         setFeedback((prev) =>
-          prev ? prev.filter((item) => item.utenteId !== utenteId || item.tutorialId !== parseInt(tutorialId, 10)) : null
+          prev
+            ? prev.filter(
+                (item) =>
+                  item.utenteId !== utenteId ||
+                  item.tutorialId !== parseInt(tutorialId, 10)
+              )
+            : null
         );
       } else {
         alert("Errore durante l'eliminazione del feedback");
@@ -133,7 +145,10 @@ const FeedbackComponent = ({ id }: Props) => {
     <>
       <div className="feedback-container">
         {feedback.map((item, index) => (
-          <div key={`${item.utenteId}-${index}`} className={`feedback-item ${getBorderClass(item.valutazione)}`}>
+          <div
+            key={`${item.utenteId}-${index}`}
+            className={`feedback-item ${getBorderClass(item.valutazione)}`}
+          >
             <p>Valutazione: {item.valutazione || "Non disponibile"}</p>
             <p>Commento: {item.commento || "Non disponibile"}</p>
             <p>ID Utente: {item.utenteId ?? "Anonimo"}</p>
@@ -141,7 +156,12 @@ const FeedbackComponent = ({ id }: Props) => {
             {user?.id === item.utenteId && (
               <button
                 className="delete-feedback-btn"
-                onClick={() => handleDeleteFeedback(item.utenteId, item.tutorialId.toString())}
+                onClick={() =>
+                  handleDeleteFeedback(
+                    item.utenteId,
+                    item.tutorialId.toString()
+                  )
+                }
               >
                 Elimina Feedback
               </button>

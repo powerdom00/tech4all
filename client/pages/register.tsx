@@ -3,7 +3,7 @@ import Link from "next/link"; // Importa Link da Next.js
 import React from "react";
 // eslint-disable-next-line prettier/prettier
 import { useRouter } from "next/router";
-import "../src/app/css/Register.css";
+import "../src/css/Register.css";
 
 const Register = () => {
   // Stato per i campi del form

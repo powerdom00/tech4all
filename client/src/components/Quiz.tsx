@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../css/Quiz.css";
 import axios from "axios";
-import { useAuth } from "../../../pages/context/AuthContext";
+import { useAuth } from "../../pages/context/AuthContext";
 
 type Domanda = {
   id: number;
@@ -49,11 +49,11 @@ const DomandaComponent: React.FC<{
                   ? isCorrect && isSelected
                     ? "corretta-selezionata"
                     : isSelected
-                      ? "errata-selezionata"
-                      : "non-selezionata"
-                  : isSelected
-                    ? "selezionata"
+                    ? "errata-selezionata"
                     : "non-selezionata"
+                  : isSelected
+                  ? "selezionata"
+                  : "non-selezionata"
               } ${isSelected ? "selezionata-bold" : ""}`}
             >
               {risposta.risposta}

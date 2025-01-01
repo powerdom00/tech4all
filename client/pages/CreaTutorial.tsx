@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import "../src/app/css/CreaTutorial.css";
+import "../src/css/CreaTutorial.css";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");

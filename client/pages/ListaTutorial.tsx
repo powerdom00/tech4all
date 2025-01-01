@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useTutorials } from "@/hooks/useTutorials";
-import "../src/app/css/ListaTutorial.css";
+import "../src/css/ListaTutorial.css";
 import { useAuth } from "./context/AuthContext"; // Assicurati di importare correttamente il contesto
 import Link from "next/link";
 

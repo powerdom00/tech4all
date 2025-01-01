@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import "./page.css"; // Aggiungi qui il tuo CSS
 import { AuthProvider } from "../../pages/context/AuthContext";
 const App: React.FC = () => {
