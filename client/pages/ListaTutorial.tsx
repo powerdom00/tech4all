@@ -1,20 +1,28 @@
-import { useRouter } from "next/router";
-import { useTutorials } from "@/hooks/useTutorials";
 import "../src/css/ListaTutorial.css";
-import { useAuth } from "./context/AuthContext"; // Assicurati di importare correttamente il contesto
+import { useRouter } from "next/router";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useAuth } from "./context/AuthContext"; // Assicurati di importare correttamente il contesto
+import { Tutorial } from "@/interfacce/Tutorial";
+import ApiFacade from "@/facade/ApiFacade";
 
 const ListTutorials = () => {
-  const {
-    tutorials,
-    filteredTutorials,
-    selectedCategory,
-    setSelectedCategory,
-    setFilteredTutorials,
-  } = useTutorials();
+  const [tutorials, setTutorials] = useState<Tutorial[]>([]);
+  const [filteredTutorials, setFilteredTutorials] = useState<Tutorial[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const { user } = useAuth(); // Recupera il ruolo dell'utente dal contesto
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchTutorials = async () => {
+      const data = await ApiFacade.getTutorials();
+      setTutorials(data);
+      setFilteredTutorials(data);
+    };
+
+    fetchTutorials();
+  }, []);
 
   const handleCreateNewTutorial = () => {
     router.push("/CreaTutorial");

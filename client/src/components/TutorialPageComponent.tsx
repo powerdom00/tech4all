@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Tutorial } from "@/interfacce/Tutorial";
+import ApiFacade from "@/facade/ApiFacade";
 
 type Props = {
   id: string;
@@ -8,43 +9,14 @@ type Props = {
 const TutorialPageComponent = ({ id }: Props) => {
   const [tutorial, setTutorial] = useState<Tutorial | null>(null);
 
-  // GET tutorial by id dal database
   useEffect(() => {
     const fetchTutorial = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/tutorials/tutorial/${id}`
-        );
-        const data: Tutorial = await response.json();
-        setTutorial(data);
-      } catch (error) {
-        console.error("Error fetching tutorial", error);
-      }
+      const data = await ApiFacade.getTutorialById(Number(id));
+      setTutorial(data);
     };
 
     fetchTutorial();
   }, [id]);
-
-  /* GET tutorial by id dal localStorage
-  useEffect(() => {
-    const fetchTutorial = () => {
-      try {
-        const tutorials = JSON.parse(localStorage.getItem("tutorials") || "[]");
-        const foundTutorial = tutorials.find(
-          (tutorial: Tutorial) => tutorial.id === parseInt(id)
-        );
-        if (foundTutorial) {
-          setTutorial(foundTutorial);
-        } else {
-          console.error("Tutorial not found");
-        }
-      } catch (error) {
-        console.error("Error fetching tutorial from localStorage", error);
-      }
-    };
-
-    fetchTutorial();
-  }, [id]); */
 
   if (!tutorial) {
     return <div>Loading tutorial...</div>;
