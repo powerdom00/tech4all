@@ -4,6 +4,7 @@ import React from "react";
 // eslint-disable-next-line prettier/prettier
 import { useRouter } from "next/router";
 import "../src/css/Register.css";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const Register = () => {
   // Stato per i campi del form
@@ -74,26 +75,14 @@ const Register = () => {
     }
 
     try {
-      // Invio dei dati al server
-      const response = await fetch("http://localhost:5000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nome: sanitizeInput(nome),
-          cognome: sanitizeInput(cognome),
-          email: sanitizeInput(email),
-          password: sanitizeInput(password),
-        }),
-      });
+      // Invio dei dati al server tramite ApiFacade
+      await ApiControllerFacade.registerUser(
+        sanitizeInput(nome),
+        sanitizeInput(cognome),
+        sanitizeInput(email),
+        sanitizeInput(password)
+      );
 
-      if (!response.ok) {
-        const { error } = await response.json();
-        throw new Error(error || "Errore durante la registrazione.");
-      }
-
-      const data = await response.json();
       setSuccess("Registrazione completata con successo! Benvenuto!");
       setNome("");
       setCognome("");

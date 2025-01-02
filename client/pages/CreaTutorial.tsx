@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import "../src/css/CreaTutorial.css";
-import ApiFacade from "@/facade/ApiFacade";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");
@@ -77,7 +77,7 @@ const CreateTutorial = () => {
       formData.append("categoria", categoria);
       formData.append("grafica", grafica);
 
-      await ApiFacade.createTutorial(formData);
+      await ApiControllerFacade.createTutorial(formData);
 
       setSuccess("Tutorial creato con successo!");
       setError(null);
