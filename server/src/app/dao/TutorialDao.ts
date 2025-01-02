@@ -136,6 +136,7 @@ export class TutorialDao {
         new Tutorial(
           row.titolo,
           row.grafica,
+          row.testo,
           row.categoria,
           row.valutazione,
           row.id,

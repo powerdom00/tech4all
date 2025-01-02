@@ -64,17 +64,25 @@ const FeedbackComponent = ({ id }: Props) => {
       return;
     }
 
-    try {
-      await ApiFacade.createFeedback(
-        valutazione as number,
-        commento,
-        utenteId,
-        parseInt(id, 10)
-      );
+try {
+      // Verifica se esiste già un feedback per lo stesso utente e tutorial
+      const feedbackList = await ApiFacade.getFeedbackByTutorialId(parseInt(id, 10));
+      const existingFeedback = feedbackList.find(feedback => feedback.utenteId === utenteId);
 
-      alert("Feedback creato con successo!");
-      setIsModalOpen(false); // Chiudi il modal
-      fetchFeedback(); // Aggiorna i feedback dopo la creazione
+      if (existingFeedback) {
+        alert("Feedback già esistente per questo tutorial!");
+      } else {
+        await ApiFacade.createFeedback(
+          valutazione as number,
+          commento,
+          utenteId,
+          parseInt(id, 10)
+        );
+
+        alert("Feedback creato con successo!");
+        setIsModalOpen(false); // Chiudi il modal
+        fetchFeedback(); // Aggiorna i feedback dopo la creazione
+      }
     } catch (error) {
       console.error("Errore durante la creazione del feedback", error);
       alert("Errore del server");

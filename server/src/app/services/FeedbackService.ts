@@ -179,4 +179,42 @@ export class FeedbackService {
       };
     }
   }
+  //Visualizza feedback utente id e tutorial id
+  async VisualizzaFeedbackUtenteTutorial(
+    userId: number,
+    tutorialId: number,
+  ): Promise<{
+    success: boolean;
+    feedback?: Feedback;
+    message?: string;
+  }> {
+    try {
+      if (!userId || !tutorialId) {
+        return {
+          success: false,
+          message: "ID utente e ID tutorial obbligatori.",
+        };
+      }
+      const feedback = await this.FeedbackDao.getFeedbackByUserIdAndTutorialId(
+        userId,
+        tutorialId,
+      );
+      if (!feedback) {
+        return {
+          success: false,
+          message: "Feedback non trovato.",
+        };
+      }
+      return {
+        success: true,
+        feedback: feedback,
+      };
+    } catch (error) {
+      console.error("Errore durante la visualizzazione del feedback:", error);
+      return {
+        success: false,
+        message: "Errore durante la visualizzazione del feedback.",
+      };
+    }
+  }
 }
