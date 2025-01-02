@@ -16,7 +16,7 @@ router.post("/creaQuiz", async (req, res) => {
     // Creazione delle istanze di Risposta
     const domande = domandeData.map((domanda: any) => {
       const risposte = domanda.risposte.map(
-        (risposta: any) => new Risposta(risposta.risposta, risposta.corretta)
+        (risposta: any) => new Risposta(risposta.risposta, risposta.corretta),
       );
       return new Domanda(domanda.domanda, risposte);
     });
@@ -49,7 +49,7 @@ router.post("/eseguiQuiz", async (req, res) => {
     const result = await quizService.eseguiQuiz(
       quizId,
       utenteId,
-      risposteUtente
+      risposteUtente,
     );
     res
       .status(result.success ? 200 : 400)

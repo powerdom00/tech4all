@@ -47,7 +47,7 @@ export class Tutorial {
     /** Valutazione iniziale */
     valutazione?: number | undefined,
     /** Identificativo unico */
-    id?: number | undefined
+    id?: number | undefined,
   ) {
     /** Assegna il titolo */
     this.titolo = titolo;
