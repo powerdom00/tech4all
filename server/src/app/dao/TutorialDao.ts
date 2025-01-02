@@ -12,7 +12,7 @@ export class TutorialDao {
   // Metodo per ottenere tutti i tutorial
   public async getAllTutorials(): Promise<Tutorial[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
-      "SELECT * FROM tutorial"
+      "SELECT * FROM tutorial",
     );
     return rows.map(
       (row: RowDataPacket) =>
@@ -22,8 +22,8 @@ export class TutorialDao {
           row.testo,
           row.categoria,
           row.valutazione,
-          row.id
-        )
+          row.id,
+        ),
     );
   }
 
@@ -31,7 +31,7 @@ export class TutorialDao {
   public async getTutorialById(id: number): Promise<Tutorial | null> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM tutorial WHERE id = ?",
-      [id]
+      [id],
     );
     if (rows.length > 0) {
       const row = rows[0];
@@ -41,7 +41,7 @@ export class TutorialDao {
         row.testo,
         row.categoria,
         row.valutazione,
-        row.id
+        row.id,
       );
     }
     return null;
@@ -56,7 +56,7 @@ export class TutorialDao {
 
     await this.db.query(
       "INSERT INTO tutorial (titolo, grafica, testo, categoria) VALUES (?, ?, ?, ?)",
-      [Titolo, grafica, testo, categoria]
+      [Titolo, grafica, testo, categoria],
     );
   }
 
@@ -73,7 +73,7 @@ export class TutorialDao {
     }
     await this.db.query(
       "UPDATE tutorial SET titolo = ?, grafica = ?, testo = ?, categoria = ?, valutazione = ? WHERE id = ?",
-      [Titolo, grafica, testo, categoria, valutazione, Id]
+      [Titolo, grafica, testo, categoria, valutazione, Id],
     );
   }
 
@@ -85,7 +85,7 @@ export class TutorialDao {
   public async getTutorialsByCategoria(categoria: string): Promise<Tutorial[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM tutorial WHERE categoria = ?",
-      [categoria]
+      [categoria],
     );
     return rows.map(
       (row: RowDataPacket) =>
@@ -95,16 +95,16 @@ export class TutorialDao {
           row.testo,
           row.categoria,
           row.valutazione,
-          row.id
-        )
+          row.id,
+        ),
     );
   }
 
   public async getTutorialsByValutazione(
-    order: "asc" | "desc"
+    order: "asc" | "desc",
   ): Promise<Tutorial[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
-      `SELECT * FROM tutorial ORDER BY valutazione ${order}`
+      `SELECT * FROM tutorial ORDER BY valutazione ${order}`,
     );
     return rows.map(
       (row: RowDataPacket) =>
@@ -114,8 +114,8 @@ export class TutorialDao {
           row.testo,
           row.categoria,
           row.valutazione,
-          row.id
-        )
+          row.id,
+        ),
     );
   }
 
@@ -128,7 +128,7 @@ export class TutorialDao {
     const parolaFormato = `%${parolaChiave}%`;
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       query,
-      [parolaFormato, parolaFormato]
+      [parolaFormato, parolaFormato, parolaFormato],
     );
 
     return rows.map(
@@ -136,11 +136,10 @@ export class TutorialDao {
         new Tutorial(
           row.titolo,
           row.grafica,
-          row.testo,
           row.categoria,
           row.valutazione,
-          row.id
-        )
+          row.id,
+        ),
     );
   }
 }

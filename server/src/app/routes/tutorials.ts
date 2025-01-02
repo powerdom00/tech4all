@@ -20,6 +20,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+router.get("/tutorial/search", async (req, res) => {
+  const { parolaChiave } = req.query;
+
+  try {
+    // Cast a string
+    const tutorials = await tutorialService.ricercaTutorial(
+      parolaChiave as string,
+    );
+    res.status(200).json(tutorials);
+  } catch (error) {
+    console.error("Errore durante la ricerca dei tutorial:", error);
+    res.status(500).json({ message: "Errore del server", error });
+  }
+}); 
 // Creazione di un nuovo tutorial
 router.post("/tutorial", upload.single("grafica"), async (req, res) => {
   const { titolo, testo, categoria } = req.body;
@@ -71,7 +85,7 @@ router.get("/tutorial/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const tutorial = await tutorialService.visualizzazioneTutorial(
-      parseInt(id)
+      parseInt(id),
     );
     if (tutorial) {
       res.status(200).json(tutorial);
@@ -90,27 +104,11 @@ router.get("/tutorial/filter", async (req, res) => {
   try {
     const tutorials = await tutorialService.filtroTutorial(
       categoria as string,
-      valutazione as "asc" | "desc"
+      valutazione as "asc" | "desc",
     );
     res.status(200).json(tutorials);
   } catch (error) {
     console.error("Errore durante il filtraggio dei tutorial:", error);
-    res.status(500).json({ message: "Errore del server", error });
-  }
-});
-
-// Ricerca tutorial basata su una parola chiave
-router.get("/tutorial/search", async (req, res) => {
-  const { parolaChiave } = req.query;
-
-  try {
-    // Cast a string
-    const tutorials = await tutorialService.ricercaTutorial(
-      parolaChiave as string
-    );
-    res.status(200).json(tutorials);
-  } catch (error) {
-    console.error("Errore durante la ricerca dei tutorial:", error);
     res.status(500).json({ message: "Errore del server", error });
   }
 });

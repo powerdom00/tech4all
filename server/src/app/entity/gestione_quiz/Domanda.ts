@@ -32,7 +32,7 @@ export class Domanda {
     domanda: string,
     risposte: Risposta[],
     quizId?: number,
-    id?: number
+    id?: number,
   ) {
     this.quizId = quizId;
     this.domanda = domanda;

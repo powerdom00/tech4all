@@ -30,7 +30,7 @@ export class Risposta {
     risposta: string,
     corretta: boolean,
     domandaId?: number,
-    id?: number
+    id?: number,
   ) {
     this.domandaId = domandaId;
     this.risposta = risposta;

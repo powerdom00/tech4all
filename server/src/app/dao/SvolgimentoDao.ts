@@ -20,11 +20,11 @@ export class SvolgimentoDao {
   // Metodo per ottenere uno svolgimento specifico per quiz e utente
   public async getSvolgimento(
     quizId: number,
-    utenteId: number
+    utenteId: number,
   ): Promise<Svolgimento | null> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM svolgimento WHERE quiz_id = ? AND utente_id = ?",
-      [quizId, utenteId]
+      [quizId, utenteId],
     );
 
     if (rows.length > 0) {
@@ -37,7 +37,7 @@ export class SvolgimentoDao {
           utente,
           row.esito,
           new Date(row.data_conseguimento),
-          row.risposte_esatte
+          row.risposte_esatte,
         );
       }
     }
@@ -47,13 +47,13 @@ export class SvolgimentoDao {
   // Metodo per ottenere tutti gli svolgimenti
   public async getAllSvolgimenti(): Promise<Svolgimento[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
-      "SELECT * FROM svolgimento"
+      "SELECT * FROM svolgimento",
     );
     const svolgimenti: Svolgimento[] = [];
     for (const row of rows) {
       const quiz: Quiz | null = await this.daoQuiz.getQuizById(row.quiz_id);
       const utente: Utente | null = await this.daoUtente.getUtenteById(
-        row.utente_id
+        row.utente_id,
       );
       if (quiz && utente) {
         svolgimenti.push(
@@ -62,8 +62,8 @@ export class SvolgimentoDao {
             utente,
             row.esito,
             new Date(row.dataConseguimento),
-            row.risposteEsatte
-          )
+            row.risposteEsatte,
+          ),
         );
       }
     }
@@ -79,7 +79,7 @@ export class SvolgimentoDao {
     const risposteEsatte = svolgimento.getRisposteEsatte();
     await this.db.query(
       "INSERT INTO svolgimento (quiz_id, utente_id, esito, data_conseguimento, risposte_esatte) VALUES (?, ?, ?, ?, ?)",
-      [quiz.getId(), utente.getId(), esito, dataConseguimento, risposteEsatte]
+      [quiz.getId(), utente.getId(), esito, dataConseguimento, risposteEsatte],
     );
   }
 
@@ -103,18 +103,18 @@ export class SvolgimentoDao {
         risposteEsatte,
         quiz.getId(),
         utente.getId(),
-      ]
+      ],
     );
   }
 
   // Metodo per eliminare uno svolgimento
   public async deleteSvolgimento(
     quizId: number,
-    utenteId: number
+    utenteId: number,
   ): Promise<void> {
     await this.db.query(
       "DELETE FROM svolgimento WHERE quizId = ? AND utenteId = ?",
-      [quizId, utenteId]
+      [quizId, utenteId],
     );
   }
 }

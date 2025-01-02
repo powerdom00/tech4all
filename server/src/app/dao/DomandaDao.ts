@@ -13,7 +13,7 @@ export class DomandaDao {
   // Metodo per ottenere tutte le domande
   public async getAllDomande(): Promise<Domanda[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
-      "SELECT * FROM domanda"
+      "SELECT * FROM domanda",
     );
     const domande: Domanda[] = [];
 
@@ -32,7 +32,7 @@ export class DomandaDao {
     //i valori inseriti dopo
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM domanda WHERE id = ?",
-      [id]
+      [id],
     );
     if (rows.length > 0) {
       const row = rows[0];
@@ -46,18 +46,18 @@ export class DomandaDao {
   private async getRisposteByDomandaId(domandaId: number): Promise<Risposta[]> {
     const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
       "SELECT * FROM risposta WHERE domanda_id = ?",
-      [domandaId] //domandaId corrisponde a fields, è il campo che andiamo ad inserire
+      [domandaId], //domandaId corrisponde a fields, è il campo che andiamo ad inserire
     );
     return rows.map(
       (row: RowDataPacket) =>
-        new Risposta(row.id, row.testo, row.correct, row.domanda_id)
+        new Risposta(row.id, row.testo, row.correct, row.domanda_id),
     );
   }
 
   // Metodo per creare una nuova domanda
   public async createDomanda(
     domanda: Domanda,
-    quizId: number | undefined
+    quizId: number | undefined,
   ): Promise<void> {
     //questo tipo di correzioni ci sono in tutti i dao, fondamentalmente i campi che si cercava di prendere
     // erano attributi privati, quindi sono stati sostituiti con i metodi getter
@@ -68,7 +68,7 @@ export class DomandaDao {
     // ]);
     const [result]: any = await this.db.query(
       "INSERT INTO domanda (quiz_id, domanda) VALUES (?, ?)",
-      [quizId, domandaText]
+      [quizId, domandaText],
     );
     domanda.setId(result.insertId);
   }
@@ -83,7 +83,7 @@ export class DomandaDao {
     }
     await this.db.query(
       "UPDATE domanda SET quiz_id = ?, domanda = ? WHERE id = ?",
-      [quizId, dmd, id]
+      [quizId, dmd, id],
     );
   }
 
