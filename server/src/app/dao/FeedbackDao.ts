@@ -121,4 +121,24 @@ export class FeedbackDao {
         ),
     );
   }
+  //Get Feedback da utente id e tutorialId getFeedbackByUserIdAndTutorialId
+  public async getFeedbackByUserIdAndTutorialId(
+    userId: number,
+    tutorialId: number,
+  ): Promise<Feedback | null> {
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await this.db.query(
+      "SELECT * FROM feedback WHERE utente_id = ? AND tutorial_id = ?",
+      [userId, tutorialId],
+    );
+    if (rows.length > 0) {
+      const row = rows[0];
+      return new Feedback(
+        row.valutazione,
+        row.commento,
+        row.utente_id,
+        row.tutorial_id,
+      );
+    }
+    return null;
+  }
 }

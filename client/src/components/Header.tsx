@@ -1,21 +1,49 @@
 import React, { useState } from "react";
 import "../css/Header.css";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Importa il router corretto per l'App Router
-import { useAuth } from "../../pages/context/AuthContext"; // Importa il contesto
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../pages/context/AuthContext";
 
 const Header: React.FC = () => {
-  const { user, logout } = useAuth(); // Usa il contesto per ottenere l'utente e la funzione logout
-  const [isDropdownVisible, setDropdownVisible] = useState(false); // Stato per il menu a tendina
-  const router = useRouter(); // Usa il router di next/navigation
+  const { user, logout } = useAuth();
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  interface SearchResult {
+    id: number;
+    titolo: string;
+  }
+
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]); // Stato per i risultati di ricerca
+  const router = useRouter();
 
   const handleLogout = () => {
-    logout(); // Esegui il logout
-    router.push("/"); // Reindirizza alla home (localhost:3000)
+    logout();
+    router.push("/");
   };
 
   const toggleDropdown = () => {
-    setDropdownVisible((prev) => !prev); // Toggle della visibilità del menu a tendina
+    setDropdownVisible((prev) => !prev);
+  };
+
+  const handleSearch = async (query: string) => {
+    setSearchQuery(query);
+    if (query.trim()) {
+      try {
+        const response = await fetch(`http://localhost:5000/tutorials/search?parolaChiave=${encodeURIComponent(query)}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSearchResults(data); // Aggiorna i risultati di ricerca
+        }
+      } catch (error) {
+        console.error("Errore durante la ricerca:", error);
+      }
+    } else {
+      setSearchResults([]); // Pulisci i risultati se non c'è input
+    }
+  };
+
+  const handleResultClick = (id: number) => {
+    router.push(`/Contenuto/${id}`); // Naviga al tutorial specifico
   };
 
   return (
@@ -26,7 +54,23 @@ const Header: React.FC = () => {
       <nav className="nav-container">
         {user && (
           <div className="search-bar-container">
-            <input type="text" placeholder="Cerca..." className="search-bar" />
+            <input
+              type="text"
+              placeholder="Cerca..."
+              className="search-bar"
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)} // Aggiorna la ricerca dinamicamente
+            />
+            {searchResults.length > 0 && (
+              <div className="search-dropdown">
+                {searchResults.map((result) => (
+                  <div key={result.id} className="search-result-item" onClick={() => handleResultClick(result.id)}>
+                    <div className="search-result-icon">🔍</div>
+                    <span className="search-result-title">{result.titolo}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -39,13 +83,13 @@ const Header: React.FC = () => {
             <li>
               <div className="user-avatar-container" onClick={toggleDropdown}>
                 <img
-                  src={"/Media/icona.png"} // Mostra l'immagine dell'utente o una di default
+                  src={"/Media/icona.png"}
                   alt="User Avatar"
-                  className="user-avatar" // Aggiungi una classe per lo stile
+                  className="user-avatar"
                 />
                 {isDropdownVisible && (
                   <div className="dropdown-menu">
-                    {user.ruolo ? ( // Se l'utente è amministratore
+                    {user.ruolo ? (
                       <Link href="/areaAmministratore">
                         <button style={{ color: "black" }}>
                           Visualizza Area Amministratore

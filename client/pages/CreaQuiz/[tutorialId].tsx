@@ -60,6 +60,10 @@ const CreaQuizPage: React.FC = () => {
 
   const handleSubmit = async () => {
     if (tutorialId) {
+      if (!isFormValid()) {
+        alert("Lunghezza domanda/risposta sbagliata");
+        return;
+      }
       try {
         await ApiControllerFacade.createQuiz(Number(tutorialId), nuoveDomande);
         router.push(`/Contenuto/${tutorialId}`);
@@ -70,11 +74,18 @@ const CreaQuizPage: React.FC = () => {
   };
 
   const isFormValid = () => {
-    return nuoveDomande.every(
-      (domanda) =>
-        domanda.domanda.trim() !== "" &&
-        domanda.risposte.every((risposta) => risposta.trim() !== "")
-    );
+    return nuoveDomande.every((domanda) => {
+      const isDomandaValid =
+        domanda.domanda.trim().length >= 2 &&
+        domanda.domanda.trim().length <= 255;
+
+      const areRisposteValid = domanda.risposte.every((risposta) => {
+        const len = risposta.trim().length;
+        return len >= 2 && len <= 255;
+      });
+
+      return isDomandaValid && areRisposteValid;
+    });
   };
 
   return (
@@ -124,7 +135,6 @@ const CreaQuizPage: React.FC = () => {
         </button>
         <button
           onClick={handleSubmit}
-          disabled={!isFormValid()}
           className="salva-button"
         >
           Salva quiz

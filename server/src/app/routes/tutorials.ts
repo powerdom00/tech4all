@@ -20,20 +20,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.get("/tutorial/search", async (req, res) => {
+router.get("/search", async (req, res) => {
   const { parolaChiave } = req.query;
 
   try {
-    // Cast a string
-    const tutorials = await tutorialService.ricercaTutorial(
-      parolaChiave as string,
-    );
+    const tutorials = await tutorialService.ricercaTutorial(parolaChiave as string);
     res.status(200).json(tutorials);
   } catch (error) {
     console.error("Errore durante la ricerca dei tutorial:", error);
     res.status(500).json({ message: "Errore del server", error });
   }
-}); 
+});
+
 // Creazione di un nuovo tutorial
 router.post("/tutorial", upload.single("grafica"), async (req, res) => {
   const { titolo, testo, categoria } = req.body;
