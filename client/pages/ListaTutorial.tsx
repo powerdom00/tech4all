@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext"; // Assicurati di importare correttamente il contesto
 import { Tutorial } from "@/interfacce/Tutorial";
-import ApiFacade from "@/facade/ApiFacade";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const ListTutorials = () => {
   const [tutorials, setTutorials] = useState<Tutorial[]>([]);
@@ -16,7 +16,7 @@ const ListTutorials = () => {
 
   useEffect(() => {
     const fetchTutorials = async () => {
-      const data = await ApiFacade.getTutorials();
+      const data = await ApiControllerFacade.getTutorials();
       setTutorials(data);
       setFilteredTutorials(data);
     };

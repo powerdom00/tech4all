@@ -10,7 +10,7 @@ import FeedbackComponent from "@/components/Feedback";
 import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import ApiFacade from "@/facade/ApiFacade";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const TutorialPage = () => {
   const router = useRouter();
@@ -25,7 +25,7 @@ const TutorialPage = () => {
   useEffect(() => {
     const checkQuizExists = async () => {
       if (id) {
-        const { exists, quizId } = await ApiFacade.checkQuizExists(
+        const { exists, quizId } = await ApiControllerFacade.checkQuizExists(
           parseInt(id as string)
         );
         setQuizExists(exists);
@@ -44,7 +44,7 @@ const TutorialPage = () => {
 
   const handleDeleteQuiz = async () => {
     if (quizId) {
-      const { success, message } = await ApiFacade.deleteQuiz(quizId);
+      const { success, message } = await ApiControllerFacade.deleteQuiz(quizId);
       if (success) {
         setQuizExists(false);
         setQuizId(null);
@@ -56,7 +56,7 @@ const TutorialPage = () => {
 
   const handleDeleteTutorial = async () => {
     if (id) {
-      await ApiFacade.deleteTutorial(parseInt(id as string));
+      await ApiControllerFacade.deleteTutorial(parseInt(id as string));
       router.push("/ListaTutorial");
     }
   };

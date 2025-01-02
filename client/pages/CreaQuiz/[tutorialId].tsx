@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import "../../src/css/CreaQuiz.css";
-import ApiFacade from "@/facade/ApiFacade";
+import axios from "axios";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const CreaQuizPage: React.FC = () => {
   const router = useRouter();
@@ -64,7 +65,7 @@ const CreaQuizPage: React.FC = () => {
         return;
       }
       try {
-        await ApiFacade.createQuiz(Number(tutorialId), nuoveDomande);
+        await ApiControllerFacade.createQuiz(Number(tutorialId), nuoveDomande);
         router.push(`/Contenuto/${tutorialId}`);
       } catch (error) {
         console.error("Errore nella creazione del quiz:", error);

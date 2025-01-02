@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Feedback } from "@/interfacce/Feedback";
 import { useAuth } from "../../pages/context/AuthContext";
 import "../css/Feedback.css";
-import ApiFacade from "@/facade/ApiFacade";
-
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 type Props = {
   id: string; // tutorialId passato dalla pagina specifica del tutorial
 };
@@ -30,7 +29,9 @@ const FeedbackComponent = ({ id }: Props) => {
   // Estrai fetchFeedback come funzione riutilizzabile
   const fetchFeedback = async () => {
     try {
-      const result = await ApiFacade.getFeedbackByTutorialId(parseInt(id, 10));
+      const result = await ApiControllerFacade.getFeedbackByTutorialId(
+        parseInt(id, 10)
+      );
       console.log("Risultato feedback:", result);
       setFeedback(result);
     } catch (error) {
@@ -66,13 +67,13 @@ const FeedbackComponent = ({ id }: Props) => {
 
 try {
       // Verifica se esiste già un feedback per lo stesso utente e tutorial
-      const feedbackList = await ApiFacade.getFeedbackByTutorialId(parseInt(id, 10));
+      const feedbackList = await ApiControllerFacade.getFeedbackByTutorialId(parseInt(id, 10));
       const existingFeedback = feedbackList.find(feedback => feedback.utenteId === utenteId);
 
       if (existingFeedback) {
         alert("Feedback già esistente per questo tutorial!");
       } else {
-        await ApiFacade.createFeedback(
+        await ApiControllerFacade.createFeedback(
           valutazione as number,
           commento,
           utenteId,
@@ -91,7 +92,7 @@ try {
 
   const handleDeleteFeedback = async (utenteId: number, tutorialId: string) => {
     try {
-      const result = await ApiFacade.deleteFeedback(
+      const result = await ApiControllerFacade.deleteFeedback(
         utenteId,
         parseInt(tutorialId, 10)
       );

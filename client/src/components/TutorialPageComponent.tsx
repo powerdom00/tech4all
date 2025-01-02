@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Tutorial } from "@/interfacce/Tutorial";
-import ApiFacade from "@/facade/ApiFacade";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 type Props = {
   id: string;
@@ -11,7 +11,7 @@ const TutorialPageComponent = ({ id }: Props) => {
 
   useEffect(() => {
     const fetchTutorial = async () => {
-      const data = await ApiFacade.getTutorialById(Number(id));
+      const data = await ApiControllerFacade.getTutorialById(Number(id));
       setTutorial(data);
     };
 

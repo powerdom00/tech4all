@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import "../src/css/AreaUtente.css";
 import Link from "next/link";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const AreaAmministratore: React.FC = () => {
   const { user } = useAuth();
@@ -31,20 +32,18 @@ const AreaAmministratore: React.FC = () => {
 
   // Funzione per ottenere la lista degli utenti dal backend
   const fetchUsers = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
-      const response = await fetch(
-        "http://localhost:5000/accounts/visualizzaUtenti"
-      );
-      const data = await response.json();
+      const data = await ApiControllerFacade.getUsers();
       console.log("Risposta dal server:", data); // Verifica la struttura della risposta
-      if (data.success) {
-        setUtenti(data.utenti); // Imposta l'array nel tuo stato
-      } else {
-        setUtenti([]); // In caso di errore, imposta un array vuoto
-      }
+      setUtenti(data);
     } catch (error) {
       console.error("Errore durante il recupero degli utenti:", error);
+      setError("Errore durante il recupero degli utenti.");
       setUtenti([]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
