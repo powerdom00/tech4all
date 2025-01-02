@@ -3,6 +3,7 @@ import React from "react";
 import "../src/css/Login.css";
 import { useRouter } from "next/router";
 import { useAuth } from "./context/AuthContext";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 export default function LoginPage() {
   const { login } = useAuth(); // Usa il metodo login dal contesto
@@ -43,23 +44,10 @@ export default function LoginPage() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: sanitizedEmail,
-          password: sanitizedPassword,
-        }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || "Email o password errati.");
-      }
-
-      const data = await res.json();
+      const data = await ApiControllerFacade.loginUser(
+        sanitizedEmail,
+        sanitizedPassword
+      );
 
       console.log("Dati utente ricevuti dal backend:", data);
       // Passa i dati dell'utente al contesto

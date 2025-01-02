@@ -3,8 +3,7 @@ import "../css/Quiz.css";
 import axios from "axios";
 import { useAuth } from "../../pages/context/AuthContext";
 import { Domanda, Risposta } from "@/interfacce/Quiz";
-import ApiFacade from "@/facade/ApiFacade";
-
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 const DomandaComponent: React.FC<{
   domanda: Domanda;
   risposte: Risposta[];
@@ -81,9 +80,8 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
   useEffect(() => {
     const fetchQuizData = async () => {
       try {
-        const { domande, risposte } = await ApiFacade.getQuizByTutorialId(
-          tutorialId
-        );
+        const { domande, risposte } =
+          await ApiControllerFacade.getQuizByTutorialId(tutorialId);
         setDomandeQuiz(domande);
         setRisposteQuiz(risposte);
       } catch (error) {
@@ -137,7 +135,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
 
     if (quizId && utenteId) {
       try {
-        const { success, message } = await ApiFacade.executeQuiz(
+        const { success, message } = await ApiControllerFacade.executeQuiz(
           quizId,
           risposteUtente,
           utenteId

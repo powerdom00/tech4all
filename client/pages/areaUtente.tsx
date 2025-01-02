@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import "../src/css/AreaUtente.css";
 import Link from "next/link";
-import ApiFacade from "@/facade/ApiFacade";
+import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const UserPage: React.FC = () => {
   const { user, updateUser } = useAuth();
@@ -35,7 +35,7 @@ const UserPage: React.FC = () => {
 
   const fetchUserFeedback = async (userId: number) => {
     try {
-      const feedback = await ApiFacade.getFeedbackByUserId(userId);
+      const feedback = await ApiControllerFacade.getFeedbackByUserId(userId);
       setFeedbackList(feedback);
     } catch (error) {
       console.error("Errore durante il recupero dei feedback:", error);
