@@ -8,7 +8,7 @@ jobs:
     env:
       DB_HOST: "localhost"
       DB_USER: "root"
-      DB_PASSWORD: ""
+      DB_PASSWORD: "password"
       DB_NAME: "tech4all"
     
           
