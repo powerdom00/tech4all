@@ -2,12 +2,12 @@ USE tech4all;
 
 -- Popolamento della tabella utente
 INSERT INTO utente (email, password, nome, cognome, ruolo, quiz_superati) VALUES
-('user1@example.com', 'password123', 'Mario', 'Rossi', 'utente', 0),
-('user2@example.com', 'password123', 'Luigi', 'Verdi', 'utente', 0),
-('admin@example.com', 'adminpass', 'Admin', 'User', 'admin', 0),
-('user3@example.com', 'password123', 'Giovanni', 'Bianchi', 'utente', 0),
-('user4@example.com', 'password123', 'Silvana', 'Neri', 'utente', 0),
-('user5@example.com', 'password123', 'Paola', 'Gialli', 'utente', 0);
+('user1@example.com', 'Password1@', 'Mario', 'Rossi', 'utente', 0),
+('user2@example.com', 'Password2@', 'Luigi', 'Verdi', 'utente', 0),
+('admin@example.com', 'AdminPass3@', 'Admin', 'User', 'admin', 0),
+('user3@example.com', 'Password4@', 'Giovanni', 'Bianchi', 'utente', 0),
+('user4@example.com', 'Password5@', 'Silvana', 'Neri', 'utente', 0),
+('user5@example.com', 'Password6@', 'Paola', 'Gialli', 'utente', 0);
 
 
 INSERT INTO tutorial (titolo, grafica, testo, categoria) VALUES
