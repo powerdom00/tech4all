@@ -22,14 +22,29 @@ describe("AutenticazioneService - Test registrazione", () => {
 
   it("TC Email già registrata", async () => {
     // Arrange
-    const existingUser = new Utente(1, "test@example.com", "Password1!", "Nome", "Cognome", false, 0);
+    const existingUser = new Utente(
+      1,
+      "test@example.com",
+      "Password1!",
+      "Nome",
+      "Cognome",
+      false,
+      0,
+    );
     mockUtenteDao.getUtenteByEmail.mockResolvedValueOnce(existingUser);
 
     // Act
-    const result = await autenticazioneService.registraUtente("test@example.com", "Password1!", "Nome", "Cognome");
+    const result = await autenticazioneService.registraUtente(
+      "test@example.com",
+      "Password1!",
+      "Nome",
+      "Cognome",
+    );
 
     // Assert
-    expect(mockUtenteDao.getUtenteByEmail).toHaveBeenCalledWith("test@example.com");
+    expect(mockUtenteDao.getUtenteByEmail).toHaveBeenCalledWith(
+      "test@example.com",
+    );
     expect(result).toEqual({
       success: false,
       message: "Email già in uso.",
@@ -38,18 +53,29 @@ describe("AutenticazioneService - Test registrazione", () => {
 
   it("TC Formato password non valido", async () => {
     // Act
-    const result = await autenticazioneService.registraUtente("test@example.com", "pass", "Nome", "Cognome");
+    const result = await autenticazioneService.registraUtente(
+      "test@example.com",
+      "pass",
+      "Nome",
+      "Cognome",
+    );
 
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "La password deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale.",
+      message:
+        "La password deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale.",
     });
   });
 
   it("TC Nome non valido", async () => {
     // Act
-    const result = await autenticazioneService.registraUtente("test@example.com", "Password1!", "A", "Cognome");
+    const result = await autenticazioneService.registraUtente(
+      "test@example.com",
+      "Password1!",
+      "A",
+      "Cognome",
+    );
 
     // Assert
     expect(result).toEqual({
@@ -60,7 +86,12 @@ describe("AutenticazioneService - Test registrazione", () => {
 
   it("TC Cognome non valido", async () => {
     // Act
-    const result = await autenticazioneService.registraUtente("test@example.com", "Password1!", "Nome", "B");
+    const result = await autenticazioneService.registraUtente(
+      "test@example.com",
+      "Password1!",
+      "Nome",
+      "B",
+    );
 
     // Assert
     expect(result).toEqual({
@@ -71,7 +102,12 @@ describe("AutenticazioneService - Test registrazione", () => {
 
   it("TC Formato email non valido", async () => {
     // Act
-    const result = await autenticazioneService.registraUtente("invalid-email", "Password1!", "Nome", "Cognome");
+    const result = await autenticazioneService.registraUtente(
+      "invalid-email",
+      "Password1!",
+      "Nome",
+      "Cognome",
+    );
 
     // Assert
     expect(result).toEqual({
@@ -82,7 +118,15 @@ describe("AutenticazioneService - Test registrazione", () => {
 
   it("TC Registrazione completata", async () => {
     // Arrange
-    const newUser = new Utente(undefined, "test@example.com", "Password1!", "Nome", "Cognome", false, 0);
+    const newUser = new Utente(
+      undefined,
+      "test@example.com",
+      "Password1!",
+      "Nome",
+      "Cognome",
+      false,
+      0,
+    );
     mockUtenteDao.getUtenteByEmail.mockResolvedValueOnce(null);
     mockUtenteDao.createUtente.mockResolvedValueOnce();
 
@@ -91,11 +135,13 @@ describe("AutenticazioneService - Test registrazione", () => {
       "test@example.com",
       "Password1!",
       "Nome",
-      "Cognome"
+      "Cognome",
     );
 
     // Assert
-    expect(mockUtenteDao.getUtenteByEmail).toHaveBeenCalledWith("test@example.com");
+    expect(mockUtenteDao.getUtenteByEmail).toHaveBeenCalledWith(
+      "test@example.com",
+    );
     expect(mockUtenteDao.createUtente).toHaveBeenCalledWith(newUser);
     expect(result).toEqual({
       success: true,
