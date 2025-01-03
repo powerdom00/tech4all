@@ -148,7 +148,8 @@ export class AutenticazioneService {
       if (!passwordRegex.test(password)) {
         return {
           success: false,
-          message: "La password deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale.",
+          message:
+            "La password deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale.",
         };
       }
 
