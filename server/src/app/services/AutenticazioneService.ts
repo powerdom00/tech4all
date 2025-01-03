@@ -120,6 +120,38 @@ export class AutenticazioneService {
         };
       }
 
+      //lunghezza nome compresa tra 1 e 20 caratteri
+      if (nome.length < 2 || nome.length > 20) {
+        return {
+          success: false,
+          message: "Il nome fornito non è valido.",
+        };
+      }
+
+      //lunghezza cognome compresa tra 1 e 20 caratteri
+      if (cognome.length < 2 || cognome.length > 20) {
+        return {
+          success: false,
+          message: "Il cognome fornito non è valido.",
+        };
+      }
+
+      const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (!emailRegex.test(email)) {
+        return {
+          success: false,
+          message: "Formato email non valido.",
+        };
+      }
+
+      const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*\d)(?=.*[A-Z]).{8,14}$/;
+      if (!passwordRegex.test(password)) {
+        return {
+          success: false,
+          message: "La password deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un carattere speciale.",
+        };
+      }
+
       const utenteEsistente = await this.utenteDao.getUtenteByEmail(email);
       if (utenteEsistente) {
         return {
@@ -164,6 +196,4 @@ export class AutenticazioneService {
       return false;
     }
   }
-
-
 }
