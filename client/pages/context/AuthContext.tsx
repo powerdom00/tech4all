@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } else {
         console.error(
           "L'utente salvato nel localStorage non contiene un ID valido:",
-          parsedUser
+          parsedUser,
         );
       }
     }

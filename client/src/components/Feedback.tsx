@@ -30,7 +30,7 @@ const FeedbackComponent = ({ id }: Props) => {
   const fetchFeedback = async () => {
     try {
       const result = await ApiControllerFacade.getFeedbackByTutorialId(
-        parseInt(id, 10)
+        parseInt(id, 10),
       );
       console.log("Risultato feedback:", result);
       setFeedback(result);
@@ -65,10 +65,14 @@ const FeedbackComponent = ({ id }: Props) => {
       return;
     }
 
-try {
+    try {
       // Verifica se esiste già un feedback per lo stesso utente e tutorial
-      const feedbackList = await ApiControllerFacade.getFeedbackByTutorialId(parseInt(id, 10));
-      const existingFeedback = feedbackList.find(feedback => feedback.utenteId === utenteId);
+      const feedbackList = await ApiControllerFacade.getFeedbackByTutorialId(
+        parseInt(id, 10),
+      );
+      const existingFeedback = feedbackList.find(
+        (feedback) => feedback.utenteId === utenteId,
+      );
 
       if (existingFeedback) {
         alert("Feedback già esistente per questo tutorial!");
@@ -77,7 +81,7 @@ try {
           valutazione as number,
           commento,
           utenteId,
-          parseInt(id, 10)
+          parseInt(id, 10),
         );
 
         alert("Feedback creato con successo!");
@@ -94,7 +98,7 @@ try {
     try {
       const result = await ApiControllerFacade.deleteFeedback(
         utenteId,
-        parseInt(tutorialId, 10)
+        parseInt(tutorialId, 10),
       );
 
       if (result.success) {
@@ -104,9 +108,9 @@ try {
             ? prev.filter(
                 (item) =>
                   item.utenteId !== utenteId ||
-                  item.tutorialId !== parseInt(tutorialId, 10)
+                  item.tutorialId !== parseInt(tutorialId, 10),
               )
-            : null
+            : null,
         );
       } else {
         alert("Errore durante l'eliminazione del feedback");
@@ -146,7 +150,7 @@ try {
                 onClick={() =>
                   handleDeleteFeedback(
                     item.utenteId,
-                    item.tutorialId.toString()
+                    item.tutorialId.toString(),
                   )
                 }
               >

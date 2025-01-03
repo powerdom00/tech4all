@@ -154,4 +154,16 @@ export class AutenticazioneService {
       };
     }
   }
+  // Metodo per controllare se un'email esiste nel database
+  async checkEmailExists(email: string): Promise<boolean> {
+    try {
+      const user = await this.utenteDao.getUtenteByEmail(email);
+      return !!user;
+    } catch (error) {
+      console.error("Errore durante il controllo dell'email:", error);
+      return false;
+    }
+  }
+
+
 }

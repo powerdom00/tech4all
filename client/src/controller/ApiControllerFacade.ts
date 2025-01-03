@@ -38,26 +38,26 @@ class ApiControllerFacade {
 
   // Metodi per interagire con il QuizController
   async checkQuizExists(
-    tutorialId: number
+    tutorialId: number,
   ): Promise<{ exists: boolean; quizId: number | null }> {
     return this.quizController.checkQuizExists(tutorialId);
   }
 
   async getQuizByTutorialId(
-    tutorialId: number
+    tutorialId: number,
   ): Promise<{ domande: Domanda[]; risposte: Risposta[] }> {
     return this.quizController.getQuizByTutorialId(tutorialId);
   }
 
   async createQuiz(
     tutorialId: number,
-    nuoveDomande: { domanda: string; risposte: string[]; corretta: number }[]
+    nuoveDomande: { domanda: string; risposte: string[]; corretta: number }[],
   ): Promise<void> {
     return this.quizController.createQuiz(tutorialId, nuoveDomande);
   }
 
   async deleteQuiz(
-    id: number
+    id: number,
   ): Promise<{ success: boolean; message?: string }> {
     return this.quizController.deleteQuiz(id);
   }
@@ -65,7 +65,7 @@ class ApiControllerFacade {
   async executeQuiz(
     quizId: number,
     risposteUtente: number[],
-    utenteId: number
+    utenteId: number,
   ): Promise<{ success: boolean; message?: string }> {
     return this.quizController.executeQuiz(quizId, risposteUtente, utenteId);
   }
@@ -75,19 +75,19 @@ class ApiControllerFacade {
     valutazione: number,
     commento: string,
     utenteId: number,
-    tutorialId: number
+    tutorialId: number,
   ): Promise<void> {
     return this.feedbackController.createFeedback(
       valutazione,
       commento,
       utenteId,
-      tutorialId
+      tutorialId,
     );
   }
 
   async deleteFeedback(
     utenteId: number,
-    tutorialId: number
+    tutorialId: number,
   ): Promise<{ success: boolean; message?: string }> {
     return this.feedbackController.deleteFeedback(utenteId, tutorialId);
   }
@@ -105,7 +105,7 @@ class ApiControllerFacade {
     nome: string,
     cognome: string,
     email: string,
-    password: string
+    password: string,
   ): Promise<void> {
     return this.userController.registerUser(nome, cognome, email, password);
   }
@@ -116,6 +116,10 @@ class ApiControllerFacade {
 
   async getUsers(): Promise<any[]> {
     return this.userController.getUsers();
+  }
+
+  async checkEmailExists(email: string): Promise<boolean> {
+    return this.userController.checkEmailExists(email);
   }
 }
 

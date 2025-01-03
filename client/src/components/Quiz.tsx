@@ -37,11 +37,11 @@ const DomandaComponent: React.FC<{
                   ? isCorrect && isSelected
                     ? "corretta-selezionata"
                     : isSelected
-                    ? "errata-selezionata"
-                    : "non-selezionata"
+                      ? "errata-selezionata"
+                      : "non-selezionata"
                   : isSelected
-                  ? "selezionata"
-                  : "non-selezionata"
+                    ? "selezionata"
+                    : "non-selezionata"
               } ${isSelected ? "selezionata-bold" : ""}`}
             >
               {risposta.risposta}
@@ -94,13 +94,13 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
 
   const tutteRisposteDate = () => {
     return domandeQuiz.every((domanda) =>
-      Object.keys(risposteSelezionate).includes(domanda.id.toString())
+      Object.keys(risposteSelezionate).includes(domanda.id.toString()),
     );
   };
 
   const handleCambioRisposta = (
     domandaId: number,
-    rispostaId: number
+    rispostaId: number,
   ): void => {
     if (!bloccato) {
       setRisposteSelezionate((prev) => ({
@@ -117,7 +117,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
       const rispostaSelezionataId = risposteSelezionate[domanda.id];
       const rispostaCorretta = risposteQuiz.find(
         (risposta: Risposta) =>
-          risposta.domanda_id === domanda.id && risposta.corretta
+          risposta.domanda_id === domanda.id && risposta.corretta,
       );
 
       if (rispostaCorretta && rispostaCorretta.id === rispostaSelezionataId) {
@@ -138,7 +138,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
         const { success, message } = await ApiControllerFacade.executeQuiz(
           quizId,
           risposteUtente,
-          utenteId
+          utenteId,
         );
 
         if (success) {
@@ -149,7 +149,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
       } catch (error) {
         console.error(
           "Errore del server nell'invio del risultato del quiz:",
-          error
+          error,
         );
       }
     }
@@ -159,7 +159,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
     (rispostaId) => {
       const risposta = risposteQuiz.find((r: Risposta) => r.id === rispostaId);
       return risposta && risposta.corretta;
-    }
+    },
   ).length;
 
   const minRisposteCorrette = Math.ceil(domandeQuiz.length * 0.7);
@@ -177,7 +177,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
           key={domanda.id}
           domanda={domanda}
           risposte={risposteQuiz.filter(
-            (risposta) => risposta.domanda_id === domanda.id
+            (risposta) => risposta.domanda_id === domanda.id,
           )}
           rispostaSelezionata={risposteSelezionate[domanda.id]}
           onChange={handleCambioRisposta}

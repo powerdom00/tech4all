@@ -22,7 +22,7 @@ const CreaQuizPage: React.FC = () => {
   const handleChangeRisposta = (
     indexDomanda: number,
     indexRisposta: number,
-    value: string
+    value: string,
   ) => {
     setNuoveDomande((prev) => {
       const updated = [...prev];
@@ -33,7 +33,7 @@ const CreaQuizPage: React.FC = () => {
 
   const handleChangeCorretta = (
     indexDomanda: number,
-    indexCorretta: number
+    indexCorretta: number,
   ) => {
     setNuoveDomande((prev) => {
       const updated = [...prev];
@@ -133,10 +133,7 @@ const CreaQuizPage: React.FC = () => {
         >
           Rimuovi domanda
         </button>
-        <button
-          onClick={handleSubmit}
-          className="salva-button"
-        >
+        <button onClick={handleSubmit} className="salva-button">
           Salva quiz
         </button>
       </div>

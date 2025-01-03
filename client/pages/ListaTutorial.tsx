@@ -36,7 +36,7 @@ const ListTutorials = () => {
     setSelectedCategory(category);
     if (category) {
       setFilteredTutorials(
-        tutorials.filter((tutorial) => tutorial.categoria === category)
+        tutorials.filter((tutorial) => tutorial.categoria === category),
       );
     } else {
       setFilteredTutorials(tutorials);
@@ -67,7 +67,7 @@ const ListTutorials = () => {
         >
           <option value="">Tutte</option>
           {Array.from(
-            new Set(tutorials.map((tutorial) => tutorial.categoria))
+            new Set(tutorials.map((tutorial) => tutorial.categoria)),
           ).map((category) => (
             <option key={category} value={category}>
               {category}

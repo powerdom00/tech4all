@@ -43,10 +43,38 @@ export default function LoginPage() {
       return;
     }
 
+    //Lunghezza email tra 6 e 30 caratteri
+    if (sanitizedEmail.length < 6 || sanitizedEmail.length > 30) {
+      setError("L'email deve contenere tra 6 e 30 caratteri.");
+      return;
+    }
+
+    //formato email non valido Formato: “ ^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$”
+    if (
+      !sanitizedEmail.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    ) {
+      setError("Formato email non valido.");
+      return;
+    }
+
+    //Lunghezza password tra 8 e 14 caratteri
+    if (sanitizedPassword.length < 8 || sanitizedPassword.length > 14) {
+      setError("La password deve contenere tra 8 e 14 caratteri.");
+      return;
+    }
+
+     //formato password non valido Formato: “?=.*[!@#$%^&*])(?=.*\\d)(?=.*[A-Z]).{8,14}”
+    if (
+      !sanitizedPassword.match(/(?=.*[!@#$%^&*])(?=.*\d)(?=.*[A-Z]).{8,14}/)
+    ) {
+      setError("Formato password non valido.");
+      return;
+    }
+
     try {
       const data = await ApiControllerFacade.loginUser(
         sanitizedEmail,
-        sanitizedPassword
+        sanitizedPassword,
       );
 
       console.log("Dati utente ricevuti dal backend:", data);

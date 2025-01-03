@@ -13,7 +13,7 @@ export class FeedbackController {
     valutazione: number,
     commento: string,
     utenteId: number,
-    tutorialId: number
+    tutorialId: number,
   ): Promise<void> {
     try {
       const response = await axios.post(`${this.baseUrl}/creaFeedback`, {
@@ -24,7 +24,7 @@ export class FeedbackController {
       });
       if (response.status !== 201) {
         throw new Error(
-          response.data.message || "Errore nella creazione del feedback"
+          response.data.message || "Errore nella creazione del feedback",
         );
       }
     } catch (error) {
@@ -36,11 +36,11 @@ export class FeedbackController {
   // Metodo per eliminare un feedback
   async deleteFeedback(
     utenteId: number,
-    tutorialId: number
+    tutorialId: number,
   ): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await axios.delete(
-        `${this.baseUrl}/eliminaFeedback/${utenteId}/${tutorialId}`
+        `${this.baseUrl}/eliminaFeedback/${utenteId}/${tutorialId}`,
       );
       if (response.status === 200) {
         return { success: true };
@@ -61,7 +61,7 @@ export class FeedbackController {
   async getFeedbackByTutorialId(tutorialId: number): Promise<Feedback[]> {
     try {
       const response = await axios.get(
-        `${this.baseUrl}/visualizzaFeedback/${tutorialId}`
+        `${this.baseUrl}/visualizzaFeedback/${tutorialId}`,
       );
       return response.data.Feedback;
     } catch (error) {
@@ -74,7 +74,7 @@ export class FeedbackController {
   async getFeedbackByUserId(utenteId: number): Promise<Feedback[]> {
     try {
       const response = await axios.get(
-        `${this.baseUrl}/visualizzaFeedbackUtente/${utenteId}`
+        `${this.baseUrl}/visualizzaFeedbackUtente/${utenteId}`,
       );
       return response.data.Feedback;
     } catch (error) {
