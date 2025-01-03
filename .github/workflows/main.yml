@@ -5,6 +5,13 @@ on: [pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      DB_HOST: "localhost"
+      DB_USER: "root"
+      DB_PASSWORD: ""
+      DB_NAME: "tech4all"
+    
+          
 
     strategy:
       matrix:
@@ -12,6 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: create .env file
+        run: echo "DB_HOST=$DB_HOST\nDB_USER=$DB_USER\nDB_PASSWORD=$DB_PASSWORD\nDB_NAME=$DB_NAME" > .env 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
