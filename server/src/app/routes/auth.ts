@@ -59,4 +59,16 @@ router.post("/logout", async (req, res) => {
   }
 });
 
+// Check Email
+router.post("/check-email", async (req, res) => {
+  const { email } = req.body;
+  try {
+    const autenticazioneService = new AutenticazioneService();
+    const emailExists = await autenticazioneService.checkEmailExists(email);
+    res.status(200).json({ exists: emailExists });
+  } catch (error) {
+    res.status(500).json({ message: "Errore del server", error });
+  }
+});
+
 export default router;

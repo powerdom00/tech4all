@@ -15,7 +15,7 @@ const App: React.FC = () => {
       router.push("/register"); // Redirect alla pagina di registrazione
     } else if (choice === "no") {
       setMessage(
-        "Per imparare a registrarti, guarda il video tutorial che trovi al centro della pagina."
+        "Per imparare a registrarti, guarda il video tutorial che trovi al centro della pagina.",
       );
     }
   };

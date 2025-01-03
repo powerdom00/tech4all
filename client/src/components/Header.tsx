@@ -29,7 +29,9 @@ const Header: React.FC = () => {
     setSearchQuery(query);
     if (query.trim()) {
       try {
-        const response = await fetch(`http://localhost:5000/tutorials/search?parolaChiave=${encodeURIComponent(query)}`);
+        const response = await fetch(
+          `http://localhost:5000/tutorials/search?parolaChiave=${encodeURIComponent(query)}`,
+        );
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data); // Aggiorna i risultati di ricerca
@@ -64,7 +66,11 @@ const Header: React.FC = () => {
             {searchResults.length > 0 && (
               <div className="search-dropdown">
                 {searchResults.map((result) => (
-                  <div key={result.id} className="search-result-item" onClick={() => handleResultClick(result.id)}>
+                  <div
+                    key={result.id}
+                    className="search-result-item"
+                    onClick={() => handleResultClick(result.id)}
+                  >
                     <div className="search-result-icon">🔍</div>
                     <span className="search-result-title">{result.titolo}</span>
                   </div>

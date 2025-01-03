@@ -23,37 +23,44 @@ const Register = () => {
     return input.replace(/<\/?[^>]+(>|$)/g, "").trim();
   };
 
-  const validateInputs = (): string | null => {
+  const validateInputs = async (): Promise<string | null> => {
     const sanitizedNome = sanitizeInput(nome);
     const sanitizedCognome = sanitizeInput(cognome);
     const sanitizedEmail = sanitizeInput(email);
 
+    const nomeCognomeRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ'’-]+$/;
+
     if (
       !sanitizedNome ||
       sanitizedNome.length > 50 ||
-      /\d|\W/.test(sanitizedNome)
+      !nomeCognomeRegex.test(sanitizedNome)
     ) {
-      return "Il nome deve contenere solo lettere e massimo 50 caratteri.";
+      return "Il nome deve contenere solo lettere (maiuscole e minuscole), lettere accentate, apostrofi e trattini, e massimo 50 caratteri.";
     }
 
     if (
       !sanitizedCognome ||
       sanitizedCognome.length > 50 ||
-      /\d|\W/.test(sanitizedCognome)
+      !nomeCognomeRegex.test(sanitizedCognome)
     ) {
-      return "Il cognome deve contenere solo lettere e massimo 50 caratteri.";
+      return "Il cognome deve contenere solo lettere (maiuscole e minuscole), lettere accentate, apostrofi e trattini, e massimo 50 caratteri.";
     }
 
-    if (
-      !sanitizedEmail.includes("@") ||
-      !/\.(com|it)$/.test(sanitizedEmail) ||
-      sanitizedEmail.length > 60
-    ) {
-      return "L'email deve essere valida, contenere '@' e terminare con '.com' o '.it' (max 60 caratteri).";
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(sanitizedEmail)) {
+      return "L'email deve essere valida e rispettare il formato richiesto.";
     }
 
-    if (!password || password.length < 8) {
-      return "La password deve essere di almeno 8 caratteri.";
+    // Controlla se l'email è già registrata
+    const emailExists =
+      await ApiControllerFacade.checkEmailExists(sanitizedEmail);
+    if (emailExists) {
+      return "L'email è già registrata.";
+    }
+
+    const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*\d)(?=.*[A-Z]).{8,14}$/;
+    if (!passwordRegex.test(password)) {
+      return "La password deve essere compreso tra 8 e 14 caratteri, una lettera maiuscola, un numero e un carattere speciale.";
     }
 
     if (password !== confirmPassword) {
@@ -68,7 +75,7 @@ const Register = () => {
 
     // Sanifica e valida gli input
     setError(null);
-    const validationError = validateInputs();
+    const validationError = await validateInputs();
     if (validationError) {
       setError(validationError);
       return;
@@ -80,7 +87,7 @@ const Register = () => {
         sanitizeInput(nome),
         sanitizeInput(cognome),
         sanitizeInput(email),
-        sanitizeInput(password)
+        sanitizeInput(password),
       );
 
       setSuccess("Registrazione completata con successo! Benvenuto!");
@@ -89,7 +96,7 @@ const Register = () => {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-      router.push("/homepage");
+      router.push("/login");
     } catch (err: any) {
       setError(err.message);
       setSuccess(null);

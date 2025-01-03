@@ -26,7 +26,7 @@ const TutorialPage = () => {
     const checkQuizExists = async () => {
       if (id) {
         const { exists, quizId } = await ApiControllerFacade.checkQuizExists(
-          parseInt(id as string)
+          parseInt(id as string),
         );
         setQuizExists(exists);
         setQuizId(quizId);

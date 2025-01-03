@@ -47,7 +47,7 @@ const CreateTutorial = () => {
 
     if (!categorieValide.includes(categoria)) {
       setError(
-        "La categoria deve essere una tra 'Internet', 'Social Media', 'Tecnologia' o 'Sicurezza'."
+        "La categoria deve essere una tra 'Internet', 'Social Media', 'Tecnologia' o 'Sicurezza'.",
       );
       setSuccess(null);
       return;
@@ -64,7 +64,7 @@ const CreateTutorial = () => {
       !["image/jpeg", "image/png", "image/gif", "video/mp4"].includes(fileType)
     ) {
       setError(
-        "Il file deve essere un'immagine (JPEG/PNG/GIF) o un video MP4."
+        "Il file deve essere un'immagine (JPEG/PNG/GIF) o un video MP4.",
       );
       setSuccess(null);
       return;
