@@ -24,7 +24,9 @@ router.get("/search", async (req, res) => {
   const { parolaChiave } = req.query;
 
   try {
-    const tutorials = await tutorialService.ricercaTutorial(parolaChiave as string);
+    const tutorials = await tutorialService.ricercaTutorial(
+      parolaChiave as string,
+    );
     res.status(200).json(tutorials);
   } catch (error) {
     console.error("Errore durante la ricerca dei tutorial:", error);
