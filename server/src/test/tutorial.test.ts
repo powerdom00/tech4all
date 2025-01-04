@@ -1,6 +1,7 @@
 import { TutorialService } from "../app/services/TutorialService";
 import { TutorialDao } from "../app/dao/TutorialDao";
 import { Tutorial } from "../app/entity/gestione_tutorial/Tutorial";
+import { Categoria } from "../app/entity/gestione_tutorial/Categoria";
 
 // Mock delle dipendenze
 jest.mock("../app/dao/TutorialDao");
@@ -25,14 +26,14 @@ describe("TutorialService - Test tutorial", () => {
     // Arrange
     const tutorialWithEmptyTitle = new Tutorial(
       "", // Titolo vuoto
-      "https://example.com/image.jpg",
-      "Questo è il contenuto del tutorial.",
-      "Programmazione",
+      "uploads/resized-1735384807365-grafica.png",
+      "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
+      Categoria.Categoria_1
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithEmptyTitle,
+      tutorialWithEmptyTitle
     );
 
     // Assert
@@ -45,15 +46,15 @@ describe("TutorialService - Test tutorial", () => {
   it("TC Formato titolo non valido", async () => {
     // Arrange
     const tutorialWithInvalidTitleFormat = new Tutorial(
-      "!!@##", // Titolo con caratteri non validi
-      "https://example.com/image.jpg",
-      "Questo è il contenuto del tutorial.",
-      "Programmazione",
+      "!@#Titolo123", // Titolo con caratteri non validi
+      "uploads/resized-1735384807365-grafica.png",
+      "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
+      Categoria.Categoria_1
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithInvalidTitleFormat,
+      tutorialWithInvalidTitleFormat
     );
 
     // Assert
@@ -67,79 +68,146 @@ describe("TutorialService - Test tutorial", () => {
     // Arrange
     const tutorialWithLongTitle = new Tutorial(
       "A".repeat(101), // Titolo con più di 100 caratteri
-      "https://example.com/image.jpg",
-      "Questo è il contenuto del tutorial.",
-      "Programmazione",
+      "uploads/resized-1735384807365-grafica.png",
+      "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
+      Categoria.Categoria_1
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithLongTitle,
+      tutorialWithLongTitle
     );
 
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "Il titolo non può essere più lungo di 100 caratteri.",
+      message: "Il titolo deve essere tra 1 e 100 caratteri.",
     });
   });
 
-  it("TC Lunghezza testo non valida maggiore", async () => {
+  it("TC Lunghezza testo non valida maggiore (oltre 65.535 caratteri)", async () => {
     // Arrange
-    const tutorialWithLongText = new Tutorial(
-      "Tutorial valido",
-      "https://example.com/image.jpg",
-      "A".repeat(1001), // Testo con più di 1000 caratteri
-      "Programmazione",
+    const longText = "A".repeat(65536); // Testo con più di 65.535 caratteri
+    const tutorialWithExcessiveText = new Tutorial(
+      "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
+      "uploads/resized-1735384807365-grafica.png",
+      longText,
+      Categoria.Categoria_1
     );
 
     // Act
-    const result =
-      await tutorialService.creazioneTutorial(tutorialWithLongText);
+    const result = await tutorialService.creazioneTutorial(
+      tutorialWithExcessiveText
+    );
 
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "Il testo non può essere più lungo di 1000 caratteri.",
+      message: "Il testo deve essere tra 20 e 65.535 caratteri.",
     });
   });
 
   it("TC Lunghezza testo non valida minore", async () => {
     // Arrange
+    const shortText = "A".repeat(19);
     const tutorialWithShortText = new Tutorial(
-      "Tutorial valido",
-      "https://example.com/image.jpg",
-      "A".repeat(19), // Testo con meno di 20 caratteri
-      "Programmazione",
+      "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
+      "uploads/resized-1735384807365-grafica.png",
+      shortText, //Testo troppo corto
+      Categoria.Categoria_1
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithShortText,
+      tutorialWithShortText
     );
 
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "Il testo deve essere lungo almeno 20 caratteri.",
+      message: "Il testo deve essere tra 20 e 65.535 caratteri.",
     });
   });
 
-  it("TC Creazione tutorial con titolo valido", async () => {
+  it("TC Caricamento grafica con formato non supportato", async () => {
     // Arrange
-    const validTutorial = new Tutorial(
-      "Tutorial di esempio",
-      "https://example.com/image.jpg",
-      "Questo è il contenuto del tutorial.",
-      "Programmazione",
+    const tutorialWithUnsupportedImageFormat = new Tutorial(
+      "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
+      "uploads/resized-1735384807365-foto_tut.tiff", // Formato grafica non supportato
+      "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
+      Categoria.Categoria_1
+    );
+
+    // Act
+    const result = await tutorialService.creazioneTutorial(
+      tutorialWithUnsupportedImageFormat
+    );
+
+    // Assert
+    expect(result).toEqual({
+      success: false,
+      message:
+        "Il formato della foto non è valido. Sono ammessi solo i formati png, jpg, jpeg, webp.",
+    });
+  });
+
+  it("TC Errore selezione categoria I", async () => {
+    // Arrange
+    const tutorialWithInvalidCategory = new Tutorial(
+      "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
+      "uploads/resized-1735384807365-foto.jpeg",
+      "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
+      "Casuale" // Categoria non valida
+    );
+
+    // Act
+    const result = await tutorialService.creazioneTutorial(
+      tutorialWithInvalidCategory
+    );
+
+    // Assert
+    expect(result).toEqual({
+      success: false,
+      message: "La categoria inserita non è valida.",
+    });
+  });
+
+  it("TC Errore selezione categoria II", async () => {
+    // Arrange
+    const tutorialWithInvalidCategory = new Tutorial(
+      "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
+      "uploads/resized-1735384807365-foto.jpeg",
+      "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
+      "Categoria_Casuale_con_più_di_cinquanta_lettere_quindi_non_è_inseribile_in_questo_campo" // Categoria non valida
+    );
+
+    // Act
+    const result = await tutorialService.creazioneTutorial(
+      tutorialWithInvalidCategory
+    );
+
+    // Assert
+    expect(result).toEqual({
+      success: false,
+      message: "La categoria inserita non è valida.",
+    });
+  });
+
+  it("TC Creazione tutorial completata", async () => {
+    // Arrange
+    const newTutorial = new Tutorial(
+      "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
+      "uploads/resized-1735384807365-foto.jpeg",
+      "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
+      Categoria.Categoria_1
     );
     mockTutorialDao.createTutorial.mockResolvedValueOnce();
 
     // Act
-    const result = await tutorialService.creazioneTutorial(validTutorial);
+    const result = await tutorialService.creazioneTutorial(newTutorial);
 
     // Assert
-    expect(mockTutorialDao.createTutorial).toHaveBeenCalledWith(validTutorial);
+    expect(mockTutorialDao.createTutorial).toHaveBeenCalledWith(newTutorial);
     expect(result).toEqual({
       success: true,
       message: "Tutorial creato con successo.",
