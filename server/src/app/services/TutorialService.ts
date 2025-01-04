@@ -13,6 +13,47 @@ export class TutorialService {
     tutorial: Tutorial,
   ): Promise<{ success: boolean; message: string }> {
     try {
+      // Validazione titolo vuoto
+      if (!tutorial.getTitolo()) {
+        return {
+          success: false,
+          message: "Il titolo del tutorial non può essere vuoto.",
+        };
+      }
+
+      // Validazione formato titolo (può essere personalizzata)
+      if (!/^[a-zA-Z0-9 ]+$/.test(tutorial.getTitolo())) {
+        return {
+          success: false,
+          message: "Il titolo contiene caratteri non validi.",
+        };
+      }
+
+      // Validazione lunghezza titolo (massimo 100 caratteri)
+      if (tutorial.getTitolo().length > 100) {
+        return {
+          success: false,
+          message: "Il titolo non può essere più lungo di 100 caratteri.",
+        };
+      }
+
+      // Validazione lunghezza testo (massimo 1000 caratteri)
+      if (tutorial.getTesto().length > 1000) {
+        return {
+          success: false,
+          message: "Il testo non può essere più lungo di 1000 caratteri.",
+        };
+      }
+
+      // Validazione lunghezza testo (minimo 20 caratteri)
+      if (tutorial.getTesto().length < 20) {
+        return {
+          success: false,
+          message: "Il testo deve essere lungo almeno 20 caratteri.",
+        };
+      }
+
+      // Creazione tutorial
       await this.tutorialDao.createTutorial(tutorial);
       return {
         success: true,
