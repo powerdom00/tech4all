@@ -23,18 +23,51 @@ export class QuizService {
     this.utenteDao = new UtenteDao();
     this.svolgimentoDao = new SvolgimentoDao(this.quizDao, this.utenteDao);
   }
-
-  // Creazione di un nuovo quiz con domande e risposte
   async creaQuiz(quiz: Quiz): Promise<{ success: boolean; message: string }> {
     try {
-      // 1. Creazione del quiz
+      // 1. Validazione delle domande
+      for (const domanda of quiz.getDomande()) {
+        if (domanda.getDomanda().length < 2) {
+          return {
+            success: false,
+            message:
+              "La lunghezza della domanda non è valida (minimo 2 caratteri).",
+          };
+        }
+        if (domanda.getDomanda().length > 255) {
+          return {
+            success: false,
+            message:
+              "La lunghezza della domanda non è valida (massimo 255 caratteri).",
+          };
+        }
+        for (const risposta of domanda.getRisposte()) {
+          const testoRisposta = risposta.getRisposta();
+          if (testoRisposta.length < 2) {
+            return {
+              success: false,
+              message:
+                "La lunghezza della risposta non è valida (minimo 2 caratteri).",
+            };
+          }
+          if (testoRisposta.length > 255) {
+            return {
+              success: false,
+              message:
+                "La lunghezza della risposta non è valida (massimo 255 caratteri).",
+            };
+          }
+        }
+      }
+
+      // 2. Creazione del quiz
       await this.quizDao.createQuiz(quiz);
 
-      // 2. Creazione delle domande associate al quiz
+      // 3. Creazione delle domande associate al quiz
       for (const domanda of quiz.getDomande()) {
         await this.domandaDao.createDomanda(domanda, quiz.getId());
 
-        // 3. Creazione delle risposte per ogni domanda
+        // 4. Creazione delle risposte per ogni domanda
         for (const risposta of domanda.getRisposte()) {
           await this.rispostaDao.createRisposta(risposta, domanda.getId());
         }
