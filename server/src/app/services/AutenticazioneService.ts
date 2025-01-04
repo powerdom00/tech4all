@@ -11,26 +11,48 @@ export class AutenticazioneService {
 
   /**
    * Metodo per gestire il login dell'utente.
-   * @param username - Nome utente inserito.
+   * @param email - Email utente inserito.
    * @param password - Password inserita.
    * @returns Una promessa che risolve un oggetto con informazioni sull'utente o un messaggio di errore.
    */
   async login(
-    username: string,
+    email: string,
     password: string,
   ): Promise<{ success: boolean; user?: Utente; message?: string }> {
     try {
       // Validazione input
-      if (!username || !password) {
+      if (!email || !password) {
         return {
           success: false,
-          message: "Username e password sono obbligatori.",
+          message: "Email e password sono obbligatori.",
+        };
+      }
+
+      if (email.length > 30 || email.length < 6) {
+        return {
+          success: false,
+          message: "Lunghezza email non valida.",
+        };
+      }
+
+      const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (!emailRegex.test(email)) {
+        return {
+          success: false,
+          message: "Formato email non valido.",
+        };
+      }
+
+      const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*\d)(?=.*[A-Z]).{8,14}$/;
+      if (!passwordRegex.test(password)) {
+        return {
+          success: false,
+          message: "Formato password non valido.",
         };
       }
 
       // Recupera l'utente dal database tramite il DAO
-      const user: Utente | null =
-        await this.utenteDao.getUtenteByEmail(username);
+      const user: Utente | null = await this.utenteDao.getUtenteByEmail(email);
 
       // Controllo dell'esistenza dell'utente
       if (!user) {
@@ -41,7 +63,7 @@ export class AutenticazioneService {
       }
 
       // Verifica della password
-      if (user.getPassword() !== password) {
+      if (user.getPassword() != password) {
         return {
           success: false,
           message: "Password errata.",
