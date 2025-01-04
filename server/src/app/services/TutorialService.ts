@@ -1,5 +1,6 @@
 import { TutorialDao } from "../dao/TutorialDao";
 import { Tutorial } from "../entity/gestione_tutorial/Tutorial";
+import { Categoria } from "../entity/gestione_tutorial/Categoria";
 
 export class TutorialService {
   private tutorialDao: TutorialDao;
@@ -10,46 +11,62 @@ export class TutorialService {
 
   // Creazione di un nuovo tutorial
   async creazioneTutorial(
-    tutorial: Tutorial,
+    tutorial: Tutorial
   ): Promise<{ success: boolean; message: string }> {
     try {
-      // Validazione titolo vuoto
-      if (!tutorial.getTitolo()) {
+      // Validazione Titolo
+      const titolo = tutorial.getTitolo();
+      if (!titolo) {
         return {
           success: false,
           message: "Il titolo del tutorial non può essere vuoto.",
         };
       }
-
-      // Validazione formato titolo (può essere personalizzata)
-      if (!/^[a-zA-Z0-9 ]+$/.test(tutorial.getTitolo())) {
+      if (!/^[a-zA-ZÀ-ÿ0-9][a-zA-Zà-ÿ0-9\s-:'-]*$/.test(titolo)) {
         return {
           success: false,
           message: "Il titolo contiene caratteri non validi.",
         };
       }
-
-      // Validazione lunghezza titolo (massimo 100 caratteri)
-      if (tutorial.getTitolo().length > 100) {
+      if (titolo.length < 1 || titolo.length > 100) {
         return {
           success: false,
-          message: "Il titolo non può essere più lungo di 100 caratteri.",
+          message: "Il titolo deve essere tra 1 e 100 caratteri.",
         };
       }
 
-      // Validazione lunghezza testo (massimo 1000 caratteri)
-      if (tutorial.getTesto().length > 1000) {
+      // Validazione Testo
+      const testo = tutorial.getTesto();
+      if (testo.length < 20 || testo.length > 65535) {
         return {
           success: false,
-          message: "Il testo non può essere più lungo di 1000 caratteri.",
+          message: "Il testo deve essere tra 20 e 65.535 caratteri.",
         };
       }
 
-      // Validazione lunghezza testo (minimo 20 caratteri)
-      if (tutorial.getTesto().length < 20) {
+      // Validazione Grafica
+      const grafica = tutorial.getGrafica();
+      if (!/\.(png|jpg|jpeg|webp)$/i.test(grafica)) {
         return {
           success: false,
-          message: "Il testo deve essere lungo almeno 20 caratteri.",
+          message:
+            "Il formato della foto non è valido. Sono ammessi solo i formati png, jpg, jpeg, webp.",
+        };
+      }
+
+      // Validazione Categoria
+      const categoria = tutorial.getCategoria();
+      if (!Object.values(Categoria).includes(categoria as Categoria)) {
+        return {
+          success: false,
+          message: "La categoria inserita non è valida.",
+        };
+      }
+      if (categoria.length < 1 || categoria.length > 50) {
+        return {
+          success: false,
+          message:
+            "La lunghezza della categoria deve essere tra 1 e 50 caratteri.",
         };
       }
 
@@ -70,7 +87,7 @@ export class TutorialService {
 
   // Eliminazione di un tutorial
   async cancellazioneTutorial(
-    id: number,
+    id: number
   ): Promise<{ success: boolean; message: string }> {
     try {
       await this.tutorialDao.deleteTutorial(id);
@@ -110,7 +127,7 @@ export class TutorialService {
   // Filtro tutorial per categoria o valutazione
   async filtroTutorial(
     categoria?: string,
-    valutazione?: "asc" | "desc",
+    valutazione?: "asc" | "desc"
   ): Promise<Tutorial[]> {
     try {
       if (categoria) {
