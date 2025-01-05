@@ -11,7 +11,7 @@ export class TutorialService {
 
   // Creazione di un nuovo tutorial
   async creazioneTutorial(
-    tutorial: Tutorial
+    tutorial: Tutorial,
   ): Promise<{ success: boolean; message: string }> {
     try {
       // Validazione Titolo
@@ -87,7 +87,7 @@ export class TutorialService {
 
   // Eliminazione di un tutorial
   async cancellazioneTutorial(
-    id: number
+    id: number,
   ): Promise<{ success: boolean; message: string }> {
     try {
       await this.tutorialDao.deleteTutorial(id);
@@ -127,7 +127,7 @@ export class TutorialService {
   // Filtro tutorial per categoria o valutazione
   async filtroTutorial(
     categoria?: string,
-    valutazione?: "asc" | "desc"
+    valutazione?: "asc" | "desc",
   ): Promise<Tutorial[]> {
     try {
       if (categoria) {
