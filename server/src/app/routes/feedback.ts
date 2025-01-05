@@ -75,22 +75,4 @@ router.get("/visualizzaFeedbackUtente/:utenteId", async (req, res) => {
   }
 });
 
-//modifica feedback
-
-router.get("/modificaFeedback/:feedbackId", async (req, res) => {
-  const { feedback } = req.body;
-  try {
-    const feedbackService = new FeedbackService();
-    const result = await feedbackService.AggiornaFeedback(
-      feedback.getTutorialId(),
-      feedback.getUtenteId(),
-      feedback.getValutazione(),
-      feedback.getCommento(),
-    );
-    res.status(200).json(result);
-  } catch (error) {
-    console.error("Errore durante la modifica del feedback:", error);
-    res.status(500).json({ message: "Errore del server", error });
-  }
-});
 export default router;
