@@ -81,7 +81,7 @@ describe("TutorialService - Test tutorial", () => {
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "Il titolo deve essere tra 1 e 100 caratteri.",
+      message: "Il titolo deve avere tra gli 1 e i 100 caratteri.",
     });
   });
 
@@ -103,7 +103,7 @@ describe("TutorialService - Test tutorial", () => {
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "Il testo deve essere tra 20 e 65.535 caratteri.",
+      message: "Il testo deve avere tra i 20 e i 65.535 caratteri.",
     });
   });
 
@@ -125,7 +125,7 @@ describe("TutorialService - Test tutorial", () => {
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "Il testo deve essere tra 20 e 65.535 caratteri.",
+      message: "Il testo deve avere tra i 20 e i 65.535 caratteri.",
     });
   });
 
@@ -168,7 +168,8 @@ describe("TutorialService - Test tutorial", () => {
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "La categoria inserita non è valida.",
+      message:
+        "La categoria inserita non è valida. Le categorie valide sono: Internet, Social Media, Tecnologia, Sicurezza.",
     });
   });
 
@@ -189,7 +190,8 @@ describe("TutorialService - Test tutorial", () => {
     // Assert
     expect(result).toEqual({
       success: false,
-      message: "La categoria inserita non è valida.",
+      message:
+        "La categoria inserita non è valida. Le categorie valide sono: Internet, Social Media, Tecnologia, Sicurezza.",
     });
   });
 
