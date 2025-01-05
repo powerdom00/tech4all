@@ -59,22 +59,6 @@ export class FeedbackDao {
     );
   }
 
-  // Metodo per aggiornare un feedback esistente
-  public async updateFeedback(feedback: Feedback): Promise<void> {
-    const valutazione = feedback.getValutazione();
-    const commento = feedback.getCommento();
-    const idUtente = feedback.getUtenteId();
-    const idTutorila = feedback.getTutorialId();
-    if (idUtente === null || idTutorila === null) {
-      throw new Error("Feedback ID is required for updating.");
-      //andrà sostituita con un'eccezione personalizzata (vincoli);
-    }
-    await this.db.query(
-      "UPDATE feedback SET valutazione = ?, commento = ? WHERE utente_id = ? AND tutorial_id = ?",
-      [valutazione, commento, idUtente, idTutorila],
-    );
-  }
-
   // Metodo per eliminare un feedback per utente e tutorial
   public async deleteFeedback(
     userId: number,
