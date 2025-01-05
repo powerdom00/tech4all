@@ -70,7 +70,7 @@ describe("QuizService - getQuizByTutorialId", () => {
 
     // Act & Assert
     await expect(
-      quizService.getQuizByTutorialId(tutorialId)
+      quizService.getQuizByTutorialId(tutorialId),
     ).rejects.toThrowError(new Error("Impossibile recuperare il quiz")); // Verifica che venga lanciato l'errore con il messaggio corretto
   });
 });
@@ -125,7 +125,7 @@ describe("QuizService - eseguiQuiz", () => {
     utenteDaoMock = new UtenteDao() as jest.Mocked<UtenteDao>;
     svolgimentoDaoMock = new SvolgimentoDao(
       quizDaoMock,
-      utenteDaoMock
+      utenteDaoMock,
     ) as jest.Mocked<SvolgimentoDao>;
     quizService = new QuizService();
 
@@ -166,7 +166,7 @@ describe("QuizService - eseguiQuiz", () => {
       "Nome",
       "Cognome",
       false,
-      0
+      0,
     );
 
     quizDaoMock.getQuizById.mockResolvedValue(quiz);
@@ -177,7 +177,7 @@ describe("QuizService - eseguiQuiz", () => {
     const result = await quizService.eseguiQuiz(
       quizId,
       utenteId,
-      risposteUtente
+      risposteUtente,
     );
 
     // Assert
@@ -214,7 +214,7 @@ describe("QuizService - getQuizByTutorialId (quando il tutorialId non esiste)", 
 
     // Act & Assert
     await expect(
-      quizService.getQuizByTutorialId(tutorialId)
+      quizService.getQuizByTutorialId(tutorialId),
     ).rejects.toThrowError(new Error("Impossibile recuperare il quiz")); // Controlliamo che venga lanciato un errore con il messaggio appropriato
   });
 });
@@ -234,7 +234,7 @@ describe("QuizService - eseguiQuiz", () => {
     utenteDaoMock = new UtenteDao() as jest.Mocked<UtenteDao>;
     svolgimentoDaoMock = new SvolgimentoDao(
       quizDaoMock,
-      utenteDaoMock
+      utenteDaoMock,
     ) as jest.Mocked<SvolgimentoDao>;
     quizService = new QuizService();
 
@@ -275,7 +275,7 @@ describe("QuizService - eseguiQuiz", () => {
       "Nome",
       "Cognome",
       false,
-      0
+      0,
     );
 
     quizDaoMock.getQuizById.mockResolvedValue(quiz);
@@ -287,7 +287,7 @@ describe("QuizService - eseguiQuiz", () => {
     const result = await quizService.eseguiQuiz(
       quizId,
       utenteId,
-      risposteUtente
+      risposteUtente,
     );
 
     // Assert
@@ -327,7 +327,7 @@ describe("QuizService - eliminaQuiz", () => {
       "Domanda di esempio",
       [new Risposta("Risposta", true, 1, quizId)],
       1,
-      quizId
+      quizId,
     );
     const quiz = new Quiz(quizId, [domanda]);
 

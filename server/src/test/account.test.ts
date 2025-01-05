@@ -135,4 +135,35 @@ describe("AccountService - visualizzaUtenti", () => {
       message: "Errore interno del server. Riprova più tardi.",
     });
   });
+
+  it("dovrebbe restituire un messaggio d'errore se il metodo DAO restituisce null", async () => {
+    // Arrange
+    utenteDaoMock.getAllUtenti.mockResolvedValue([]);
+
+    // Act
+    const result = await accountService.visualizzaUtenti();
+
+    // Assert
+    expect(utenteDaoMock.getAllUtenti).toHaveBeenCalled();
+    expect(result).toEqual({
+      success: false,
+      message: "Utenti non trovati.",
+    });
+  });
+
+  it("dovrebbe restituire un messaggio d'errore quando viene scatenata un'eccezione generica", async () => {
+    // Arrange
+    const error = new Error("Errore sconosciuto");
+    utenteDaoMock.getAllUtenti.mockRejectedValue(error);
+
+    // Act
+    const result = await accountService.visualizzaUtenti();
+
+    // Assert
+    expect(utenteDaoMock.getAllUtenti).toHaveBeenCalled();
+    expect(result).toEqual({
+      success: false,
+      message: "Errore interno del server. Riprova più tardi.",
+    });
+  });
 });

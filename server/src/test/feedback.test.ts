@@ -314,7 +314,7 @@ describe("FeedbackService - Recensione vuota", () => {
   describe("FeedbackService - VisualizzaFeedbackUtente", () => {
     let feedbackService: FeedbackService;
     let mockFeedbackDao: jest.Mocked<FeedbackDao>;
-  
+
     beforeEach(() => {
       mockFeedbackDao = new FeedbackDao() as jest.Mocked<FeedbackDao>;
       feedbackService = new FeedbackService();
@@ -322,11 +322,11 @@ describe("FeedbackService - Recensione vuota", () => {
       // @ts-ignore
       feedbackService["FeedbackDao"] = mockFeedbackDao;
     });
-  
+
     afterEach(() => {
       jest.clearAllMocks();
     });
-  
+
     it("dovrebbe restituire un errore se userId è mancante", async () => {
       const result = await feedbackService.VisualizzaFeedbackUtente(
         undefined as any,
@@ -336,43 +336,41 @@ describe("FeedbackService - Recensione vuota", () => {
         message: "ID utente obbligatorio.",
       });
     });
-  
-    it("dovrebbe restituire un errore se il feedback non viene trovato", async () => {  
+
+    it("dovrebbe restituire un errore se il feedback non viene trovato", async () => {
       const result = await feedbackService.VisualizzaFeedbackUtente(1);
       expect(result).toEqual({
         success: false,
         message: "Feedback non trovato.",
       });
     });
-  
+
     it("dovrebbe restituire il feedback se trovato", async () => {
       const feedback = [
         new Feedback(5, "Ottimo tutorial", 1, 1),
         new Feedback(4, "Buon tutorial", 2, 1),
       ];
       mockFeedbackDao.getFeedbackByUserId.mockResolvedValue(feedback);
-  
+
       const result = await feedbackService.VisualizzaFeedbackUtente(1);
-  
+
       expect(result).toEqual({
         success: true,
         Feedback: feedback,
       });
     });
-  
+
     it("dovrebbe gestire gli errori in modo appropriato", async () => {
       mockFeedbackDao.getFeedbackByUserId.mockRejectedValue(
         new Error("Errore del database"),
       );
-  
+
       const result = await feedbackService.VisualizzaFeedbackUtente(1);
-  
+
       expect(result).toEqual({
         success: false,
         message: "Errore durante la visualizzazione del feedback.",
       });
     });
   });
-
-
 });

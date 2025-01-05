@@ -55,7 +55,7 @@ export class AccountService {
   }> {
     try {
       const utenti = await this.utenteDao.getAllUtenti();
-      if (!utenti) {
+      if (!utenti || utenti.length === 0) {
         return {
           success: false,
           message: "Utenti non trovati.",
