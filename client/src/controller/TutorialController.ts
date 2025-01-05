@@ -31,7 +31,9 @@ export class TutorialController {
   }
 
   // Metodo per creare un nuovo tutorial
-  async createTutorial(formData: FormData): Promise<void> {
+  async createTutorial(
+    formData: FormData
+  ): Promise<{ success: boolean; message: string }> {
     try {
       const response = await axios.post(`${this.baseUrl}/tutorial`, formData, {
         headers: {

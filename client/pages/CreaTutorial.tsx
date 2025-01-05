@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import styles from "../src/css/CreaTutorial.module.css";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
+import { Categoria } from "../../server/src/app/entity/gestione_tutorial/Categoria";
+import "../src/css/quill.css";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");
@@ -12,18 +13,35 @@ const CreateTutorial = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const editorRef = useRef<HTMLDivElement>(null);
-  const [editor, setEditor] = useState<Quill | null>(null);
+  const [editor, setEditor] = useState<any | null>(null);
 
   const router = useRouter();
 
   useEffect(() => {
-    if (editorRef.current) {
-      const quill = new Quill(editorRef.current, {
-        theme: "snow",
+    if (typeof window !== "undefined" && editorRef.current) {
+      import("quill").then((Quill) => {
+        const quill = new Quill.default(editorRef.current, {
+          theme: "snow",
+          modules: {
+            toolbar: [
+              [{ header: [1, 2, 3, false] }],
+              [{ font: [] }],
+              [{ align: [] }],
+              ["bold", "italic", "underline"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ color: [] }, { background: [] }],
+              ["blockquote", "code-block"],
+              ["link", "image", "video"],
+              ["clean"],
+            ],
+          },
+        });
+
+        setEditor(quill);
       });
-      setEditor(quill);
     }
   }, []);
 
@@ -32,40 +50,8 @@ const CreateTutorial = () => {
 
     const testo = editor?.root.innerHTML;
 
-    // Validazione dei campi
-    const categorieValide = [
-      "Internet",
-      "Social Media",
-      "Tecnologia",
-      "Sicurezza",
-    ];
     if (!titolo || !testo || !categoria || !grafica) {
       setError("Tutti i campi sono obbligatori.");
-      setSuccess(null);
-      return;
-    }
-
-    if (!categorieValide.includes(categoria)) {
-      setError(
-        "La categoria deve essere una tra 'Internet', 'Social Media', 'Tecnologia' o 'Sicurezza'."
-      );
-      setSuccess(null);
-      return;
-    }
-
-    if (categoria.length > 25) {
-      setError("La categoria non può superare i 25 caratteri.");
-      setSuccess(null);
-      return;
-    }
-
-    const fileType = grafica.type;
-    if (
-      !["image/jpeg", "image/png", "image/gif", "video/mp4"].includes(fileType)
-    ) {
-      setError(
-        "Il file deve essere un'immagine (JPEG/PNG/GIF) o un video MP4."
-      );
       setSuccess(null);
       return;
     }
@@ -77,20 +63,24 @@ const CreateTutorial = () => {
       formData.append("categoria", categoria);
       formData.append("grafica", grafica);
 
-      await ApiControllerFacade.createTutorial(formData);
+      const response = await ApiControllerFacade.createTutorial(formData);
+      console.log(response);
 
-      setSuccess("Tutorial creato con successo!");
-      setError(null);
-      setTitolo("");
-      setCategoria("");
-      editor?.setText("");
-
-      // Redirect to the list of tutorials
-      router.push("/ListaTutorial");
+      if (response.success) {
+        setSuccess(response.message);
+        setShowPopup(true);
+      } else {
+        setError(response.message);
+      }
     } catch (err: any) {
       setError(err.message);
       setSuccess(null);
     }
+  };
+
+  const handlePopupConfirm = () => {
+    setShowPopup(false);
+    router.push("/ListaTutorial");
   };
 
   return (
@@ -120,24 +110,30 @@ const CreateTutorial = () => {
           </div>
           <div className={styles.formGroup}>
             <label htmlFor="categoria">Categoria:</label>
-            <input
+            <select
               id="categoria"
-              type="text"
               className={styles.formInput}
               value={categoria}
-              onChange={(e) => setCategoria(e.target.value)}
-            />
+              onChange={(e) => setCategoria(e.target.value as Categoria)}
+            >
+              <option value="">Seleziona una categoria</option>
+              {Object.values(Categoria).map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
           </div>
           <div className={styles.formGroup}>
             <label htmlFor="editor">Testo:</label>
             <div
               id="editor"
               ref={editorRef}
-              className={styles.quillEditor}
+              // className={styles.quillEditor}
             ></div>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="grafica">Grafica (immagine o video MP4):</label>
+            <label htmlFor="grafica">Grafica:</label>
             <input
               id="grafica"
               type="file"
@@ -153,6 +149,14 @@ const CreateTutorial = () => {
           </div>
         </form>
       </main>
+      {showPopup && (
+        <div className={styles.popup}>
+          <div className={styles.popupContent}>
+            <p>{success}</p>
+            <button onClick={handlePopupConfirm}>Conferma</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

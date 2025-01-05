@@ -25,15 +25,7 @@ const TutorialPageComponent = ({ id }: Props) => {
   return (
     <div>
       <h2>{tutorial.titolo}</h2>
-      <p></p> <div dangerouslySetInnerHTML={{ __html: tutorial.testo }} />
-      <p></p>
-      <img
-        width="300px"
-        height="200px"
-        src={`http://localhost:5000/${tutorial.grafica}`}
-        alt={tutorial.grafica}
-      />
-      <p>Categoria: {tutorial.categoria}</p>
+      <div dangerouslySetInnerHTML={{ __html: tutorial.testo }} />
     </div>
   );
 };
