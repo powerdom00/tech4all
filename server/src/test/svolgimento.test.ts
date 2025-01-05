@@ -36,7 +36,7 @@ describe("QuizService - getQuizByTutorialId", () => {
     quizService["rispostaDao"] = rispostaDaoMock;
   });
 
-  it("should return the quiz with its questions and answers for a given tutorialId", async () => {
+  it("Restituisce le risposte e le domande del quiz per un dato tutorial", async () => {
     // Arrange
     const tutorialId = 1;
 
@@ -62,7 +62,7 @@ describe("QuizService - getQuizByTutorialId", () => {
     expect(result).toEqual(quiz);
   });
 
-  it("should return null if no quiz is found for the given tutorialId", async () => {
+  it("Nessun quiz trovato per il tutorial Id", async () => {
     // Arrange
     const tutorialId = 999;
 
@@ -98,7 +98,7 @@ describe("QuizService - eliminaQuiz", () => {
     quizService["rispostaDao"] = rispostaDaoMock;
   });
 
-  it("should return an error if the quiz is not found", async () => {
+  it("Dovrebbe restuire un errore se il quiz non viene trovato", async () => {
     const quizId = 999;
     quizDaoMock.getQuizById.mockResolvedValue(null);
 
@@ -144,7 +144,7 @@ describe("QuizService - eseguiQuiz", () => {
     quizService["utenteDao"] = utenteDaoMock;
   });
 
-  it("should correctly execute a quiz", async () => {
+  it("Quiz completato correttamente", async () => {
     // Arrange
     const quizId = 1;
     const utenteId = 1;
