@@ -36,7 +36,7 @@ describe("QuizService - getQuizByTutorialId", () => {
     quizService["rispostaDao"] = rispostaDaoMock;
   });
 
-  it("Restituisce le risposte e le domande del quiz per un dato tutorial", async () => {
+  it("should return the quiz with its questions and answers for a given tutorialId", async () => {
     // Arrange
     const tutorialId = 1;
 
@@ -62,18 +62,15 @@ describe("QuizService - getQuizByTutorialId", () => {
     expect(result).toEqual(quiz);
   });
 
-  it("Nessun quiz trovato per il tutorial Id", async () => {
+  it("should throw an error if no quiz is found for the given tutorialId", async () => {
     // Arrange
-    const tutorialId = 999;
+    const tutorialId = 999; // Un ID che non corrisponde a nessun quiz
+    quizDaoMock.getQuizByTutorialId.mockResolvedValue(null); // Mock per restituire null
 
-    quizDaoMock.getQuizByTutorialId.mockResolvedValue(null);
-
-    // Act
-    const result = await quizService.getQuizByTutorialId(tutorialId);
-
-    // Assert
-    expect(quizDaoMock.getQuizByTutorialId).toHaveBeenCalledWith(tutorialId);
-    expect(result).toBeNull();
+    // Act & Assert
+    await expect(
+      quizService.getQuizByTutorialId(tutorialId)
+    ).rejects.toThrowError(new Error("Impossibile recuperare il quiz")); // Verifica che venga lanciato l'errore con il messaggio corretto
   });
 });
 
@@ -98,7 +95,7 @@ describe("QuizService - eliminaQuiz", () => {
     quizService["rispostaDao"] = rispostaDaoMock;
   });
 
-  it("Dovrebbe restuire un errore se il quiz non viene trovato", async () => {
+  it("should return an error if the quiz is not found", async () => {
     const quizId = 999;
     quizDaoMock.getQuizById.mockResolvedValue(null);
 
@@ -127,7 +124,7 @@ describe("QuizService - eseguiQuiz", () => {
     utenteDaoMock = new UtenteDao() as jest.Mocked<UtenteDao>;
     svolgimentoDaoMock = new SvolgimentoDao(
       quizDaoMock,
-      utenteDaoMock,
+      utenteDaoMock
     ) as jest.Mocked<SvolgimentoDao>;
     quizService = new QuizService();
 
@@ -144,7 +141,7 @@ describe("QuizService - eseguiQuiz", () => {
     quizService["utenteDao"] = utenteDaoMock;
   });
 
-  it("Quiz completato correttamente", async () => {
+  it("should correctly execute a quiz", async () => {
     // Arrange
     const quizId = 1;
     const utenteId = 1;
@@ -168,7 +165,7 @@ describe("QuizService - eseguiQuiz", () => {
       "Nome",
       "Cognome",
       false,
-      0,
+      0
     );
 
     quizDaoMock.getQuizById.mockResolvedValue(quiz);
@@ -179,7 +176,7 @@ describe("QuizService - eseguiQuiz", () => {
     const result = await quizService.eseguiQuiz(
       quizId,
       utenteId,
-      risposteUtente,
+      risposteUtente
     );
 
     // Assert
@@ -191,5 +188,32 @@ describe("QuizService - eseguiQuiz", () => {
       message: "Quiz eseguito con successo.",
       esito: true,
     });
+  });
+});
+
+describe("QuizService - getQuizByTutorialId (quando il tutorialId non esiste)", () => {
+  let quizService: QuizService;
+  let quizDaoMock: jest.Mocked<QuizDao>;
+
+  beforeEach(() => {
+    quizDaoMock = new QuizDao() as jest.Mocked<QuizDao>;
+    quizService = new QuizService();
+
+    // Override delle dipendenze private per il test
+    // @ts-ignore
+    quizService["quizDao"] = quizDaoMock;
+  });
+
+  it("should throw an error if the tutorialId does not exist", async () => {
+    // Arrange
+    const tutorialId = 999; // Un tutorialId che non esiste
+
+    // Simuliamo che il quiz non venga trovato per il tutorialId non esistente
+    quizDaoMock.getQuizByTutorialId.mockResolvedValue(null); // Simuliamo che non venga trovato nessun quiz
+
+    // Act & Assert
+    await expect(
+      quizService.getQuizByTutorialId(tutorialId)
+    ).rejects.toThrowError(new Error("Impossibile recuperare il quiz")); // Controlliamo che venga lanciato un errore con il messaggio appropriato
   });
 });

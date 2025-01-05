@@ -31,7 +31,7 @@ const App: React.FC = () => {
             <div className={styles.heroContent}>
               <h1 className={styles.heroTitle}>Tech4All</h1>
               <p className={styles.heroSubtitle}>
-                Impara a usare la tecnologia in modo facile e divertente!
+                Byte per Byte, verso il futuro.
               </p>
             </div>
           </section>

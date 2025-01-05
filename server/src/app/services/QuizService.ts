@@ -88,7 +88,7 @@ export class QuizService {
 
   // Eliminazione di un quiz (e relative domande e risposte)
   async eliminaQuiz(
-    id: number,
+    id: number
   ): Promise<{ success: boolean; message: string }> {
     try {
       const quiz = await this.quizDao.getQuizById(id);
@@ -132,7 +132,7 @@ export class QuizService {
   async eseguiQuiz(
     quizId: number,
     utenteId: number,
-    risposteFornite: number[], // Lista di ID delle risposte scelte dall'utente
+    risposteFornite: number[] // Lista di ID delle risposte scelte dall'utente
   ): Promise<{ success: boolean; message: string; esito: boolean }> {
     try {
       const quiz = await this.quizDao.getQuizById(quizId);
@@ -180,7 +180,7 @@ export class QuizService {
       // Verifica se esiste già uno svolgimento per questo quiz e utente
       let svolgimento = await this.svolgimentoDao.getSvolgimento(
         quizId,
-        utenteId,
+        utenteId
       );
 
       if (svolgimento) {
@@ -204,7 +204,7 @@ export class QuizService {
           utente,
           esito,
           new Date(),
-          risposteEsatte,
+          risposteEsatte
         );
         await this.svolgimentoDao.createSvolgimento(svolgimento);
 
@@ -230,36 +230,43 @@ export class QuizService {
   }
 
   // recupera quiz per tutorial id
-  async getQuizByTutorialId(tutorialId: number): Promise<Quiz | null> {
+  async getQuizByTutorialId(tutorialId: number): Promise<Quiz> {
     try {
       const quiz = await this.quizDao.getQuizByTutorialId(tutorialId);
-      if (quiz) {
-        const domande = quiz.getDomande().map((domanda) => {
-          const risposte = domanda
-            .getRisposte()
-            .map(
-              (risposta) =>
-                new Risposta(
-                  risposta.getRisposta(),
-                  risposta.getCorretta(),
-                  risposta.getDomandaId(),
-                  risposta.getId(),
-                ),
-            );
-          return new Domanda(
-            domanda.getDomanda(),
-            risposte,
-            domanda.getQuizId(),
-            domanda.getId(),
-          );
-        });
-        quiz.setDomande(domande);
-        return quiz;
+
+      if (!quiz) {
+        throw new Error("Tutorial not found"); // Lancia un errore se il quiz non esiste
       }
-      return null;
+
+      const domande = quiz.getDomande().map((domanda) => {
+        const risposte = domanda
+          .getRisposte()
+          .map(
+            (risposta) =>
+              new Risposta(
+                risposta.getRisposta(),
+                risposta.getCorretta(),
+                risposta.getDomandaId(),
+                risposta.getId()
+              )
+          );
+        return new Domanda(
+          domanda.getDomanda(),
+          risposte,
+          domanda.getQuizId(),
+          domanda.getId()
+        );
+      });
+
+      quiz.setDomande(domande);
+      return quiz;
     } catch (error) {
-      console.error("Errore durante il recupero del quiz:", error);
-      return null;
+      // Gestione degli errori più esplicita
+      console.error(
+        "Errore durante il recupero del quiz:",
+        error instanceof Error ? error.message : error
+      );
+      throw new Error("Impossibile recuperare il quiz"); // Lancia un errore generico al chiamante
     }
   }
 }

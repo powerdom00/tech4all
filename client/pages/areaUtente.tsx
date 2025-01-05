@@ -62,88 +62,22 @@ const UserPage: React.FC = () => {
         return (
           <>
             <div className={styles.profileInfo}>
-              {!isEditing ? (
-                <>
-                  <div className={styles.profileRow}>
-                    <span>Nome:</span>
-                    <span>{userData.nome}</span>
-                  </div>
-                  <div className={styles.profileRow}>
-                    <span>Cognome:</span>
-                    <span>{userData.cognome}</span>
-                  </div>
-                  <div className={styles.profileRow}>
-                    <span>Email:</span>
-                    <span>{userData.email}</span>
-                  </div>
-                  <div className={styles.profileRow}>
-                    <span>Quiz Superati:</span>
-                    <span>{userData.quiz_superati}</span>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className={styles.profileRow}>
-                    <span>Nome:</span>
-                    <input
-                      type="text"
-                      name="nome"
-                      value={userData.nome}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className={styles.profileRow}>
-                    <span>Cognome:</span>
-                    <input
-                      type="text"
-                      name="cognome"
-                      value={userData.cognome}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className={styles.profileRow}>
-                    <span>Email:</span>
-                    <input
-                      type="email"
-                      name="email"
-                      value={userData.email}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className={styles.profileRow}>
-                    <span>Quiz Superati:</span>
-                    <input
-                      type="number"
-                      name="quiz_superati"
-                      value={userData.quiz_superati}
-                      onChange={handleInputChange}
-                      disabled
-                    />
-                  </div>
-                </>
-              )}
-            </div>
-            <div className={styles.editButtonContainer}>
-              {!isEditing ? (
-                <button
-                  className={styles.editButton}
-                  onClick={() => setIsEditing(true)}
-                >
-                  Modifica dati
-                </button>
-              ) : (
-                <>
-                  <button className={styles.saveButton} onClick={handleSave}>
-                    Salva
-                  </button>
-                  <button
-                    className={styles.cancelButton}
-                    onClick={() => setIsEditing(false)}
-                  >
-                    Annulla
-                  </button>
-                </>
-              )}
+              <div className={styles.profileRow}>
+                <span>Nome:</span>
+                <span>{userData.nome}</span>
+              </div>
+              <div className={styles.profileRow}>
+                <span>Cognome:</span>
+                <span>{userData.cognome}</span>
+              </div>
+              <div className={styles.profileRow}>
+                <span>Email:</span>
+                <span>{userData.email}</span>
+              </div>
+              <div className={styles.profileRow}>
+                <span>Quiz Superati:</span>
+                <span>{userData.quiz_superati}</span>
+              </div>
             </div>
           </>
         );
