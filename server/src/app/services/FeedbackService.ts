@@ -103,55 +103,43 @@ export class FeedbackService {
             "Valutazione, commento, ID utente e ID tutorial obbligatori.",
         };
       }
+      //lunghezza recensione tra 2 e 500 caratteri
+      if (commento.length < 2 || commento.length > 500) {
+        return {
+          success: false,
+          message: "Lunghezza recensione tra 2 e 500 caratteri.",
+        };
+      }
+      //valutazione tra 1 e 5
+      if (valutazione < 1 || valutazione > 5) {
+        return {
+          success: false,
+          message: "Valutazione tra 1 e 5.",
+        };
+      }
+      const existingFeedback =
+        await this.FeedbackDao.getFeedbackByUserIdAndTutorialId(
+          userId,
+          tutorialId,
+        );
+      if (existingFeedback) {
+        return {
+          success: false,
+          message: "Feedback già inserito per questo tutorial.",
+        };
+      }
       const feedback = new Feedback(valutazione, commento, userId, tutorialId);
       await this.FeedbackDao.createFeedback(feedback);
       return {
         success: true,
         feedback: feedback,
+        message: "Feedback creato con successo.",
       };
     } catch (error) {
       console.error("Errore durante l'aggiunta del feedback:", error);
       return {
         success: false,
         message: "Errore durante l'aggiunta del feedback.",
-      };
-    }
-  }
-
-  /**
-   * Metodo per aggiornare un feedback.
-   * @param valutazione - Valutazione del tutorial.
-   * @param commento - Commento del tutorial.
-   * @param userId - ID dell'utente.
-   * @param tutorialId - ID del tutorial.
-   * @returns Una promessa che risolve un oggetto con il feedback aggiornato o un messaggio di errore.
-   */
-
-  async AggiornaFeedback(
-    valutazione: number,
-    commento: string,
-    userId: number,
-    tutorialId: number,
-  ): Promise<{ success: boolean; feedback?: Feedback; message?: string }> {
-    try {
-      if (!valutazione || !commento || !userId || !tutorialId) {
-        return {
-          success: false,
-          message:
-            "Valutazione, commento, ID utente e ID tutorial obbligatori.",
-        };
-      }
-      const feedback = new Feedback(valutazione, commento, userId, tutorialId);
-      await this.FeedbackDao.updateFeedback(feedback);
-      return {
-        success: true,
-        feedback: feedback,
-      };
-    } catch (error) {
-      console.error("Errore durante l'aggiornamento del feedback:", error);
-      return {
-        success: false,
-        message: "Errore durante l'aggiornamento del feedback.",
       };
     }
   }
