@@ -15,6 +15,103 @@ jest.mock("../app/dao/RispostaDao");
 jest.mock("../app/dao/SvolgimentoDao");
 jest.mock("../app/dao/UtenteDao");
 
+describe("QuizService - getQuizByTutorialId", () => {
+  let quizService: QuizService;
+  let quizDaoMock: jest.Mocked<QuizDao>;
+  let domandaDaoMock: jest.Mocked<DomandaDao>;
+  let rispostaDaoMock: jest.Mocked<RispostaDao>;
+
+  beforeEach(() => {
+    quizDaoMock = new QuizDao() as jest.Mocked<QuizDao>;
+    domandaDaoMock = new DomandaDao() as jest.Mocked<DomandaDao>;
+    rispostaDaoMock = new RispostaDao() as jest.Mocked<RispostaDao>;
+    quizService = new QuizService();
+
+    // Override delle dipendenze private per il test
+    // @ts-ignore
+    quizService["quizDao"] = quizDaoMock;
+    // @ts-ignore
+    quizService["domandaDao"] = domandaDaoMock;
+    // @ts-ignore
+    quizService["rispostaDao"] = rispostaDaoMock;
+  });
+
+  it("should return the quiz with its questions and answers for a given tutorialId", async () => {
+    // Arrange
+    const tutorialId = 1;
+
+    const risposteArray = [
+      new Risposta("Roma", true, 1, 1),
+      new Risposta("Milano", false, 2, 1),
+      new Risposta("Napoli", false, 3, 1),
+    ];
+
+    const domande = [
+      new Domanda("Qual è la capitale d'Italia?", risposteArray, 1, tutorialId),
+    ];
+
+    const quiz = new Quiz(1, domande);
+
+    quizDaoMock.getQuizByTutorialId.mockResolvedValue(quiz);
+
+    // Act
+    const result = await quizService.getQuizByTutorialId(tutorialId);
+
+    // Assert
+    expect(quizDaoMock.getQuizByTutorialId).toHaveBeenCalledWith(tutorialId);
+    expect(result).toEqual(quiz);
+  });
+
+  it("should return null if no quiz is found for the given tutorialId", async () => {
+    // Arrange
+    const tutorialId = 999;
+
+    quizDaoMock.getQuizByTutorialId.mockResolvedValue(null);
+
+    // Act
+    const result = await quizService.getQuizByTutorialId(tutorialId);
+
+    // Assert
+    expect(quizDaoMock.getQuizByTutorialId).toHaveBeenCalledWith(tutorialId);
+    expect(result).toBeNull();
+  });
+});
+
+describe("QuizService - eliminaQuiz", () => {
+  let quizService: QuizService;
+  let quizDaoMock: jest.Mocked<QuizDao>;
+  let domandaDaoMock: jest.Mocked<DomandaDao>;
+  let rispostaDaoMock: jest.Mocked<RispostaDao>;
+
+  beforeEach(() => {
+    quizDaoMock = new QuizDao() as jest.Mocked<QuizDao>;
+    domandaDaoMock = new DomandaDao() as jest.Mocked<DomandaDao>;
+    rispostaDaoMock = new RispostaDao() as jest.Mocked<RispostaDao>;
+    quizService = new QuizService();
+
+    // Override delle dipendenze private per il test
+    // @ts-ignore
+    quizService["quizDao"] = quizDaoMock;
+    // @ts-ignore
+    quizService["domandaDao"] = domandaDaoMock;
+    // @ts-ignore
+    quizService["rispostaDao"] = rispostaDaoMock;
+  });
+
+  it("should return an error if the quiz is not found", async () => {
+    const quizId = 999;
+    quizDaoMock.getQuizById.mockResolvedValue(null);
+
+    const result = await quizService.eliminaQuiz(quizId);
+
+    expect(quizDaoMock.getQuizById).toHaveBeenCalledWith(quizId);
+    expect(result).toEqual({
+      success: false,
+      message: "Quiz non trovato.",
+    });
+  });
+});
+
 describe("QuizService - eseguiQuiz", () => {
   let quizService: QuizService;
   let quizDaoMock: jest.Mocked<QuizDao>;

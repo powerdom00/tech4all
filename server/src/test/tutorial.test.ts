@@ -28,12 +28,12 @@ describe("TutorialService - Test tutorial", () => {
       "", // Titolo vuoto
       "uploads/resized-1735384807365-grafica.png",
       "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
-      Categoria.Categoria_1
+      Categoria.Categoria_1,
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithEmptyTitle
+      tutorialWithEmptyTitle,
     );
 
     // Assert
@@ -49,12 +49,12 @@ describe("TutorialService - Test tutorial", () => {
       "!@#Titolo123", // Titolo con caratteri non validi
       "uploads/resized-1735384807365-grafica.png",
       "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
-      Categoria.Categoria_1
+      Categoria.Categoria_1,
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithInvalidTitleFormat
+      tutorialWithInvalidTitleFormat,
     );
 
     // Assert
@@ -70,12 +70,12 @@ describe("TutorialService - Test tutorial", () => {
       "A".repeat(101), // Titolo con più di 100 caratteri
       "uploads/resized-1735384807365-grafica.png",
       "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
-      Categoria.Categoria_1
+      Categoria.Categoria_1,
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithLongTitle
+      tutorialWithLongTitle,
     );
 
     // Assert
@@ -92,12 +92,12 @@ describe("TutorialService - Test tutorial", () => {
       "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
       "uploads/resized-1735384807365-grafica.png",
       longText,
-      Categoria.Categoria_1
+      Categoria.Categoria_1,
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithExcessiveText
+      tutorialWithExcessiveText,
     );
 
     // Assert
@@ -114,12 +114,12 @@ describe("TutorialService - Test tutorial", () => {
       "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
       "uploads/resized-1735384807365-grafica.png",
       shortText, //Testo troppo corto
-      Categoria.Categoria_1
+      Categoria.Categoria_1,
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithShortText
+      tutorialWithShortText,
     );
 
     // Assert
@@ -135,12 +135,12 @@ describe("TutorialService - Test tutorial", () => {
       "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
       "uploads/resized-1735384807365-foto_tut.tiff", // Formato grafica non supportato
       "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
-      Categoria.Categoria_1
+      Categoria.Categoria_1,
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithUnsupportedImageFormat
+      tutorialWithUnsupportedImageFormat,
     );
 
     // Assert
@@ -157,12 +157,12 @@ describe("TutorialService - Test tutorial", () => {
       "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
       "uploads/resized-1735384807365-foto.jpeg",
       "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
-      "Casuale" // Categoria non valida
+      "Casuale", // Categoria non valida
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithInvalidCategory
+      tutorialWithInvalidCategory,
     );
 
     // Assert
@@ -178,12 +178,12 @@ describe("TutorialService - Test tutorial", () => {
       "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
       "uploads/resized-1735384807365-foto.jpeg",
       "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
-      "Categoria_Casuale_con_più_di_cinquanta_lettere_quindi_non_è_inseribile_in_questo_campo" // Categoria non valida
+      "Categoria_Casuale_con_più_di_cinquanta_lettere_quindi_non_è_inseribile_in_questo_campo", // Categoria non valida
     );
 
     // Act
     const result = await tutorialService.creazioneTutorial(
-      tutorialWithInvalidCategory
+      tutorialWithInvalidCategory,
     );
 
     // Assert
@@ -199,7 +199,7 @@ describe("TutorialService - Test tutorial", () => {
       "Come Funziona il Cloud Computing: Un'introduzione per Principianti",
       "uploads/resized-1735384807365-foto.jpeg",
       "Il cloud computing è una tecnologia che ha rivoluzionato il modo in cui accediamo e utilizziamo risorse digitali. [...]",
-      Categoria.Categoria_1
+      Categoria.Categoria_1,
     );
     mockTutorialDao.createTutorial.mockResolvedValueOnce();
 
