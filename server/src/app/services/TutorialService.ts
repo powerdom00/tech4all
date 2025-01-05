@@ -31,21 +31,33 @@ export class TutorialService {
       if (titolo.length < 1 || titolo.length > 100) {
         return {
           success: false,
-          message: "Il titolo deve essere tra 1 e 100 caratteri.",
+          message: "Il titolo deve avere tra gli 1 e i 100 caratteri.",
         };
       }
 
       // Validazione Testo
       const testo = tutorial.getTesto();
+      if (!testo) {
+        return {
+          success: false,
+          message: "Il testo del tutorial non può essere vuoto.",
+        };
+      }
       if (testo.length < 20 || testo.length > 65535) {
         return {
           success: false,
-          message: "Il testo deve essere tra 20 e 65.535 caratteri.",
+          message: "Il testo deve avere tra i 20 e i 65.535 caratteri.",
         };
       }
 
       // Validazione Grafica
       const grafica = tutorial.getGrafica();
+      if (!grafica) {
+        return {
+          success: false,
+          message: "La grafica del tutorial non può essere vuota.",
+        };
+      }
       if (!/\.(png|jpg|jpeg|webp)$/i.test(grafica)) {
         return {
           success: false,
@@ -56,17 +68,26 @@ export class TutorialService {
 
       // Validazione Categoria
       const categoria = tutorial.getCategoria();
-      if (!Object.values(Categoria).includes(categoria as Categoria)) {
+      if (!categoria) {
         return {
           success: false,
-          message: "La categoria inserita non è valida.",
+          message: "La categoria del tutorial non può essere vuota.",
+        };
+      }
+      const categorieValide = Object.values(Categoria);
+      if (!categorieValide.includes(categoria as Categoria)) {
+        return {
+          success: false,
+          message: `La categoria inserita non è valida. Le categorie valide sono: ${categorieValide.join(
+            ", "
+          )}.`,
         };
       }
       if (categoria.length < 1 || categoria.length > 50) {
         return {
           success: false,
           message:
-            "La lunghezza della categoria deve essere tra 1 e 50 caratteri.",
+            "La lunghezza della categoria deve essere tra gli 1 e i 50 caratteri.",
         };
       }
 
