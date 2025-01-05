@@ -1,13 +1,11 @@
-/* Login.css */
-
-body {
+/* body {
   font-family: "Arial", sans-serif;
   background: linear-gradient(135deg, #4caf50, #2e8b57); /* sfondo verde */
-  margin: 0;
+/* margin: 0;
   padding: 0;
-}
+} */
 
-.main-container {
+.mainContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -17,7 +15,7 @@ body {
   padding: 20px;
 }
 
-.form-container {
+.formContainer {
   background-color: #ffffff;
   padding: 2.5rem;
   border-radius: 12px; /* Rounded corners for a softer look */
@@ -37,7 +35,7 @@ body {
   }
 }
 
-.form-container h1 {
+.formContainer h1 {
   margin-bottom: 2rem;
   font-size: 2rem;
   font-weight: bold;
@@ -46,11 +44,11 @@ body {
   text-transform: uppercase;
 }
 
-.input-group {
+.inputGroup {
   margin-bottom: 1.5rem;
 }
 
-.input-group label {
+.inputGroup label {
   display: block;
   font-weight: 600;
   margin-bottom: 0.5rem;
@@ -58,7 +56,7 @@ body {
   font-size: 1.1rem;
 }
 
-.input-group input {
+.inputGroup input {
   width: 90%;
   padding: 1rem;
   border: 1px solid #ddd;
@@ -67,13 +65,13 @@ body {
   transition: border-color 0.3s ease;
 }
 
-.input-group input:focus {
+.inputGroup input:focus {
   outline: none;
   border-color: #1d5c31; /* Focus color matches button */
   box-shadow: 0 0 5px rgba(29, 92, 49, 0.3);
 }
 
-.error-message {
+.errorMessage {
   color: red;
   margin-bottom: 1rem;
   font-size: 0.9rem;
@@ -81,7 +79,7 @@ body {
   font-style: italic;
 }
 
-.submit-button {
+.submitButton {
   width: 100%;
   padding: 1rem;
   background-color: #1d5c31;
@@ -92,17 +90,15 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: 0.5px;
-  transition:
-    background-color 0.3s ease,
-    transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.submit-button:hover {
+.submitButton:hover {
   background-color: #144421;
   transform: translateY(-2px); /* Adds subtle lift effect */
 }
 
-.submit-button:active {
+.submitButton:active {
   transform: translateY(1px); /* Subtle press effect */
 }
 
@@ -115,13 +111,13 @@ body {
 }
 
 @media (max-width: 600px) {
-  .form-container {
+  .formContainer {
     padding: 1.5rem;
     width: 90%;
   }
 }
 
-.redirect-link {
+.redirectLink {
   display: block;
   margin-top: 15px;
   text-align: center;
@@ -130,6 +126,6 @@ body {
   text-decoration: none;
 }
 
-.redirect-link:hover {
+.redirectLink:hover {
   text-decoration: underline;
 }

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import "../src/css/CreaTutorial.css";
+import styles from "../src/css/CreaTutorial.module.css";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const CreateTutorial = () => {
@@ -47,7 +47,7 @@ const CreateTutorial = () => {
 
     if (!categorieValide.includes(categoria)) {
       setError(
-        "La categoria deve essere una tra 'Internet', 'Social Media', 'Tecnologia' o 'Sicurezza'.",
+        "La categoria deve essere una tra 'Internet', 'Social Media', 'Tecnologia' o 'Sicurezza'."
       );
       setSuccess(null);
       return;
@@ -64,7 +64,7 @@ const CreateTutorial = () => {
       !["image/jpeg", "image/png", "image/gif", "video/mp4"].includes(fileType)
     ) {
       setError(
-        "Il file deve essere un'immagine (JPEG/PNG/GIF) o un video MP4.",
+        "Il file deve essere un'immagine (JPEG/PNG/GIF) o un video MP4."
       );
       setSuccess(null);
       return;
@@ -94,50 +94,60 @@ const CreateTutorial = () => {
   };
 
   return (
-    <div className="main-container">
-      <header className="header-container">
-        <h1 className="page-title">Crea un nuovo Tutorial</h1>
+    <div className={styles.mainContainer}>
+      <header className={styles.headerContainer}>
+        <h1 className={styles.pageTitle}>Crea un nuovo Tutorial</h1>
       </header>
-      <main className="form-container">
-        <form className="tutorial-form" onSubmit={handleSubmit}>
-          {error && <p className="form-message error">{error}</p>}
-          {success && <p className="form-message success">{success}</p>}
-          <div className="form-group">
+      <main className={styles.formContainer}>
+        <form className={styles.tutorialForm} onSubmit={handleSubmit}>
+          {error && (
+            <p className={`${styles.formMessage} ${styles.error}`}>{error}</p>
+          )}
+          {success && (
+            <p className={`${styles.formMessage} ${styles.success}`}>
+              {success}
+            </p>
+          )}
+          <div className={styles.formGroup}>
             <label htmlFor="titolo">Titolo:</label>
             <input
               id="titolo"
               type="text"
-              className="form-input"
+              className={styles.formInput}
               value={titolo}
               onChange={(e) => setTitolo(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="categoria">Categoria:</label>
             <input
               id="categoria"
               type="text"
-              className="form-input"
+              className={styles.formInput}
               value={categoria}
               onChange={(e) => setCategoria(e.target.value)}
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="editor">Testo:</label>
-            <div id="editor" ref={editorRef} className="quill-editor"></div>
+            <div
+              id="editor"
+              ref={editorRef}
+              className={styles.quillEditor}
+            ></div>
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="grafica">Grafica (immagine o video MP4):</label>
             <input
               id="grafica"
               type="file"
-              className="form-input"
+              className={styles.formInput}
               accept="image/*,video/mp4"
               onChange={(e) => setGrafica(e.target.files?.[0] || null)}
             />
           </div>
-          <div className="button-container">
-            <button type="submit" className="submit-button">
+          <div className={styles.buttonContainer}>
+            <button type="submit" className={styles.submitButton}>
               Crea Tutorial
             </button>
           </div>

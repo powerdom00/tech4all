@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/Quiz.css";
+import styles from "../css/Quiz.module.css";
 import axios from "axios";
 import { useAuth } from "../../pages/context/AuthContext";
 import { Domanda, Risposta } from "@/interfacce/Quiz";
@@ -20,9 +20,9 @@ const DomandaComponent: React.FC<{
   evidenzia,
 }) => {
   return (
-    <div className="domanda-container">
-      <p className="domanda-testo">{domanda.domanda}</p>
-      <div className="risposte-container">
+    <div className={styles.domandaContainer}>
+      <p className={styles.domandaTesto}>{domanda.domanda}</p>
+      <div className={styles.risposteContainer}>
         {risposte.map((risposta) => {
           const isCorrect = risposta.corretta;
           const isSelected = rispostaSelezionata === risposta.id;
@@ -32,17 +32,17 @@ const DomandaComponent: React.FC<{
               key={risposta.id}
               onClick={() => onChange(domanda.id, risposta.id)}
               disabled={disabilitato}
-              className={`risposta-button ${
+              className={`${styles.rispostaButton} ${
                 evidenzia
                   ? isCorrect && isSelected
-                    ? "corretta-selezionata"
+                    ? styles.correttaSelezionata
                     : isSelected
-                      ? "errata-selezionata"
-                      : "non-selezionata"
+                    ? styles.errataSelezionata
+                    : styles.nonSelezionata
                   : isSelected
-                    ? "selezionata"
-                    : "non-selezionata"
-              } ${isSelected ? "selezionata-bold" : ""}`}
+                  ? styles.selezionata
+                  : styles.nonSelezionata
+              } ${isSelected ? styles.selezionataBold : ""}`}
             >
               {risposta.risposta}
             </button>
@@ -58,7 +58,7 @@ const RisultatoComponent: React.FC<{
   risposteCorrette: number;
 }> = ({ risultato, risposteCorrette }) => {
   return risultato ? (
-    <p className="risultato-testo">
+    <p className={styles.risultatoTesto}>
       Quiz {risultato}! Hai risposto correttamente a {risposteCorrette}{" "}
       {risposteCorrette === 1 ? "domanda" : "domande"}.
     </p>
@@ -94,13 +94,13 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
 
   const tutteRisposteDate = () => {
     return domandeQuiz.every((domanda) =>
-      Object.keys(risposteSelezionate).includes(domanda.id.toString()),
+      Object.keys(risposteSelezionate).includes(domanda.id.toString())
     );
   };
 
   const handleCambioRisposta = (
     domandaId: number,
-    rispostaId: number,
+    rispostaId: number
   ): void => {
     if (!bloccato) {
       setRisposteSelezionate((prev) => ({
@@ -117,7 +117,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
       const rispostaSelezionataId = risposteSelezionate[domanda.id];
       const rispostaCorretta = risposteQuiz.find(
         (risposta: Risposta) =>
-          risposta.domanda_id === domanda.id && risposta.corretta,
+          risposta.domanda_id === domanda.id && risposta.corretta
       );
 
       if (rispostaCorretta && rispostaCorretta.id === rispostaSelezionataId) {
@@ -138,7 +138,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
         const { success, message } = await ApiControllerFacade.executeQuiz(
           quizId,
           risposteUtente,
-          utenteId,
+          utenteId
         );
 
         if (success) {
@@ -149,7 +149,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
       } catch (error) {
         console.error(
           "Errore del server nell'invio del risultato del quiz:",
-          error,
+          error
         );
       }
     }
@@ -159,15 +159,15 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
     (rispostaId) => {
       const risposta = risposteQuiz.find((r: Risposta) => r.id === rispostaId);
       return risposta && risposta.corretta;
-    },
+    }
   ).length;
 
   const minRisposteCorrette = Math.ceil(domandeQuiz.length * 0.7);
 
   return (
-    <div className="quiz-container">
+    <div className={styles.quizContainer}>
       <h2>Quiz</h2>
-      <p className="quiz-descrizione">
+      <p className={styles.quizDescrizione}>
         Per superare il quiz, devi rispondere correttamente ad almeno{" "}
         {minRisposteCorrette}{" "}
         {minRisposteCorrette === 1 ? "domanda" : "domande"}.
@@ -177,7 +177,7 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
           key={domanda.id}
           domanda={domanda}
           risposte={risposteQuiz.filter(
-            (risposta) => risposta.domanda_id === domanda.id,
+            (risposta) => risposta.domanda_id === domanda.id
           )}
           rispostaSelezionata={risposteSelezionate[domanda.id]}
           onChange={handleCambioRisposta}
@@ -185,16 +185,16 @@ const QuizComponent: React.FC<{ tutorialId: number }> = ({ tutorialId }) => {
           evidenzia={evidenzia}
         />
       ))}
-      <div className="button-container">
+      <div className={styles.buttonContainer}>
         <button
-          className="submit-button"
+          className={styles.submitButton}
           onClick={handleSubmit}
           disabled={bloccato || !tutteRisposteDate()}
         >
           Conferma
         </button>
         {!tutteRisposteDate() && (
-          <p className="error-message">
+          <p className={styles.errorMessage}>
             Rispondi a tutte le domande prima di confermare.
           </p>
         )}

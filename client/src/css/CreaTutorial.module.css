@@ -1,4 +1,4 @@
-.main-container {
+.mainContainer {
   width: 80%;
   margin: 20px auto;
   padding: 30px;
@@ -8,12 +8,12 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-.header-container {
+.headerContainer {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.page-title {
+.pageTitle {
   font-size: 36px;
   font-weight: bold;
   color: #4caf50;
@@ -25,12 +25,12 @@
   border-radius: 12px;
 }
 
-.form-container {
+.formContainer {
   display: flex;
   justify-content: center;
 }
 
-.tutorial-form {
+.tutorialForm {
   width: 100%;
   max-width: 600px;
   display: flex;
@@ -38,19 +38,19 @@
   gap: 20px;
 }
 
-.form-group {
+.formGroup {
   display: flex;
   flex-direction: column;
 }
 
-.form-group label {
+.formGroup label {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 5px;
   color: #333333;
 }
 
-.form-input {
+.formInput {
   padding: 10px;
   font-size: 16px;
   border: 1px solid #cccccc;
@@ -59,40 +59,40 @@
   transition: border-color 0.3s ease;
 }
 
-.form-input:focus {
+.formInput:focus {
   border-color: #4caf50;
   outline: none;
 }
 
-.quill-editor {
+.quillEditor {
   height: 300px;
   border: 1px solid #cccccc;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.form-message {
+.formMessage {
   font-size: 16px;
   padding: 10px;
   border-radius: 8px;
   text-align: center;
 }
 
-.form-message.error {
+.formMessage.error {
   background-color: #ffebee;
   color: #c62828;
 }
 
-.form-message.success {
+.formMessage.success {
   background-color: #e8f5e9;
   color: #388e3c;
 }
 
-.button-container {
+.buttonContainer {
   text-align: center;
 }
 
-.submit-button {
+.submitButton {
   padding: 10px 20px;
   font-size: 18px;
   font-weight: bold;
@@ -104,6 +104,6 @@
   transition: background-color 0.3s ease;
 }
 
-.submit-button:hover {
+.submitButton:hover {
   background-color: #388e3c;
 }

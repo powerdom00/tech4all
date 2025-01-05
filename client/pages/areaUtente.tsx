@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
-import "../src/css/AreaUtente.css";
+import styles from "../src/css/AreaUtente.module.css";
 import Link from "next/link";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
@@ -61,29 +61,29 @@ const UserPage: React.FC = () => {
       case "Anagrafica":
         return (
           <>
-            <div className="profile-info">
+            <div className={styles.profileInfo}>
               {!isEditing ? (
                 <>
-                  <div className="profile-row">
+                  <div className={styles.profileRow}>
                     <span>Nome:</span>
                     <span>{userData.nome}</span>
                   </div>
-                  <div className="profile-row">
+                  <div className={styles.profileRow}>
                     <span>Cognome:</span>
                     <span>{userData.cognome}</span>
                   </div>
-                  <div className="profile-row">
+                  <div className={styles.profileRow}>
                     <span>Email:</span>
                     <span>{userData.email}</span>
                   </div>
-                  <div className="profile-row">
+                  <div className={styles.profileRow}>
                     <span>Quiz Superati:</span>
                     <span>{userData.quiz_superati}</span>
                   </div>
                 </>
               ) : (
                 <>
-                  <div className="profile-row">
+                  <div className={styles.profileRow}>
                     <span>Nome:</span>
                     <input
                       type="text"
@@ -92,7 +92,7 @@ const UserPage: React.FC = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="profile-row">
+                  <div className={styles.profileRow}>
                     <span>Cognome:</span>
                     <input
                       type="text"
@@ -101,7 +101,7 @@ const UserPage: React.FC = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="profile-row">
+                  <div className={styles.profileRow}>
                     <span>Email:</span>
                     <input
                       type="email"
@@ -110,7 +110,7 @@ const UserPage: React.FC = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="profile-row">
+                  <div className={styles.profileRow}>
                     <span>Quiz Superati:</span>
                     <input
                       type="number"
@@ -123,21 +123,21 @@ const UserPage: React.FC = () => {
                 </>
               )}
             </div>
-            <div className="edit-button-container">
+            <div className={styles.editButtonContainer}>
               {!isEditing ? (
                 <button
-                  className="edit-button"
+                  className={styles.editButton}
                   onClick={() => setIsEditing(true)}
                 >
                   Modifica dati
                 </button>
               ) : (
                 <>
-                  <button className="save-button" onClick={handleSave}>
+                  <button className={styles.saveButton} onClick={handleSave}>
                     Salva
                   </button>
                   <button
-                    className="cancel-button"
+                    className={styles.cancelButton}
                     onClick={() => setIsEditing(false)}
                   >
                     Annulla
@@ -149,7 +149,7 @@ const UserPage: React.FC = () => {
         );
       case "Feedback":
         return (
-          <div className="feedback-container">
+          <div className={styles.feedbackContainer}>
             <h2>Feedback</h2>
             <p>Qui puoi vedere i feedback ricevuti per i quiz completati.</p>
             {feedbackList.length === 0 ? (
@@ -191,7 +191,7 @@ const UserPage: React.FC = () => {
             .find((badge) => user.quizSuperati >= badge.threshold);
 
           return unlockedBadge ? (
-            <div className="badge">
+            <div className={styles.badge}>
               <img src={unlockedBadge.image} alt={unlockedBadge.label} />
               <p>{unlockedBadge.label}</p>
             </div>
@@ -204,10 +204,10 @@ const UserPage: React.FC = () => {
         };
 
         return (
-          <div className="goals-container">
+          <div className={styles.goalsContainer}>
             <h2>Obiettivi</h2>
             <p>Completa quiz per ottenere badge esclusivi!</p>
-            <div className="legend">
+            <div className={styles.legend}>
               <h3>Legenda:</h3>
               <ul>
                 <li>1 Quiz superato: Primo Badge</li>
@@ -215,7 +215,7 @@ const UserPage: React.FC = () => {
                 <li>5 Quiz superati: Terzo Badge</li>
               </ul>
             </div>
-            <div className="badge-container">{renderBadge()}</div>
+            <div className={styles.badgeContainer}>{renderBadge()}</div>
           </div>
         );
       default:
@@ -224,39 +224,45 @@ const UserPage: React.FC = () => {
   };
 
   return (
-    <div className="main-container">
-      <div className="tab-container">
+    <div className={styles.mainContainer}>
+      <div className={styles.tabContainer}>
         <button
-          className={`tab-button ${activeTab === "Anagrafica" ? "active" : ""}`}
+          className={`${styles.tabButton} ${
+            activeTab === "Anagrafica" ? styles.active : ""
+          }`}
           onClick={() => setActiveTab("Anagrafica")}
         >
           Anagrafica
         </button>
         <button
-          className={`tab-button ${activeTab === "Obiettivi" ? "active" : ""}`}
+          className={`${styles.tabButton} ${
+            activeTab === "Obiettivi" ? styles.active : ""
+          }`}
           onClick={() => setActiveTab("Obiettivi")}
         >
           Obiettivi
         </button>
         <button
-          className={`tab-button ${activeTab === "Feedback" ? "active" : ""}`}
+          className={`${styles.tabButton} ${
+            activeTab === "Feedback" ? styles.active : ""
+          }`}
           onClick={() => setActiveTab("Feedback")}
         >
           Feedback
         </button>
       </div>
-      <div className="content-container">
-        <div className="profile-container">
+      <div className={styles.contentContainer}>
+        <div className={styles.profileContainer}>
           {activeTab === "Anagrafica" && (
-            <div className="avatar-placeholder">
+            <div className={styles.avatarPlaceholder}>
               <img src="/Media/areaUtente.png" alt="Avatar" />
             </div>
           )}
           {renderContent()}
         </div>
-        <div className="home-button-container">
+        <div className={styles.homeButtonContainer}>
           <Link href="/homepage">
-            <button className="home-button">Torna alla home</button>
+            <button className={styles.homeButton}>Torna alla home</button>
           </Link>
         </div>
       </div>

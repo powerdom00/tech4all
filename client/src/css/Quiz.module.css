@@ -1,4 +1,4 @@
-.quiz-container {
+.quizContainer {
   width: 100%;
   margin: 20px 0;
   padding: 0;
@@ -7,7 +7,7 @@
   box-shadow: none;
 }
 
-.quiz-titolo {
+.quizTitolo {
   font-size: 36px;
   font-weight: bold;
   color: #4caf50;
@@ -19,17 +19,17 @@
   border-radius: 12px;
 }
 
-.quiz-descrizione {
+.quizDescrizione {
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 20px;
 }
 
-.domanda-container {
+.domandaContainer {
   margin-bottom: 20px;
 }
 
-.domanda-testo {
+.domandaTesto {
   width: 55%;
   font-size: 25px;
   font-weight: bold;
@@ -42,45 +42,43 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.risposte-container {
+.risposteContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.risposta-button {
+.rispostaButton {
   display: block;
   width: 50%;
   padding: 10px 20px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.risposta-button.selezionata {
+.rispostaButton.selezionata {
   background-color: #cce5ff;
 }
 
-.risposta-button.non-selezionata {
+.rispostaButton.nonSelezionata {
   background-color: #e0e0e0;
 }
 
-.risposta-button.corretta-selezionata {
+.rispostaButton.correttaSelezionata {
   background-color: #d4edda;
 }
 
-.risposta-button.errata-selezionata {
+.rispostaButton.errataSelezionata {
   background-color: #f8d7da;
 }
 
-.risposta-button.selezionata-bold {
+.rispostaButton.selezionataBold {
   font-weight: bold;
 }
 
-.risultato-testo {
+.risultatoTesto {
   font-size: 18px;
   font-weight: bold;
   color: #333333;
@@ -88,14 +86,14 @@
   text-align: center;
 }
 
-.button-container {
+.buttonContainer {
   text-align: center;
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
-.submit-button {
+.submitButton {
   padding: 10px 20px;
   font-size: 18px;
   font-weight: bold;
@@ -107,11 +105,11 @@
   transition: background-color 0.3s ease;
 }
 
-.submit-button:hover {
+.submitButton:hover {
   background-color: #388e3c;
 }
 
-.submit-button:disabled {
+.submitButton:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }

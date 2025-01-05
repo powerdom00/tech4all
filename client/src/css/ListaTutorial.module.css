@@ -1,4 +1,4 @@
-.main-container {
+.mainContainer {
   width: 80%;
   height: auto;
   margin: 20px auto;
@@ -12,20 +12,14 @@
   gap: 20px;
 }
 
-.header-container {
+.headerContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-/* .page-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333333;
-} */
-
-.page-title {
+.pageTitle {
   font-size: 36px; /* Dimensione più grande per il titolo */
   font-weight: bold;
   text-align: center; /* Centrare il titolo */
@@ -41,12 +35,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* .page-title:hover { */
-/* transform: scale(1.05); Leggero ingrandimento al passaggio del mouse */
-/* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); Intensificazione dell'ombra */
-/* } */
-
-.create-button {
+.createButton {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -58,37 +47,37 @@
   transition: background-color 0.3s ease;
 }
 
-.create-button:hover {
+.createButton:hover {
   background-color: #388e3c;
 }
 
-.filter-container {
+.filterContainer {
   display: flex;
   align-items: center;
   gap: 15px;
   margin-bottom: 20px;
 }
 
-.filter-label {
+.filterLabel {
   font-size: 18px;
   font-weight: bold;
   color: #333333;
 }
 
-.filter-select {
+.filterSelect {
   padding: 10px;
   font-size: 16px;
   border: 1px solid #cccccc;
   border-radius: 8px;
 }
 
-.content-container {
+.contentContainer {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.tutorial-list {
+.tutorialList {
   list-style-type: none;
   padding: 0;
   display: grid;
@@ -96,7 +85,7 @@
   gap: 20px;
 }
 
-.tutorial-item {
+.tutorialItem {
   padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #cccccc;
@@ -106,28 +95,34 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tutorial-item:hover {
+.tutorialItem:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-.tutorial-title {
+.tutorialTitle {
   font-size: 20px;
   font-weight: bold;
   color: #333333;
   margin-bottom: 10px;
 }
 
-.thumbnail-container {
+.thumbnailContainer {
   text-align: center;
 }
 
-.tutorial-thumbnail {
+.tutorialThumbnail {
   width: 100%;
   height: auto;
   border-radius: 8px;
 }
-.home-button {
+
+.homeButtonContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.homeButton {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -139,7 +134,6 @@
   transition: background-color 0.3s ease;
 }
 
-.edit-button:hover,
-.home-button:hover {
+.homeButton:hover {
   background-color: #388e3c;
 }

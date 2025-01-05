@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import "../../src/css/CreaQuiz.css";
+import styles from "../../src/css/CreaQuiz.module.css";
 import axios from "axios";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
@@ -22,7 +22,7 @@ const CreaQuizPage: React.FC = () => {
   const handleChangeRisposta = (
     indexDomanda: number,
     indexRisposta: number,
-    value: string,
+    value: string
   ) => {
     setNuoveDomande((prev) => {
       const updated = [...prev];
@@ -33,7 +33,7 @@ const CreaQuizPage: React.FC = () => {
 
   const handleChangeCorretta = (
     indexDomanda: number,
-    indexCorretta: number,
+    indexCorretta: number
   ) => {
     setNuoveDomande((prev) => {
       const updated = [...prev];
@@ -89,31 +89,31 @@ const CreaQuizPage: React.FC = () => {
   };
 
   return (
-    <div className="crea-quiz-container">
-      <h2 className="crea-quiz-titolo">Crea un nuovo quiz</h2>
+    <div className={styles.creaQuizContainer}>
+      <h2 className={styles.creaQuizTitolo}>Crea un nuovo quiz</h2>
       {nuoveDomande.map((domanda, index) => (
-        <div key={index} className="domanda-container">
+        <div key={index} className={styles.domandaContainer}>
           <input
             type="text"
             placeholder="Inserisci la domanda"
             value={domanda.domanda}
             onChange={(e) => handleChangeDomanda(index, e.target.value)}
-            className="domanda-input"
+            className={styles.domandaInput}
           />
           {domanda.risposte.map((risposta, i) => (
-            <div key={i} className="risposta-container">
+            <div key={i} className={styles.rispostaContainer}>
               <input
                 type="text"
                 placeholder={`Risposta ${i + 1}`}
                 value={risposta}
                 onChange={(e) => handleChangeRisposta(index, i, e.target.value)}
-                className="risposta-input"
+                className={styles.rispostaInput}
               />
               <button
                 type="button"
                 onClick={() => handleChangeCorretta(index, i)}
-                className={`corretta-button ${
-                  domanda.corretta === i ? "selezionata" : ""
+                className={`${styles.correttaButton} ${
+                  domanda.corretta === i ? styles.selezionata : ""
                 }`}
               >
                 {domanda.corretta === i ? "Corretta" : "Seleziona"}
@@ -122,18 +122,21 @@ const CreaQuizPage: React.FC = () => {
           ))}
         </div>
       ))}
-      <div className="button-container">
-        <button onClick={handleAggiungiDomanda} className="aggiungi-button">
+      <div className={styles.buttonContainer}>
+        <button
+          onClick={handleAggiungiDomanda}
+          className={styles.aggiungiButton}
+        >
           Aggiungi domanda
         </button>
         <button
           onClick={handleRimuoviDomanda}
           disabled={nuoveDomande.length === 1}
-          className="rimuovi-button"
+          className={styles.rimuoviButton}
         >
           Rimuovi domanda
         </button>
-        <button onClick={handleSubmit} className="salva-button">
+        <button onClick={handleSubmit} className={styles.salvaButton}>
           Salva quiz
         </button>
       </div>

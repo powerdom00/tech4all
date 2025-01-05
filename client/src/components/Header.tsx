@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/Header.css";
+import styles from "../css/Header.module.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../pages/context/AuthContext";
@@ -30,7 +30,9 @@ const Header: React.FC = () => {
     if (query.trim()) {
       try {
         const response = await fetch(
-          `http://localhost:5000/tutorials/search?parolaChiave=${encodeURIComponent(query)}`,
+          `http://localhost:5000/tutorials/search?parolaChiave=${encodeURIComponent(
+            query
+          )}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -49,30 +51,32 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="header">
-      <div className="logo">
+    <header className={styles.header}>
+      <div className={styles.logo}>
         <img src="/Media/LogoT4A.jpeg" alt="Logo" />
       </div>
-      <nav className="nav-container">
+      <nav className={styles.navContainer}>
         {user && (
-          <div className="search-bar-container">
+          <div className={styles.searchBarContainer}>
             <input
               type="text"
               placeholder="Cerca..."
-              className="search-bar"
+              className={styles.searchBar}
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)} // Aggiorna la ricerca dinamicamente
             />
             {searchResults.length > 0 && (
-              <div className="search-dropdown">
+              <div className={styles.searchDropdown}>
                 {searchResults.map((result) => (
                   <div
                     key={result.id}
-                    className="search-result-item"
+                    className={styles.searchResultItem}
                     onClick={() => handleResultClick(result.id)}
                   >
-                    <div className="search-result-icon">🔍</div>
-                    <span className="search-result-title">{result.titolo}</span>
+                    <div className={styles.searchResultIcon}>🔍</div>
+                    <span className={styles.searchResultTitle}>
+                      {result.titolo}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -80,21 +84,24 @@ const Header: React.FC = () => {
           </div>
         )}
 
-        <ul className="nav-links">
+        <ul className={styles.navLinks}>
           {!user ? (
             <li>
               <Link href="/login">Login</Link>
             </li>
           ) : (
             <li>
-              <div className="user-avatar-container" onClick={toggleDropdown}>
+              <div
+                className={styles.userAvatarContainer}
+                onClick={toggleDropdown}
+              >
                 <img
                   src={"/Media/icona.png"}
                   alt="User Avatar"
-                  className="user-avatar"
+                  className={styles.userAvatar}
                 />
                 {isDropdownVisible && (
-                  <div className="dropdown-menu">
+                  <div className={styles.dropdownMenu}>
                     {user.ruolo ? (
                       <Link href="/areaAmministratore">
                         <button style={{ color: "black" }}>

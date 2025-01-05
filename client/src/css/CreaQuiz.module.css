@@ -1,4 +1,4 @@
-.crea-quiz-container {
+.creaQuizContainer {
   width: 80%;
   margin: 20px auto;
   padding: 30px;
@@ -8,7 +8,7 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-.crea-quiz-titolo {
+.creaQuizTitolo {
   font-size: 36px;
   font-weight: bold;
   color: #4caf50;
@@ -20,11 +20,11 @@
   border-radius: 12px;
 }
 
-.domanda-container {
+.domandaContainer {
   margin-bottom: 20px;
 }
 
-.domanda-input {
+.domandaInput {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -34,13 +34,13 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.risposta-container {
+.rispostaContainer {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.risposta-input {
+.rispostaInput {
   flex: 1;
   padding: 10px;
   font-size: 16px;
@@ -50,7 +50,7 @@
   margin-right: 10px;
 }
 
-.corretta-button {
+.correttaButton {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -62,24 +62,24 @@
   transition: background-color 0.3s ease;
 }
 
-.corretta-button.selezionata {
+.correttaButton.selezionata {
   background-color: #4caf50;
 }
 
-.corretta-button:hover {
+.correttaButton:hover {
   background-color: #8cbfa1; /* Verde chiaro tendente al grigio più scuro */
 }
 
-.button-container {
+.buttonContainer {
   text-align: center;
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
-.aggiungi-button,
-.rimuovi-button,
-.salva-button {
+.aggiungiButton,
+.rimuoviButton,
+.salvaButton {
   padding: 10px 20px;
   font-size: 18px;
   font-weight: bold;
@@ -90,31 +90,31 @@
   transition: background-color 0.3s ease;
 }
 
-.aggiungi-button {
+.aggiungiButton {
   background-color: #4caf50;
 }
 
-.aggiungi-button:hover {
+.aggiungiButton:hover {
   background-color: #388e3c;
 }
 
-.rimuovi-button {
+.rimuoviButton {
   background-color: #ff5722;
 }
 
-.rimuovi-button:hover {
+.rimuoviButton:hover {
   background-color: #e64a19;
 }
 
-.salva-button {
+.salvaButton {
   background-color: #2196f3;
 }
 
-.salva-button:hover {
+.salvaButton:hover {
   background-color: #1976d2;
 }
 
-.salva-button:disabled {
+.salvaButton:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }

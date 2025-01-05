@@ -1,11 +1,9 @@
-"use client"; // Indica che questo componente è client-side
-
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import "./page.css"; // Aggiungi qui il tuo CSS
-import { AuthProvider } from "../../pages/context/AuthContext";
+import Header from "../src/components/Header";
+import Footer from "../src/components/Footer";
+import styles from "../src/css/index.module.css"; // Aggiungi qui il tuo CSS
+import { AuthProvider } from "./context/AuthContext";
 const App: React.FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -15,7 +13,7 @@ const App: React.FC = () => {
       router.push("/register"); // Redirect alla pagina di registrazione
     } else if (choice === "no") {
       setMessage(
-        "Per imparare a registrarti, guarda il video tutorial che trovi al centro della pagina.",
+        "Per imparare a registrarti, guarda il video tutorial che trovi al centro della pagina."
       );
     }
   };
@@ -25,21 +23,21 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <AuthProvider>
         <Header />
         <main>
-          <section className="hero">
-            <div className="hero-content">
-              <h1 className="hero-title">Tech4All</h1>
-              <p className="hero-subtitle">
+          <section className={styles.hero}>
+            <div className={styles.heroContent}>
+              <h1 className={styles.heroTitle}>Tech4All</h1>
+              <p className={styles.heroSubtitle}>
                 Impara a usare la tecnologia in modo facile e divertente!
               </p>
             </div>
           </section>
 
-          <section className="card">
-            <div className="video-container">
+          <section className={styles.card}>
+            <div className={styles.videoContainer}>
               <iframe
                 width="700"
                 height="350"
@@ -52,8 +50,8 @@ const App: React.FC = () => {
               ></iframe>
             </div>
 
-            <h2 className="card-title">Chi siamo?</h2>
-            <p className="card-text">
+            <h2 className={styles.cardTitle}>Chi siamo?</h2>
+            <p className={styles.cardText}>
               Tech4All è un sito dedicato a migliorare l'alfabetizzazione
               digitale, offrendo tutorial facili da seguire e interattivi. Il
               sito è progettato per rendere la tecnologia accessibile a tutti,
@@ -67,34 +65,34 @@ const App: React.FC = () => {
 
             <button
               onClick={() => setPopupVisible(true)}
-              className="card-button"
+              className={styles.cardButton}
             >
               Registrati!
             </button>
 
             {/* Popup */}
             {isPopupVisible && (
-              <div className="popup">
-                <div className="popup-content">
-                  <button className="close-button" onClick={closePopup}>
+              <div className={styles.popup}>
+                <div className={styles.popupContent}>
+                  <button className={styles.closeButton} onClick={closePopup}>
                     X
                   </button>
-                  <p className="popup-text">Sai già come registrarti?</p>
-                  <div className="popup-buttons">
+                  <p className={styles.popupText}>Sai già come registrarti?</p>
+                  <div className={styles.popupButtons}>
                     <button
                       onClick={() => handleChoice("si")}
-                      className="popup-button"
+                      className={styles.popupButton}
                     >
                       Sì
                     </button>
                     <button
                       onClick={() => handleChoice("no")}
-                      className="popup-button"
+                      className={styles.popupButton}
                     >
                       No
                     </button>
                   </div>
-                  {message && <p className="popup-message">{message}</p>}
+                  {message && <p className={styles.popupMessage}>{message}</p>}
                 </div>
               </div>
             )}

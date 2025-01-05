@@ -1,4 +1,4 @@
-.homepage-container {
+.homepageContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,31 +7,31 @@
   height: 90vh;
 }
 
-.centered-images {
+.centeredImages {
   display: flex;
   gap: 30px;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.large-image-card {
+.largeImageCard {
   text-align: center;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
 
-.large-image-card:hover {
+.largeImageCard:hover {
   transform: scale(1.05); /* Zoom al passaggio del mouse */
 }
 
-.large-image {
+.largeImage {
   width: 400px; /* Dimensione immagine grande */
   height: 225px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.large-image-card p {
+.largeImageCard p {
   font-size: 16px;
   margin-top: 10px;
   font-weight: bold;

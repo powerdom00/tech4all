@@ -28,7 +28,8 @@ const TutorialPageComponent = ({ id }: Props) => {
       <p></p> <div dangerouslySetInnerHTML={{ __html: tutorial.testo }} />
       <p></p>
       <img
-        className="resized-image"
+        width="300px"
+        height="200px"
         src={`http://localhost:5000/${tutorial.grafica}`}
         alt={tutorial.grafica}
       />

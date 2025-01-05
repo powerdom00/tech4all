@@ -3,7 +3,7 @@ import Link from "next/link"; // Importa Link da Next.js
 import React from "react";
 // eslint-disable-next-line prettier/prettier
 import { useRouter } from "next/router";
-import "../src/css/Register.css";
+import styles from "../src/css/Register.module.css";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
 const Register = () => {
@@ -52,8 +52,9 @@ const Register = () => {
     }
 
     // Controlla se l'email è già registrata
-    const emailExists =
-      await ApiControllerFacade.checkEmailExists(sanitizedEmail);
+    const emailExists = await ApiControllerFacade.checkEmailExists(
+      sanitizedEmail
+    );
     if (emailExists) {
       return "L'email è già registrata.";
     }
@@ -87,7 +88,7 @@ const Register = () => {
         sanitizeInput(nome),
         sanitizeInput(cognome),
         sanitizeInput(email),
-        sanitizeInput(password),
+        sanitizeInput(password)
       );
 
       setSuccess("Registrazione completata con successo! Benvenuto!");
@@ -105,14 +106,14 @@ const Register = () => {
 
   return (
     <>
-      <div className="main-container">
-        <div className="container">
-          <form onSubmit={handleSubmit} className="form">
+      <div className={styles.mainContainer}>
+        <div className={styles.container}>
+          <form onSubmit={handleSubmit} className={styles.form}>
             <h1>Registrazione</h1>
-            {error && <p className="error">{error}</p>}
-            {success && <p className="success">{success}</p>}
+            {error && <p className={styles.error}>{error}</p>}
+            {success && <p className={styles.success}>{success}</p>}
 
-            <div className="input-group">
+            <div className={styles.inputGroup}>
               <label htmlFor="nome">Nome</label>
               <input
                 type="text"
@@ -120,11 +121,11 @@ const Register = () => {
                 name="nome"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
-                className="input"
+                className={styles.input}
               />
             </div>
 
-            <div className="input-group">
+            <div className={styles.inputGroup}>
               <label htmlFor="cognome">Cognome</label>
               <input
                 type="text"
@@ -132,11 +133,11 @@ const Register = () => {
                 name="cognome"
                 value={cognome}
                 onChange={(e) => setCognome(e.target.value)}
-                className="input"
+                className={styles.input}
               />
             </div>
 
-            <div className="input-group">
+            <div className={styles.inputGroup}>
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -144,11 +145,11 @@ const Register = () => {
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="input"
+                className={styles.input}
               />
             </div>
 
-            <div className="input-group">
+            <div className={styles.inputGroup}>
               <label htmlFor="password">Password</label>
               <input
                 type="password"
@@ -156,11 +157,11 @@ const Register = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="input"
+                className={styles.input}
               />
             </div>
 
-            <div className="input-group">
+            <div className={styles.inputGroup}>
               <label htmlFor="confirmPassword">Conferma Password</label>
               <input
                 type="password"
@@ -168,15 +169,15 @@ const Register = () => {
                 name="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="input"
+                className={styles.input}
               />
             </div>
 
-            <button type="submit" className="button">
+            <button type="submit" className={styles.button}>
               Registrati
             </button>
 
-            <h6 className="link">
+            <h6 className={styles.link}>
               Hai già un account?
               <Link href="/login">Accedi ora.</Link>
             </h6>
