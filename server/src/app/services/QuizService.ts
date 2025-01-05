@@ -88,7 +88,7 @@ export class QuizService {
 
   // Eliminazione di un quiz (e relative domande e risposte)
   async eliminaQuiz(
-    id: number
+    id: number,
   ): Promise<{ success: boolean; message: string }> {
     try {
       const quiz = await this.quizDao.getQuizById(id);
@@ -132,7 +132,7 @@ export class QuizService {
   async eseguiQuiz(
     quizId: number,
     utenteId: number,
-    risposteFornite: number[] // Lista di ID delle risposte scelte dall'utente
+    risposteFornite: number[], // Lista di ID delle risposte scelte dall'utente
   ): Promise<{ success: boolean; message: string; esito: boolean }> {
     try {
       const quiz = await this.quizDao.getQuizById(quizId);
@@ -180,7 +180,7 @@ export class QuizService {
       // Verifica se esiste già uno svolgimento per questo quiz e utente
       let svolgimento = await this.svolgimentoDao.getSvolgimento(
         quizId,
-        utenteId
+        utenteId,
       );
 
       if (svolgimento) {
@@ -204,7 +204,7 @@ export class QuizService {
           utente,
           esito,
           new Date(),
-          risposteEsatte
+          risposteEsatte,
         );
         await this.svolgimentoDao.createSvolgimento(svolgimento);
 
@@ -247,14 +247,14 @@ export class QuizService {
                 risposta.getRisposta(),
                 risposta.getCorretta(),
                 risposta.getDomandaId(),
-                risposta.getId()
-              )
+                risposta.getId(),
+              ),
           );
         return new Domanda(
           domanda.getDomanda(),
           risposte,
           domanda.getQuizId(),
-          domanda.getId()
+          domanda.getId(),
         );
       });
 
@@ -264,7 +264,7 @@ export class QuizService {
       // Gestione degli errori più esplicita
       console.error(
         "Errore durante il recupero del quiz:",
-        error instanceof Error ? error.message : error
+        error instanceof Error ? error.message : error,
       );
       throw new Error("Impossibile recuperare il quiz"); // Lancia un errore generico al chiamante
     }
