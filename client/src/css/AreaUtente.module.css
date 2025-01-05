@@ -1,4 +1,4 @@
-.main-container {
+.mainContainer {
   width: 80%;
   height: 80vh;
   margin: 20px auto;
@@ -12,7 +12,7 @@
   justify-content: space-between;
 }
 
-.tab-container {
+.tabContainer {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
@@ -22,7 +22,7 @@
   background-color: #f9f9f9;
 }
 
-.tab-button {
+.tabButton {
   flex: 1;
   padding: 15px;
   font-size: 18px;
@@ -30,28 +30,26 @@
   color: #ffffff;
   background-color: #4caf50;
   border: none;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   cursor: pointer;
 }
 
-.tab-button:hover {
+.tabButton:hover {
   background-color: #e8f5e9;
   color: #388e3c;
 }
 
-.tab-button:first-child {
+.tabButton:first-child {
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
 }
 
-.tab-button:last-child {
+.tabButton:last-child {
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
-.content-container {
+.contentContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,7 +59,7 @@
   width: 100%;
 }
 
-.profile-container {
+.profileContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,7 +68,7 @@
   width: 100%;
 }
 
-.avatar-placeholder img {
+.avatarPlaceholder img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -78,7 +76,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.profile-info {
+.profileInfo {
   display: flex;
   flex-direction: column;
   font-size: 20px;
@@ -86,7 +84,7 @@
   color: #333333;
 }
 
-.profile-row {
+.profileRow {
   display: flex;
   justify-content: space-between;
   width: 320px;
@@ -94,15 +92,15 @@
   font-weight: 500;
 }
 
-.button-container {
+.buttonContainer {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
 }
 
-.edit-button,
-.home-button {
+.editButton,
+.homeButton {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -114,12 +112,12 @@
   transition: background-color 0.3s ease;
 }
 
-.edit-button:hover,
-.home-button:hover {
+.editButton:hover,
+.homeButton:hover {
   background-color: #388e3c;
 }
 
-.save-button {
+.saveButton {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -131,11 +129,11 @@
   transition: background-color 0.3s ease;
 }
 
-.save-button:hover {
+.saveButton:hover {
   background-color: #388e3c;
 }
 
-.cancel-button {
+.cancelButton {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -147,18 +145,18 @@
   transition: background-color 0.3s ease;
 }
 
-.cancel-button:hover {
+.cancelButton:hover {
   background-color: #388e3c;
 }
 
-.users-container {
+.usersContainer {
   background-color: #ffffff; /* Sfondo bianco */
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
   width: 80%;
 }
 
-.users-container h2 {
+.usersContainer h2 {
   color: #388e3c; /* Verde scuro */
   font-size: 24px;
   font-weight: bold;
@@ -166,13 +164,13 @@
   margin-bottom: 20px;
 }
 
-.user-list {
+.userList {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.user-item {
+.userItem {
   background-color: #f9f9f9; /* Sfondo leggermente grigio per contrasto */
   border: 1px solid #4caf50; /* Bordo verde chiaro */
   border-radius: 6px;
@@ -181,43 +179,41 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.user-item:hover {
+.userItem:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-.user-item div {
+.userItem div {
   font-size: 16px;
   color: #333333; /* Testo nero/grigio scuro */
 }
 
-.user-item strong {
+.userItem strong {
   color: #388e3c; /* Verde scuro per i titoli */
 }
 
-p {
+/* p {
   text-align: center;
   color: #666666; /* Grigio per messaggi tipo "Nessun utente trovato" */
-  font-size: 18px;
-}
+/* font-size: 18px;
+} */
 
 @media (max-width: 768px) {
-  .user-item {
+  .userItem {
     padding: 10px;
     font-size: 14px;
   }
 
-  .users-container h2 {
+  .usersContainer h2 {
     font-size: 20px;
   }
 }
 
-.feedback-container {
+.feedbackContainer {
   background-color: #ffffff; /* Sfondo bianco */
   border: 1px solid #e0e0e0; /* Bordo leggero */
   border-radius: 10px; /* Angoli arrotondati */
@@ -228,26 +224,26 @@ p {
   font-family: Arial, sans-serif; /* Font semplice e leggibile */
 }
 
-.feedback-container h2 {
+.feedbackContainer h2 {
   color: #388e3c; /* Verde scuro per il titolo */
   text-align: center; /* Testo centrato */
   font-size: 24px; /* Dimensione del font */
   margin-bottom: 10px; /* Spaziatura inferiore */
 }
 
-.feedback-container p {
+.feedbackContainer p {
   color: #000000; /* Verde principale per i testi descrittivi */
   font-size: 16px; /* Dimensione del testo */
   margin-bottom: 15px; /* Spaziatura inferiore */
   text-align: center; /* Testo centrato */
 }
 
-.feedback-container ul {
+.feedbackContainer ul {
   list-style: none; /* Rimuove i pallini di default */
   padding: 0; /* Rimuove il padding */
 }
 
-.feedback-container li {
+.feedbackContainer li {
   background-color: #f9f9f9; /* Sfondo leggermente grigio per ogni feedback */
   border: 1px solid #e0e0e0; /* Bordo sottile */
   border-radius: 8px; /* Angoli arrotondati */
@@ -256,11 +252,11 @@ p {
   transition: box-shadow 0.3s ease; /* Transizione per l'effetto hover */
 }
 
-.feedback-container li:hover {
+.feedbackContainer li:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effetto hover */
 }
 
-.feedback-container li strong {
+.feedbackContainer li strong {
   color: #388e3c; /* Verde scuro per i titoli dei feedback */
   display: block; /* Ogni riga separata */
   margin-bottom: 5px; /* Spaziatura inferiore */
@@ -268,7 +264,7 @@ p {
 }
 
 /* Container principale della sezione Obiettivi */
-.goals-container {
+.goalsContainer {
   background-color: #ffffff;
   border-radius: 8px;
   padding: 20px;
@@ -279,7 +275,7 @@ p {
 }
 
 /* Titolo principale della sezione */
-.goals-container h2 {
+.goalsContainer h2 {
   font-size: 1.8rem;
   color: #388e3c;
   text-align: center;
@@ -287,7 +283,7 @@ p {
 }
 
 /* Testo descrittivo */
-.goals-container p {
+.goalsContainer p {
   font-size: 1rem;
   color: #000000;
   text-align: center;
@@ -321,7 +317,7 @@ p {
 }
 
 /* Badge Container */
-.badge-container {
+.badgeContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -349,7 +345,7 @@ p {
 }
 
 /* Testo quando non ci sono badge */
-.badge-container p {
+.badgeContainer p {
   font-size: 1.1rem;
   color: #000000;
   text-align: center;

@@ -1,4 +1,4 @@
-import "../src/css/ListaTutorial.css";
+import styles from "../src/css/ListaTutorial.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -29,14 +29,14 @@ const ListTutorials = () => {
   };
 
   const handleTutorialClick = (id: number) => {
-    router.push(`/Contenuto/${id}`).then(() => router.reload());
+    router.push(`/Contenuto/${id}`);
   };
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     if (category) {
       setFilteredTutorials(
-        tutorials.filter((tutorial) => tutorial.categoria === category),
+        tutorials.filter((tutorial) => tutorial.categoria === category)
       );
     } else {
       setFilteredTutorials(tutorials);
@@ -44,30 +44,33 @@ const ListTutorials = () => {
   };
 
   return (
-    <div className="main-container">
-      <header className="header-container">
-        <h1 className="page-title">Lista Tutorial</h1>
+    <div className={styles.mainContainer}>
+      <header className={styles.headerContainer}>
+        <h1 className={styles.pageTitle}>Lista Tutorial</h1>
 
         {/* Mostra il bottone solo se user.ruolo è "admin" o un altro valore specifico */}
         {user?.ruolo && (
-          <button className="create-button" onClick={handleCreateNewTutorial}>
+          <button
+            className={styles.createButton}
+            onClick={handleCreateNewTutorial}
+          >
             Crea Nuovo Tutorial
           </button>
         )}
       </header>
-      <div className="filter-container">
-        <label className="filter-label" htmlFor="category">
+      <div className={styles.filterContainer}>
+        <label className={styles.filterLabel} htmlFor="category">
           Filtra per Categoria:
         </label>
         <select
-          className="filter-select"
+          className={styles.filterSelect}
           id="category"
           value={selectedCategory || ""}
           onChange={(e) => handleCategoryChange(e.target.value)}
         >
           <option value="">Tutte</option>
           {Array.from(
-            new Set(tutorials.map((tutorial) => tutorial.categoria)),
+            new Set(tutorials.map((tutorial) => tutorial.categoria))
           ).map((category) => (
             <option key={category} value={category}>
               {category}
@@ -75,19 +78,18 @@ const ListTutorials = () => {
           ))}
         </select>
       </div>
-      <main className="content-container">
-        <ul className="tutorial-list">
+      <main className={styles.contentContainer}>
+        <ul className={styles.tutorialList}>
           {filteredTutorials.map((tutorial) => (
             <li
-              className="tutorial-item"
+              className={styles.tutorialItem}
               key={tutorial.id}
               onClick={() => handleTutorialClick(tutorial.id)}
             >
-              <h2 className="tutorial-title">{tutorial.titolo}</h2>
-              <div className="thumbnail-container">
+              <h2 className={styles.tutorialTitle}>{tutorial.titolo}</h2>
+              <div className={styles.thumbnailContainer}>
                 <img
-                  className="tutorial-thumbnail resized-image"
-                  // src={`https://picsum.photos/id/${tutorial.id}/1280/720`}
+                  className={`${styles.tutorialThumbnail} resized-image`}
                   src={`http://localhost:5000/${tutorial.grafica}`}
                   alt={tutorial.titolo}
                 />
@@ -96,9 +98,9 @@ const ListTutorials = () => {
           ))}
         </ul>
       </main>
-      <div className="home-button-container">
+      <div className={styles.homeButtonContainer}>
         <Link href="/homepage">
-          <button className="home-button">Torna alla home</button>
+          <button className={styles.homeButton}>Torna alla home</button>
         </Link>
       </div>
     </div>

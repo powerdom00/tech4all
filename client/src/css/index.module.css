@@ -1,10 +1,10 @@
 /* General Styles */
-body {
-  font-family: 'Arial', sans-serif;
+/* body {
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
-}
+} */
 /* General Layout */
 
 .container {
@@ -19,7 +19,7 @@ body {
   padding: 80px 20px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  background-image: url('/Media/heroimg.jpg');
+  background-image: url("/Media/heroimg.jpg");
   /* Percorso dell'immagine */
   background-size: cover;
   background-position: center;
@@ -29,14 +29,15 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
-.hero-title {
+.heroTitle {
   font-size: 3rem;
   margin: 0;
 }
 
-.hero-subtitle {
+.heroSubtitle {
   font-size: 1.2rem;
   margin-top: 10px;
   font-weight: 300;
@@ -55,27 +56,27 @@ body {
   box-sizing: border-box;
 }
 
-.video-container {
+.videoContainer {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.card-title {
+.cardTitle {
   font-size: 2rem;
   color: #1d5c31;
   margin-bottom: 20px;
 }
 
-.card-text {
+.cardText {
   font-size: 1rem;
   color: #7f8c8d;
   line-height: 1.6;
   margin-bottom: 20px;
 }
 
-.card-button {
+.cardButton {
   background-color: #1d5c31;
   color: white;
   border: none;
@@ -85,7 +86,7 @@ body {
   font-size: 16px;
 }
 
-.card-button:hover {
+.cardButton:hover {
   background-color: #1d5c31;
 }
 
@@ -104,7 +105,7 @@ body {
   z-index: 1000;
 }
 
-.popup-content {
+.popupContent {
   background-color: white;
   padding: 2rem;
   border-radius: 8px;
@@ -114,29 +115,30 @@ body {
   position: relative;
 }
 
-.close-button {
+.closeButton {
   position: absolute;
   top: 10px;
   right: 10px;
   background-color: transparent;
-  color:#1d5c31;
+  color: #1d5c31;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
 }
-.popup-text {
-  color:black;
+
+.popupText {
+  color: black;
   font-size: 1.2rem;
   margin-bottom: 1rem;
 }
 
-.popup-buttons {
+.popupButtons {
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
 
-.popup-button {
+.popupButton {
   padding: 0.8rem 1.5rem;
   background-color: #1d5c31;
   /* Colore verde */
@@ -146,15 +148,15 @@ body {
   cursor: pointer;
 }
 
-.popup-message {
+.popupMessage {
   margin-top: 1rem;
   color: white;
   font-weight: 200;
   background-color: #1d5c31;
-    border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0.8rem 1.5rem;
   /* Colore per il messaggio */
   font-size: 1rem;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Link from "next/link"; // Usa Link invece di useRouter
-import "../src/css/Homepage.css";
+import styles from "../src/css/Homepage.module.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
@@ -45,12 +45,16 @@ export default function Homepage() {
   return (
     <>
       <Header />
-      <div className="homepage-container">
-        <main className="centered-images">
+      <div className={styles.homepageContainer}>
+        <main className={styles.centeredImages}>
           {images.map((image, index) => (
             <Link href={image.link} key={index} passHref>
-              <div className="large-image-card">
-                <img src={image.src} alt={image.alt} className="large-image" />
+              <div className={styles.largeImageCard}>
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className={styles.largeImage}
+                />
                 <p>{image.alt}</p>
               </div>
             </Link>

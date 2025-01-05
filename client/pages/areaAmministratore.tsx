@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "./context/AuthContext";
-import "../src/css/AreaUtente.css";
+import styles from "../src/css/AreaUtente.module.css";
 import Link from "next/link";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
 
@@ -59,20 +59,20 @@ const AreaAmministratore: React.FC = () => {
       case "Anagrafica":
         return (
           <>
-            <div className="profile-info">
-              <div className="profile-row">
+            <div className={styles.profileInfo}>
+              <div className={styles.profileRow}>
                 <span>Nome:</span>
                 <span>{userData.nome}</span>
               </div>
-              <div className="profile-row">
+              <div className={styles.profileRow}>
                 <span>Cognome:</span>
                 <span>{userData.cognome}</span>
               </div>
-              <div className="profile-row">
+              <div className={styles.profileRow}>
                 <span>Email:</span>
                 <span>{userData.email}</span>
               </div>
-              <div className="profile-row">
+              <div className={styles.profileRow}>
                 <span>Quiz Superati:</span>
                 <span>{userData.quiz_superati}</span>
               </div>
@@ -81,18 +81,18 @@ const AreaAmministratore: React.FC = () => {
         );
       case "Gestisci Utenti":
         return (
-          <div className="users-container">
+          <div className={styles.usersContainer}>
             <h2>Gestisci Utenti</h2>
             {isLoading ? (
               <p>Caricamento in corso...</p>
             ) : error ? (
-              <p className="error-message">{error}</p>
+              <p className={styles.errorMessage}>{error}</p>
             ) : utenti.length === 0 ? (
               <p>Nessun utente trovato.</p>
             ) : (
-              <ul className="user-list">
+              <ul className={styles.userList}>
                 {utenti.map((utente) => (
-                  <li key={utente.id} className="user-item">
+                  <li key={utente.id} className={styles.userItem}>
                     <div>
                       <strong>Nome e Cognome:</strong> {utente.nome}{" "}
                       {utente.cognome}
@@ -116,35 +116,37 @@ const AreaAmministratore: React.FC = () => {
   };
 
   return (
-    <div className="main-container">
-      <div className="tab-container">
+    <div className={styles.mainContainer}>
+      <div className={styles.tabContainer}>
         <button
-          className={`tab-button ${activeTab === "Anagrafica" ? "active" : ""}`}
+          className={`${styles.tabButton} ${
+            activeTab === "Anagrafica" ? styles.active : ""
+          }`}
           onClick={() => setActiveTab("Anagrafica")}
         >
           Anagrafica
         </button>
         <button
-          className={`tab-button ${
-            activeTab === "Gestisci Utenti" ? "active" : ""
+          className={`${styles.tabButton} ${
+            activeTab === "Gestisci Utenti" ? styles.active : ""
           }`}
           onClick={() => setActiveTab("Gestisci Utenti")}
         >
           Gestisci Utenti
         </button>
       </div>
-      <div className="content-container">
-        <div className="profile-container">
+      <div className={styles.contentContainer}>
+        <div className={styles.profileContainer}>
           {activeTab === "Anagrafica" && (
-            <div className="avatar-placeholder">
+            <div className={styles.avatarPlaceholder}>
               <img src="/Media/areaUtente.png" alt="Avatar" />
             </div>
           )}
           {renderContent()}
         </div>
-        <div className="home-button-container">
+        <div className={styles.homeButtonContainer}>
           <Link href="/homepage">
-            <button className="home-button">Torna alla home</button>
+            <button className={styles.homeButton}>Torna alla home</button>
           </Link>
         </div>
       </div>

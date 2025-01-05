@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css"; // Stile base per i tab
-import "../../src/css/Tutorial.css";
+import styles from "../../src/css/Contenuto.module.css";
 import TutorialPageComponent from "@/components/TutorialPageComponent";
 import Quiz from "@/components/Quiz";
 import Feedback from "@/components/Feedback";
@@ -26,7 +26,7 @@ const TutorialPage = () => {
     const checkQuizExists = async () => {
       if (id) {
         const { exists, quizId } = await ApiControllerFacade.checkQuizExists(
-          parseInt(id as string),
+          parseInt(id as string)
         );
         setQuizExists(exists);
         setQuizId(quizId);
@@ -66,11 +66,11 @@ const TutorialPage = () => {
   }
 
   return (
-    <div className="main-container">
-      <header className="header-container">
-        <h1 className="page-title">Gestione Contenuto</h1>
+    <div className={styles.mainContainer}>
+      <header className={styles.headerContainer}>
+        <h1 className={styles.pageTitle}>Gestione Contenuto</h1>
       </header>
-      <main className="content-container">
+      <main className={styles.contentContainer}>
         <Tabs>
           <TabList>
             <Tab>Tutorial</Tab>
@@ -83,7 +83,7 @@ const TutorialPage = () => {
             {ruolo && (
               <button
                 onClick={handleDeleteTutorial}
-                className="delete-quiz-button"
+                className={styles.deleteQuizButton}
               >
                 Elimina Tutorial
               </button>
@@ -93,14 +93,14 @@ const TutorialPage = () => {
 
           {/* Sezione Quiz */}
           <TabPanel>
-            <div className="quiz-actions">
+            <div className={styles.quizActions}>
               {ruolo && (
                 <>
                   {quizExists ? (
                     <>
                       <button
                         onClick={handleDeleteQuiz}
-                        className="delete-quiz-button"
+                        className={styles.deleteQuizButton}
                       >
                         Elimina Quiz
                       </button>
@@ -108,7 +108,7 @@ const TutorialPage = () => {
                   ) : (
                     <button
                       onClick={handleCreateQuiz}
-                      className="create-quiz-button"
+                      className={styles.createQuizButton}
                     >
                       Crea Quiz
                     </button>
@@ -119,7 +119,7 @@ const TutorialPage = () => {
             {quizExists ? (
               <Quiz tutorialId={parseInt(id as string)} />
             ) : (
-              <p className="no-quiz-message">Nessun quiz disponibile.</p>
+              <p className={styles.noQuizMessage}>Nessun quiz disponibile.</p>
             )}
           </TabPanel>
 
@@ -129,9 +129,11 @@ const TutorialPage = () => {
           </TabPanel>
         </Tabs>
       </main>
-      <div className="home-button-container">
+      <div className={styles.homeButtonContainer}>
         <Link href="/ListaTutorial">
-          <button className="home-button">Torna alla lista dei tutorial</button>
+          <button className={styles.homeButton}>
+            Torna alla lista dei tutorial
+          </button>
         </Link>
       </div>
     </div>

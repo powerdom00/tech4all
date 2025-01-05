@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Feedback } from "@/interfacce/Feedback";
 import { useAuth } from "../../pages/context/AuthContext";
-import "../css/Feedback.css";
+import styles from "../css/Feedback.module.css";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
 type Props = {
   id: string; // tutorialId passato dalla pagina specifica del tutorial
@@ -30,7 +30,7 @@ const FeedbackComponent = ({ id }: Props) => {
   const fetchFeedback = async () => {
     try {
       const result = await ApiControllerFacade.getFeedbackByTutorialId(
-        parseInt(id, 10),
+        parseInt(id, 10)
       );
       console.log("Risultato feedback:", result);
       setFeedback(result);
@@ -68,10 +68,10 @@ const FeedbackComponent = ({ id }: Props) => {
     try {
       // Verifica se esiste già un feedback per lo stesso utente e tutorial
       const feedbackList = await ApiControllerFacade.getFeedbackByTutorialId(
-        parseInt(id, 10),
+        parseInt(id, 10)
       );
       const existingFeedback = feedbackList.find(
-        (feedback) => feedback.utenteId === utenteId,
+        (feedback) => feedback.utenteId === utenteId
       );
 
       if (existingFeedback) {
@@ -81,7 +81,7 @@ const FeedbackComponent = ({ id }: Props) => {
           valutazione as number,
           commento,
           utenteId,
-          parseInt(id, 10),
+          parseInt(id, 10)
         );
 
         alert("Feedback creato con successo!");
@@ -98,7 +98,7 @@ const FeedbackComponent = ({ id }: Props) => {
     try {
       const result = await ApiControllerFacade.deleteFeedback(
         utenteId,
-        parseInt(tutorialId, 10),
+        parseInt(tutorialId, 10)
       );
 
       if (result.success) {
@@ -108,9 +108,9 @@ const FeedbackComponent = ({ id }: Props) => {
             ? prev.filter(
                 (item) =>
                   item.utenteId !== utenteId ||
-                  item.tutorialId !== parseInt(tutorialId, 10),
+                  item.tutorialId !== parseInt(tutorialId, 10)
               )
-            : null,
+            : null
         );
       } else {
         alert("Errore durante l'eliminazione del feedback");
@@ -126,19 +126,21 @@ const FeedbackComponent = ({ id }: Props) => {
   }
 
   const getBorderClass = (valutazione: number) => {
-    if (valutazione <= 2) return "border-red";
-    if (valutazione === 3) return "border-yellow";
-    if (valutazione >= 4) return "border-green";
+    if (valutazione <= 2) return styles.borderRed;
+    if (valutazione === 3) return styles.borderYellow;
+    if (valutazione >= 4) return styles.borderGreen;
     return "";
   };
 
   return (
     <>
-      <div className="feedback-container">
+      <div className={styles.feedbackContainer}>
         {feedback.map((item, index) => (
           <div
             key={`${item.utenteId}-${index}`}
-            className={`feedback-item ${getBorderClass(item.valutazione)}`}
+            className={`${styles.feedbackItem} ${getBorderClass(
+              item.valutazione
+            )}`}
           >
             <p>Valutazione: {item.valutazione || "Non disponibile"}</p>
             <p>Commento: {item.commento || "Non disponibile"}</p>
@@ -146,11 +148,11 @@ const FeedbackComponent = ({ id }: Props) => {
             {/* Mostra il bottone elimina solo se l'utente è il creatore */}
             {user?.id === item.utenteId && (
               <button
-                className="delete-feedback-btn"
+                className={styles.deleteFeedbackBtn}
                 onClick={() =>
                   handleDeleteFeedback(
                     item.utenteId,
-                    item.tutorialId.toString(),
+                    item.tutorialId.toString()
                   )
                 }
               >
@@ -161,13 +163,13 @@ const FeedbackComponent = ({ id }: Props) => {
         ))}
       </div>
       <br />
-      <button className="create-feedback-btn" onClick={openModal}>
+      <button className={styles.createFeedbackBtn} onClick={openModal}>
         Crea Nuovo Feedback
       </button>
 
       {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
             <h2>Inserisci un nuovo feedback</h2>
             <label>
               Valutazione (1-5):
@@ -185,7 +187,7 @@ const FeedbackComponent = ({ id }: Props) => {
                 maxLength={500}
               ></textarea>
             </label>
-            <div className="modal-buttons">
+            <div className={styles.modalButtons}>
               <button onClick={handleCreateFeedback}>Conferma</button>
               <button onClick={() => setIsModalOpen(false)}>Annulla</button>
             </div>

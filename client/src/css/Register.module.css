@@ -1,11 +1,11 @@
-body {
+/* body {
   font-family: "Arial", sans-serif;
   background: linear-gradient(135deg, #4caf50, #2e8b57); /* Sfondo verde */
-  margin: 0;
+/* margin: 0;
   padding: 0;
-}
+} */
 
-.main-container {
+.mainContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -54,11 +54,11 @@ body {
   text-transform: uppercase;
 }
 
-.input-group {
+.inputGroup {
   margin-bottom: 1.5rem;
 }
 
-.input-group label {
+.inputGroup label {
   display: block;
   font-weight: 600;
   margin-bottom: 0.5rem;
@@ -66,7 +66,7 @@ body {
   font-size: 1.1rem;
 }
 
-.input-group input {
+.inputGroup input {
   width: 90%;
   padding: 1rem;
   border: 1px solid #ddd;
@@ -75,7 +75,7 @@ body {
   transition: border-color 0.3s ease;
 }
 
-.input-group input:focus {
+.inputGroup input:focus {
   outline: none;
   border-color: #1d5c31; /* Colore di focus che corrisponde al pulsante */
   box-shadow: 0 0 5px rgba(29, 92, 49, 0.3);
@@ -100,9 +100,7 @@ body {
   font-size: 1.2rem; /* Aumenta la dimensione del font */
   font-weight: 600;
   letter-spacing: 0.5px;
-  transition:
-    background-color 0.3s ease,
-    transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 

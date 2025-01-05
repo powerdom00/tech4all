@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import "../src/css/Login.css";
+import styles from "../src/css/Login.module.css";
 import { useRouter } from "next/router";
 import { useAuth } from "./context/AuthContext";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
@@ -63,7 +63,7 @@ export default function LoginPage() {
       return;
     }
 
-     //formato password non valido Formato: “?=.*[!@#$%^&*])(?=.*\\d)(?=.*[A-Z]).{8,14}”
+    //formato password non valido Formato: “?=.*[!@#$%^&*])(?=.*\\d)(?=.*[A-Z]).{8,14}”
     if (
       !sanitizedPassword.match(/(?=.*[!@#$%^&*])(?=.*\d)(?=.*[A-Z]).{8,14}/)
     ) {
@@ -74,7 +74,7 @@ export default function LoginPage() {
     try {
       const data = await ApiControllerFacade.loginUser(
         sanitizedEmail,
-        sanitizedPassword,
+        sanitizedPassword
       );
 
       console.log("Dati utente ricevuti dal backend:", data);
@@ -82,19 +82,19 @@ export default function LoginPage() {
       login(data.user);
 
       alert(`Benvenuto, ${data.user?.nome || "utente"}!`);
-      router.push("/homepage").then(() => router.reload());
+      router.push("/homepage");
     } catch (err: any) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="main-container">
-      <div className="form-container">
+    <div className={styles.mainContainer}>
+      <div className={styles.formContainer}>
         <h1>Login</h1>
-        {error && <p className="error">{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
         <form onSubmit={handleLogin}>
-          <div className="input-group">
+          <div className={styles.inputGroup}>
             <label>Email:</label>
             <input
               type="text"
@@ -102,7 +102,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="input-group">
+          <div className={styles.inputGroup}>
             <label>Password:</label>
             <input
               type="password"
@@ -110,8 +110,8 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="submit-button">
+          {error && <p className={styles.errorMessage}>{error}</p>}
+          <button type="submit" className={styles.submitButton}>
             Login
           </button>
         </form>

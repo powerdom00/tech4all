@@ -1,5 +1,5 @@
 /* Contenitore principale */
-.chi-siamo-container {
+.chiSiamoContainer {
   font-family: "Poppins", sans-serif;
   color: #333;
   margin: 0 auto;
@@ -8,7 +8,7 @@
   background: linear-gradient(to bottom, #f0fff4, #ffffff);
 }
 /* Hero Section con sfumature di verde */
-.hero-section {
+.heroSection {
   text-align: center;
   background: linear-gradient(to bottom right, #5be092, #37cb7e, #4caf50);
   padding: 60px 20px;
@@ -19,13 +19,13 @@
   position: relative;
 }
 
-.hero-title {
+.heroTitle {
   font-size: 3rem;
   margin-bottom: 20px;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-.hero-subtitle {
+.heroSubtitle {
   font-size: 1.2rem;
   line-height: 1.6;
   max-width: 700px;
@@ -41,7 +41,7 @@
 }
 
 /* Section Titles */
-.section-title {
+.sectionTitle {
   font-size: 2rem;
   color: #2e7d32;
   text-align: center;
@@ -49,7 +49,7 @@
 }
 
 /* Image Row */
-.image-row {
+.imageRow {
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -57,7 +57,7 @@
 }
 
 /* Image Cards */
-.image-card {
+.imageCard {
   background: white;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -66,26 +66,26 @@
   overflow: hidden;
 }
 
-.image-card:hover {
+.imageCard:hover {
   transform: translateY(-10px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-.main-image,
-.grid-image {
+.mainImage,
+.gridImage {
   width: 100%;
   height: 200px;
   object-fit: cover;
 }
 
-.image-description {
+.imageDescription {
   font-size: 1rem;
   margin: 10px;
   color: #555;
 }
 
 /* Image Grid */
-.image-grid {
+.imageGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
@@ -93,23 +93,23 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .hero-title {
+  .heroTitle {
     font-size: 2rem;
   }
 
-  .hero-subtitle {
+  .heroSubtitle {
     font-size: 1rem;
   }
 
-  .image-row {
+  .imageRow {
     flex-direction: column;
   }
 
-  .image-grid {
+  .imageGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-.home-button {
+.homeButton {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
@@ -121,7 +121,7 @@
   transition: background-color 0.3s ease;
 }
 
-.edit-button:hover,
-.home-button:hover {
+.editButton:hover,
+.homeButton:hover {
   background-color: #388e3c;
 }
