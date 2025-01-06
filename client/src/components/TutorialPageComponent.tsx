@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Tutorial } from "@/interfacce/Tutorial";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
+import "../css/Tutorial.css";
 
 type Props = {
   id: string;
@@ -23,8 +24,8 @@ const TutorialPageComponent = ({ id }: Props) => {
   }
 
   return (
-    <div>
-      <h2>{tutorial.titolo}</h2>
+    <div className="tutorial-container">
+      <h2 className="tutorial-titolo">{tutorial.titolo}</h2>
       <div dangerouslySetInnerHTML={{ __html: tutorial.testo }} />
     </div>
   );

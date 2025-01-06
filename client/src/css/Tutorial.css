@@ -1,0 +1,48 @@
+/* .tutorial-container {
+  background-color: aqua;
+} */
+
+.tutorial-container .ql-video {
+  width: 80%;
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
+}
+
+.tutorial-container img {
+  /* width: 100%; */
+  height: auto;
+  max-width: 100%;
+  /* aspect-ratio: 16 / 9; */
+  border: none;
+}
+
+.tutorial-container .ql-font-serif {
+  font-family: Georgia, Times New Roman, serif;
+}
+
+.tutorial-container .ql-font-monospace {
+  font-family: Monaco, Courier New, monospace;
+}
+
+.tutorial-container .ql-align-right {
+  text-align: right;
+}
+
+.tutorial-container .ql-align-center {
+  text-align: center;
+}
+
+.tutorial-container .ql-align-justify {
+  text-align: justify;
+}
+
+.tutorial-container .ql-video.ql-align-center {
+  margin: 0 auto;
+}
+
+.tutorial-container .ql-video.ql-align-right {
+  margin: 0 0 0 auto;
+}
