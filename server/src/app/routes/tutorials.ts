@@ -35,7 +35,7 @@ router.get("/search", async (req, res) => {
 
   try {
     const tutorials = await tutorialService.ricercaTutorial(
-      parolaChiave as string
+      parolaChiave as string,
     );
     res.status(200).json(tutorials);
   } catch (error) {
@@ -112,7 +112,7 @@ router.get("/tutorial/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const tutorial = await tutorialService.visualizzazioneTutorial(
-      parseInt(id)
+      parseInt(id),
     );
     if (tutorial) {
       res.status(200).json(tutorial);
@@ -131,7 +131,7 @@ router.get("/tutorial/filter", async (req, res) => {
   try {
     const tutorials = await tutorialService.filtroTutorial(
       categoria as string,
-      valutazione as "asc" | "desc"
+      valutazione as "asc" | "desc",
     );
     res.status(200).json(tutorials);
   } catch (error) {

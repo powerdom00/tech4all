@@ -79,7 +79,7 @@ export class TutorialService {
         return {
           success: false,
           message: `La categoria inserita non è valida. Le categorie valide sono: ${categorieValide.join(
-            ", "
+            ", ",
           )}.`,
         };
       }
