@@ -18,14 +18,24 @@ const storage = multer.diskStorage({
   },
 });
 
+const storageQuill = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/quill/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
 const upload = multer({ storage });
+const uploadQuill = multer({ storage: storageQuill });
 
 router.get("/search", async (req, res) => {
   const { parolaChiave } = req.query;
 
   try {
     const tutorials = await tutorialService.ricercaTutorial(
-      parolaChiave as string,
+      parolaChiave as string
     );
     res.status(200).json(tutorials);
   } catch (error) {
@@ -53,6 +63,23 @@ router.post("/tutorial", upload.single("grafica"), async (req, res) => {
     res.status(201).json(result);
   } catch (error) {
     console.error("Errore durante la creazione del tutorial:", error);
+    res.status(500).json({ message: "Errore del server", error });
+  }
+});
+
+// Caricamento di un'immagine tramite Quill
+router.post("/upload-image", uploadQuill.single("image"), async (req, res) => {
+  try {
+    if (!req.file) {
+      res.status(400).json({ message: "Nessun file caricato" });
+      return;
+    }
+
+    const imagePath = req.file.path.replace(/\\/g, "/");
+    const imageUrl = `http://localhost:5000/${imagePath}`;
+    res.status(200).json({ imageUrl });
+  } catch (error) {
+    console.error("Errore durante il caricamento dell'immagine:", error);
     res.status(500).json({ message: "Errore del server", error });
   }
 });
@@ -85,7 +112,7 @@ router.get("/tutorial/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const tutorial = await tutorialService.visualizzazioneTutorial(
-      parseInt(id),
+      parseInt(id)
     );
     if (tutorial) {
       res.status(200).json(tutorial);
@@ -104,7 +131,7 @@ router.get("/tutorial/filter", async (req, res) => {
   try {
     const tutorials = await tutorialService.filtroTutorial(
       categoria as string,
-      valutazione as "asc" | "desc",
+      valutazione as "asc" | "desc"
     );
     res.status(200).json(tutorials);
   } catch (error) {

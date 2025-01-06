@@ -1,54 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import "quill/dist/quill.snow.css";
 import styles from "../src/css/CreaTutorial.module.css";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
 import { Categoria } from "../../server/src/app/entity/gestione_tutorial/Categoria";
-import "../src/css/quill.css";
+import TextEditor from "@/components/TextEditor";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");
   const [categoria, setCategoria] = useState("");
   const [grafica, setGrafica] = useState<File | null>(null);
+  const [testo, setTesto] = useState("");
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
-  const editorRef = useRef<HTMLDivElement>(null);
-  const [editor, setEditor] = useState<any | null>(null);
-
   const router = useRouter();
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && editorRef.current) {
-      import("quill").then((Quill) => {
-        const quill = new Quill.default(editorRef.current, {
-          theme: "snow",
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, false] }],
-              [{ font: [] }],
-              [{ align: [] }],
-              ["bold", "italic", "underline"],
-              [{ list: "ordered" }, { list: "bullet" }],
-              [{ color: [] }, { background: [] }],
-              ["blockquote", "code-block"],
-              ["link", "image", "video"],
-              ["clean"],
-            ],
-          },
-        });
-
-        setEditor(quill);
-      });
-    }
-  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const testo = editor?.root.innerHTML;
 
     if (!titolo || !testo || !categoria || !grafica) {
       setError("Tutti i campi sono obbligatori.");
@@ -125,12 +95,8 @@ const CreateTutorial = () => {
             </select>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="editor">Testo:</label>
-            <div
-              id="editor"
-              ref={editorRef}
-              // className={styles.quillEditor}
-            ></div>
+            <label htmlFor="testo">Testo:</label>
+            <TextEditor value={testo} onChange={setTesto} />
           </div>
           <div className={styles.formGroup}>
             <label htmlFor="grafica">Grafica:</label>
