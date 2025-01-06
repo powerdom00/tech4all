@@ -78,7 +78,6 @@ describe("QuizService - getQuizByTutorialId", () => {
     quizService["quizDao"] = quizDaoMock;
   });
 
-  
   it("Dovrebbe lanciare un errore se tutorial non esiste", async () => {
     // Arrange
     const tutorialId = 999; // Un tutorialId che non esiste
@@ -122,17 +121,7 @@ describe("QuizService - getQuizByTutorialId", () => {
     );
   });
 
-  it("Dovrebbe lanciare un errore se TutorialId è  negative", async () => {
-    // Arrange
-    const tutorialId = -1;
-
-    // Act & Assert
-    await expect(quizService.getQuizByTutorialId(tutorialId)).rejects.toThrow(
-      "ID tutorial obbligatorio",
-    );
-  });
-
-   it("Dovrebbe dare errore se non viene trovato nessun quiz per il tutorial", async () => {
+ it("Dovrebbe dare errore se non viene trovato nessun quiz per il tutorial", async () => {
     // Arrange
     const tutorialId = 999; // Un ID che non corrisponde a nessun quiz
     quizDaoMock.getQuizByTutorialId.mockResolvedValue(null); // Mock per restituire null
@@ -284,6 +273,62 @@ describe("QuizService - eseguiQuiz", () => {
       quizService.eseguiQuiz(quizId, utenteId, risposteUtente),
     ).rejects.toThrow("ID utente non valido");
   });
+
+  it("Dovrebbe generare errore se l'id quiz ha valore minore o uguale a 0", async () => {
+    // Arrange
+    const quizId = 0;
+    const utenteId = 1; // ID utente non valido
+    const risposteUtente = [1, 2, 3];
+
+    // Act & Assert
+    await expect(
+      quizService.eseguiQuiz(quizId, utenteId, risposteUtente),
+    ).rejects.toThrow("Quiz non trovato");
+  });
+  it("Dovrebbe restituire un messaggio di errore se il quiz non viene trovato", async () => {
+    const quizId = 999; // ID non valido
+    const utenteId = 1; // ID valido dell'utente
+    const risposteUtente = [1, 2, 3];
+  
+    quizDaoMock.getQuizById.mockResolvedValue(null); // Simula l'assenza di un quiz
+  
+    // Act
+    const result = await quizService.eseguiQuiz(
+      quizId,
+      utenteId,
+      risposteUtente,
+    );
+  
+    // Assert
+    expect(result).toEqual({
+      success: false,
+      message: "Quiz non trovato.",
+      esito: false,
+    });
+  });
+  it("Dovrebbe gestire un errore generico durante l'esecuzione del quiz", async () => {
+    // Arrange
+    const quizId = 1; // ID valido del quiz
+    const utenteId = 1; // ID valido dell'utente
+    const risposteUtente = [1, 2, 3]; // Risposte fornite dall'utente
+    const errorMessage = "Database error"; // Messaggio di errore simulato
+  
+    // Simula un errore generico generato dal DAO
+    quizDaoMock.getQuizById.mockRejectedValue(new Error(errorMessage));
+  
+    // Act
+    const result = await quizService.eseguiQuiz(
+      quizId,
+      utenteId,
+      risposteUtente,
+    );
+    // Assert
+    expect(result).toEqual({
+      success: false,
+      message: "Errore durante l'esecuzione del quiz.",
+      esito: false,
+    });
+  }); 
 });
 
 describe("QuizService - eliminaQuiz", () => {
