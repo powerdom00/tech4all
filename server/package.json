@@ -9,7 +9,8 @@
     "test": "jest",
     "testr": "jest --coverage",
     "lint": "eslint",
-    "lintfix": "eslint . --fix"
+    "lintfix": "eslint . --fix",
+    "testser": "jest --collectCoverageFrom=src/app/services/**/*.ts --coverage"
   },
   "keywords": [],
   "author": "",

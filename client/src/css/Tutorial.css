@@ -1,30 +1,57 @@
-/* .tutorial-container {
-  background-color: aqua;
-} */
+/* Contenitore principale del tutorial */
+.tutorial-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+}
 
+/* Titolo del tutorial */
+.tutorial-titolo {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  border-bottom: 3px solid #4caf50;
+  padding-bottom: 8px;
+}
+
+/* Formattazione dei video nel tutorial */
 .tutorial-container .ql-video {
-  width: 80%;
+  width: 100%;
+  max-width: 960px;
   height: auto;
-  max-width: 100%;
   aspect-ratio: 16 / 9;
-  border: none;
-  display: block;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Immagini nel tutorial */
 .tutorial-container img {
-  /* width: 100%; */
+  width: 100%;
   height: auto;
-  max-width: 100%;
-  /* aspect-ratio: 16 / 9; */
-  border: none;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Formattazione dei testi */
 .tutorial-container .ql-font-serif {
-  font-family: Georgia, Times New Roman, serif;
+  font-family: "Georgia", serif;
+  font-style: italic;
 }
 
 .tutorial-container .ql-font-monospace {
-  font-family: Monaco, Courier New, monospace;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  background-color: #f4f4f4;
+  padding: 5px 10px;
+  border-radius: 4px;
 }
 
 .tutorial-container .ql-align-right {
@@ -39,10 +66,34 @@
   text-align: justify;
 }
 
+/* Centra il video nel layout */
 .tutorial-container .ql-video.ql-align-center {
   margin: 0 auto;
 }
 
+/* Allinea il video a destra */
 .tutorial-container .ql-video.ql-align-right {
   margin: 0 0 0 auto;
+}
+
+/* Responsività per schermi piccoli */
+@media (max-width: 768px) {
+  .tutorial-container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .tutorial-titolo {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .tutorial-container .ql-video {
+    max-width: 100%;
+    margin: 10px 0;
+  }
+
+  .tutorial-container img {
+    margin: 10px 0;
+  }
 }

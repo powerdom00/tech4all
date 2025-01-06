@@ -1,42 +1,44 @@
 .quizContainer {
   width: 100%;
-  margin: 20px 0;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
+  max-width: 900px; /* Limita la larghezza massima per evitare che il contenuto diventi troppo largo */
+  margin: 40px auto; /* Centra il contenuto orizzontalmente */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Aggiunto effetto ombra per un aspetto più moderno */
 }
 
 .quizTitolo {
   font-size: 36px;
   font-weight: bold;
   color: #4caf50;
+  text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   border-bottom: 3px solid #4caf50;
   display: inline-block;
   padding: 10px 20px;
   background: linear-gradient(90deg, #e8f5e9, #ffffff);
   border-radius: 12px;
+  margin-bottom: 30px;
 }
 
 .quizDescrizione {
   font-size: 18px;
   line-height: 1.6;
-  margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .domandaContainer {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .domandaTesto {
-  width: 55%;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
-  color: #333333;
-  margin-bottom: 10px;
-  padding: 10px;
+  color: #333;
   background-color: #e8f5e9;
+  padding: 15px;
   border-left: 5px solid #4caf50;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -45,17 +47,22 @@
 .risposteContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
+  justify-content: center; /* Centra le risposte */
 }
 
 .rispostaButton {
-  display: block;
-  width: 50%;
-  padding: 10px 20px;
+  display: inline-block;
+  width: 45%; /* Ridotto per migliorare l'aspetto */
+  padding: 12px 20px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 16px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  text-align: center; /* Centra il testo */
 }
 
 .rispostaButton.selezionata {
@@ -79,22 +86,22 @@
 }
 
 .risultatoTesto {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  color: #333333;
-  margin-top: 20px;
+  color: #333;
   text-align: center;
+  margin-top: 25px;
 }
 
 .buttonContainer {
-  text-align: center;
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
+  margin-top: 30px;
 }
 
 .submitButton {
-  padding: 10px 20px;
+  padding: 12px 25px;
   font-size: 18px;
   font-weight: bold;
   color: white;
@@ -112,4 +119,12 @@
 .submitButton:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+.errorMessage {
+  color: #e53935;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
 }

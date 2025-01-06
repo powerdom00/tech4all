@@ -1,12 +1,15 @@
-/* General Styles */
-/* body {
+/* 
+body {
   font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
-} */
-/* General Layout */
+  color: #333;
+  scroll-behavior: smooth;
+}
+*/
 
+/* Container */
 .container {
   display: flex;
   flex-direction: column;
@@ -18,9 +21,9 @@
   color: #ffffff;
   padding: 80px 20px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  background-image: url("/Media/heroimg.jpg");
-  /* Percorso dell'immagine */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("/Media/heroimg.jpg");
+  /* Aggiunta di sfumatura per migliorare il contrasto */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -33,29 +36,40 @@
 }
 
 .heroTitle {
-  font-size: 3rem;
+  font-size: 3.5rem;
   margin: 0;
+  font-weight: bold;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+  letter-spacing: 1px;
 }
 
 .heroSubtitle {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin-top: 10px;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.9); /* Aumento della visibilità del testo */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Aggiunta di ombra per migliorare il contrasto */
-  letter-spacing: 0.5px; /* Piccola distanza tra le lettere per maggiore leggibilità */
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.8px;
 }
 
 /* Card Section */
 .card {
-  background-color: #fff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   max-width: 960px;
   margin: 40px auto;
-  padding: 20px;
+  padding: 30px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 12px;
   box-sizing: border-box;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
 .videoContainer {
@@ -66,15 +80,16 @@
 }
 
 .cardTitle {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #1d5c31;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .cardText {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #7f8c8d;
-  line-height: 1.6;
+  line-height: 1.8;
   margin-bottom: 20px;
 }
 
@@ -83,40 +98,104 @@
   color: white;
   border: none;
   padding: 12px 30px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .cardButton:hover {
-  background-color: #1d5c31;
+  background-color: #145922;
+  transform: translateY(-2px);
 }
 
-/* Popup */
+/* Popup Overlay con Sfocatura */
 .popup {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  /* Sfondo semi-trasparente */
+  background-color: rgba(0, 0, 0, 0.4); /* Overlay più leggero */
+  backdrop-filter: blur(8px); /* Sfocatura dello sfondo */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .popupContent {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 500px;
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #f9f9f9
+  ); /* Sfondo con leggero gradiente */
+  padding: 3rem;
+  border-radius: 16px; /* Angoli più arrotondati */
+  max-width: 600px;
   width: 100%;
   text-align: center;
   position: relative;
+  transform: scale(0.8);
+  animation: scaleIn 0.3s ease-out;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Bordatura sottile */
 }
 
+/* Animazione */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Pulsanti Popup */
+.popupButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.popupButton {
+  padding: 1rem 2rem;
+  background: linear-gradient(
+    135deg,
+    #1d5c31,
+    #28a745
+  ); /* Gradiente pulsante */
+  color: white;
+  border: none;
+  border-radius: 8px; /* Angoli arrotondati */
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.2s ease;
+}
+
+.popupButton:hover {
+  background: linear-gradient(135deg, #145922, #1d5c31);
+  transform: translateY(-3px);
+}
+
+/* Pulsante Chiudi */
 .closeButton {
   position: absolute;
   top: 10px;
@@ -124,41 +203,30 @@
   background-color: transparent;
   color: #1d5c31;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
+.closeButton:hover {
+  color: #145922;
+}
+
+/* Testo del Popup */
 .popupText {
-  color: black;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-.popupButtons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.popupButton {
-  padding: 0.8rem 1.5rem;
-  background-color: #1d5c31;
-  /* Colore verde */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  color: #333;
+  font-size: 1.5rem; /* Testo leggermente più grande */
+  margin-bottom: 1.5rem;
+  font-weight: 600; /* Testo più marcato */
 }
 
 .popupMessage {
-  margin-top: 1rem;
-  color: white;
-  font-weight: 200;
-  background-color: #1d5c31;
+  margin-top: 1.5rem;
+  color: #fff;
+  font-weight: 400;
+  background: #1d5c31;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  padding: 0.8rem 1.5rem;
-  /* Colore per il messaggio */
+  border-radius: 6px;
+  padding: 1rem 2rem;
   font-size: 1rem;
 }
