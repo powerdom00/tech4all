@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import path from "path";
 import sharp from "sharp";
+import fs from "fs";
 import { TutorialService } from "../services/TutorialService";
 import { Tutorial } from "../entity/gestione_tutorial/Tutorial";
 
@@ -35,7 +36,7 @@ router.get("/search", async (req, res) => {
 
   try {
     const tutorials = await tutorialService.ricercaTutorial(
-      parolaChiave as string,
+      parolaChiave as string
     );
     res.status(200).json(tutorials);
   } catch (error) {
@@ -84,6 +85,24 @@ router.post("/upload-image", uploadQuill.single("image"), async (req, res) => {
   }
 });
 
+// Cancellazione di un'immagine caricata tramite Quill
+router.delete("/delete-image", async (req, res) => {
+  const { imagePath } = req.body;
+
+  try {
+    const fullPath = path.join(__dirname, "../../../", imagePath);
+    if (fs.existsSync(fullPath)) {
+      fs.unlinkSync(fullPath);
+      res.status(200).json({ message: "Immagine cancellata con successo" });
+    } else {
+      res.status(404).json({ message: "Immagine non trovata" });
+    }
+  } catch (error) {
+    console.error("Errore durante la cancellazione dell'immagine:", error);
+    res.status(500).json({ message: "Errore del server", error });
+  }
+});
+
 // Eliminazione di un tutorial
 router.delete("/tutorial/:id", async (req, res) => {
   const { id } = req.params;
@@ -112,7 +131,7 @@ router.get("/tutorial/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const tutorial = await tutorialService.visualizzazioneTutorial(
-      parseInt(id),
+      parseInt(id)
     );
     if (tutorial) {
       res.status(200).json(tutorial);
@@ -131,7 +150,7 @@ router.get("/tutorial/filter", async (req, res) => {
   try {
     const tutorials = await tutorialService.filtroTutorial(
       categoria as string,
-      valutazione as "asc" | "desc",
+      valutazione as "asc" | "desc"
     );
     res.status(200).json(tutorials);
   } catch (error) {

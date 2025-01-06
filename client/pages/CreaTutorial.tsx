@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styles from "../src/css/CreaTutorial.module.css";
 import ApiControllerFacade from "@/controller/ApiControllerFacade";
 import { Categoria } from "../../server/src/app/entity/gestione_tutorial/Categoria";
-import TextEditor from "@/components/TextEditor";
+import TextEditor from "@/components/TextEditor-migliorato";
 
 const CreateTutorial = () => {
   const [titolo, setTitolo] = useState("");
@@ -69,17 +69,18 @@ const CreateTutorial = () => {
             </p>
           )}
           <div className={styles.formGroup}>
-            <label htmlFor="titolo">Titolo:</label>
+            {/* <label htmlFor="titolo">Titolo:</label> */}
             <input
               id="titolo"
               type="text"
+              placeholder="Inserisci il titolo del tutorial"
               className={styles.formInput}
               value={titolo}
               onChange={(e) => setTitolo(e.target.value)}
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="categoria">Categoria:</label>
+            {/* <label htmlFor="categoria">Categoria:</label> */}
             <select
               id="categoria"
               className={styles.formInput}
@@ -95,11 +96,11 @@ const CreateTutorial = () => {
             </select>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="testo">Testo:</label>
+            {/* <label htmlFor="testo">Testo:</label> */}
             <TextEditor value={testo} onChange={setTesto} />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="grafica">Grafica:</label>
+            <label htmlFor="grafica">Carica un immagine per la grafica:</label>
             <input
               id="grafica"
               type="file"
