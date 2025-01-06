@@ -134,6 +134,10 @@ export class QuizService {
     utenteId: number,
     risposteFornite: number[], // Lista di ID delle risposte scelte dall'utente
   ): Promise<{ success: boolean; message: string; esito: boolean }> {
+    if (!utenteId || utenteId <= 0) {
+      console.error("ID utente non valido");
+      throw new Error("ID utente non valido");
+    }
     try {
       const quiz = await this.quizDao.getQuizById(quizId);
       if (!quiz) {
@@ -230,12 +234,18 @@ export class QuizService {
   }
 
   // recupera quiz per tutorial id
-  async getQuizByTutorialId(tutorialId: number): Promise<Quiz> {
+  async getQuizByTutorialId(
+    tutorialId: number | null | undefined,
+  ): Promise<Quiz> {
+    if (tutorialId === null || tutorialId === undefined || tutorialId <= 0) {
+      console.error("ID tutorial obbligatorio");
+      throw new Error("ID tutorial obbligatorio");
+    }
     try {
       const quiz = await this.quizDao.getQuizByTutorialId(tutorialId);
 
       if (!quiz) {
-        throw new Error("Tutorial not found"); // Lancia un errore se il quiz non esiste
+        throw new Error("Quiz non trovato"); // Lancia un errore se il quiz non esiste
       }
 
       const domande = quiz.getDomande().map((domanda) => {
