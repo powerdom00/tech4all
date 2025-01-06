@@ -22,21 +22,22 @@
 
 /* Formattazione dei video nel tutorial */
 .tutorial-container .ql-video {
-  width: 100%;
-  max-width: 960px;
+  width: 50%;
+  /* max-width: 960px; */
   height: auto;
   aspect-ratio: 16 / 9;
   border-radius: 10px;
-  margin: 20px 0;
+  /* margin: 20px 0; */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Immagini nel tutorial */
 .tutorial-container img {
-  width: 100%;
+  max-width: 50%;
+  /* width: 100%; */
   height: auto;
   border-radius: 10px;
-  margin: 20px 0;
+  /* margin: 20px 0; */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 

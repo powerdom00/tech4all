@@ -10,50 +10,58 @@ interface TextEditorProps {
 
 const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
   const editorRef = useRef(null);
-  const [quill, setQuill] = useState<Quill | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       import("quill").then((Quill) => {
-        const quillInstance = new Quill.default(editorRef.current, {
-          theme: "snow",
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, false] }],
-              [{ font: [] }],
-              [{ align: [] }],
-              ["bold", "italic", "underline"],
-              [{ color: [] }, { background: [] }],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["link", "image", "video"],
-              ["clean"],
-            ],
-          },
-        });
+        if (editorRef.current) {
+          const quillInstance = new Quill.default(
+            editorRef.current as HTMLElement,
+            {
+              theme: "snow",
+              modules: {
+                toolbar: [
+                  [{ header: [1, 2, 3, false] }],
+                  [{ font: [] }],
+                  [{ align: [] }],
+                  ["bold", "italic", "underline"],
+                  [{ color: [] }, { background: [] }],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                  ["link", "image", "video"],
+                  ["clean"],
+                ],
+              },
+              placeholder: "Inserisci il contenuto del tutorial...",
+            }
+          );
 
-        quillInstance.getModule("toolbar").addHandler("image", () => {
-          selectLocalImage(quillInstance);
-        });
+          (quillInstance.getModule("toolbar") as any).addHandler(
+            "image",
+            () => {
+              selectLocalImage(quillInstance);
+            }
+          );
 
-        quillInstance.on("text-change", () => {
-          onChange(quillInstance.root.innerHTML);
-        });
+          quillInstance.on("text-change", () => {
+            onChange(quillInstance.root.innerHTML);
+          });
 
-        return () => {
-          quillInstance.off("text-change");
-        };
+          return () => {
+            quillInstance.off("text-change");
+          };
+        }
       });
     }
   }, [onChange]);
 
-  const selectLocalImage = (quillInstance) => {
+  const selectLocalImage = (quillInstance: Quill) => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
     input.click();
 
     input.onchange = async () => {
-      const file = input.files[0];
+      const file = input.files ? input.files[0] : null;
       if (file) {
         const formData = new FormData();
         formData.append("image", file);
@@ -77,7 +85,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
     };
   };
 
-  const insertToEditor = (url, quillInstance) => {
+  const insertToEditor = (url: any, quillInstance: Quill) => {
     const range = quillInstance.getSelection();
     if (range) {
       quillInstance.insertEmbed(range.index, "image", url);
