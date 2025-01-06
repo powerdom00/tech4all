@@ -3,7 +3,12 @@ import "quill/dist/quill.snow.css";
 import "../css/textEditor.css";
 import Quill from "quill";
 
-const TextEditor = ({ value, onChange }) => {
+interface TextEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const TextEditor: React.FC<TextEditorProps> = ({ value, onChange }) => {
   const editorRef = useRef(null);
   const [quill, setQuill] = useState<Quill | null>(null);
 
@@ -14,7 +19,7 @@ const TextEditor = ({ value, onChange }) => {
           theme: "snow",
           modules: {
             toolbar: [
-              [{ header: [1, 2, false] }],
+              [{ header: [1, 2, 3, false] }],
               [{ font: [] }],
               [{ align: [] }],
               ["bold", "italic", "underline"],

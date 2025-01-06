@@ -10,11 +10,11 @@ export class QuizController {
 
   // Metodo per controllare se un quiz esiste per un dato tutorial ID
   async checkQuizExists(
-    tutorialId: number,
+    tutorialId: number
   ): Promise<{ exists: boolean; quizId: number | null }> {
     try {
       const response = await axios.get(
-        `${this.baseUrl}/visualizzaQuiz/${tutorialId}`,
+        `${this.baseUrl}/visualizzaQuiz/${tutorialId}`
       );
       const exists =
         response.status === 200 && response.data.domande.length > 0;
@@ -24,7 +24,7 @@ export class QuizController {
       if (
         axios.isAxiosError(error) &&
         error.response &&
-        error.response.status === 404
+        error.response.status === 500
       ) {
         return { exists: false, quizId: null };
       } else {
@@ -36,11 +36,11 @@ export class QuizController {
 
   // Metodo per ottenere un quiz specifico per tutorial ID
   async getQuizByTutorialId(
-    tutorialId: number,
+    tutorialId: number
   ): Promise<{ domande: Domanda[]; risposte: Risposta[] }> {
     try {
       const response = await axios.get(
-        `${this.baseUrl}/visualizzaQuiz/${tutorialId}`,
+        `${this.baseUrl}/visualizzaQuiz/${tutorialId}`
       );
       const quiz = response.data;
 
@@ -56,7 +56,7 @@ export class QuizController {
           domanda_id: r.domandaId,
           risposta: r.risposta,
           corretta: r.corretta,
-        })),
+        }))
       );
 
       return { domande, risposte };
@@ -69,7 +69,7 @@ export class QuizController {
   // Metodo per creare un nuovo quiz
   async createQuiz(
     tutorialId: number,
-    nuoveDomande: { domanda: string; risposte: string[]; corretta: number }[],
+    nuoveDomande: { domanda: string; risposte: string[]; corretta: number }[]
   ): Promise<void> {
     const quizData = {
       tutorialId,
@@ -88,7 +88,7 @@ export class QuizController {
       });
       if (response.status !== 201) {
         throw new Error(
-          response.data.message || "Errore nella creazione del quiz",
+          response.data.message || "Errore nella creazione del quiz"
         );
       }
     } catch (error) {
@@ -99,7 +99,7 @@ export class QuizController {
 
   // Metodo per eliminare un quiz
   async deleteQuiz(
-    id: number,
+    id: number
   ): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await axios.delete(`${this.baseUrl}/eliminaQuiz/${id}`);
@@ -122,7 +122,7 @@ export class QuizController {
   async executeQuiz(
     quizId: number,
     risposteUtente: number[],
-    utenteId: number,
+    utenteId: number
   ): Promise<{ success: boolean; message?: string }> {
     try {
       const response = await axios.post(`${this.baseUrl}/eseguiQuiz`, {
