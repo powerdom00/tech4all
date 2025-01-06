@@ -138,6 +138,10 @@ export class QuizService {
       console.error("ID utente non valido");
       throw new Error("ID utente non valido");
     }
+    if (!quizId || quizId <= 0) {
+      console.error("ID quiz non valido");
+      throw new Error("Quiz non trovato");
+    }
     try {
       const quiz = await this.quizDao.getQuizById(quizId);
       if (!quiz) {
