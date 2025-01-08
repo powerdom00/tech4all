@@ -64,7 +64,7 @@ export class TutorialService {
         return {
           success: false,
           message: `La categoria inserita non è valida. Le categorie valide sono: ${categorieValide.join(
-            ", ",
+            ", "
           )}.`,
         };
       }
@@ -123,27 +123,6 @@ export class TutorialService {
     }
   }
 
-  // Filtro tutorial per categoria o valutazione
-  async filtroTutorial(
-    categoria?: string,
-    valutazione?: "asc" | "desc"
-  ): Promise<Tutorial[]> {
-    try {
-      if (categoria) {
-        // Filtra direttamente dal database per categoria
-        return await this.tutorialDao.getTutorialsByCategoria(categoria);
-      } else if (valutazione) {
-        // Ordina direttamente dal database per valutazione
-        return await this.tutorialDao.getTutorialsByValutazione(valutazione);
-      }
-
-      // Se nessun parametro è fornito, restituisce tutti i tutorial
-      return await this.tutorialDao.getAllTutorials();
-    } catch (error) {
-      console.error("Errore durante il filtraggio dei tutorial:", error);
-      throw new Error("Errore interno del server.");
-    }
-  }
   // Metodo per la ricerca di tutorial basata su una parola chiave
   async ricercaTutorial(parolaChiave: string): Promise<Tutorial[]> {
     try {
