@@ -29,6 +29,7 @@
   border-radius: 10px;
   /* margin: 20px 0; */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: block;
 }
 
 /* Immagini nel tutorial */
@@ -44,15 +45,15 @@
 /* Formattazione dei testi */
 .tutorial-container .ql-font-serif {
   font-family: "Georgia", serif;
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 .tutorial-container .ql-font-monospace {
   font-family: "Courier New", monospace;
-  font-size: 14px;
-  background-color: #f4f4f4;
+  /* font-size: 14px; */
+  /* background-color: #f4f4f4;
   padding: 5px 10px;
-  border-radius: 4px;
+  border-radius: 4px; */
 }
 
 .tutorial-container .ql-align-right {
@@ -78,7 +79,7 @@
 }
 
 /* Responsività per schermi piccoli */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .tutorial-container {
     margin: 20px;
     padding: 15px;
@@ -97,4 +98,4 @@
   .tutorial-container img {
     margin: 10px 0;
   }
-}
+} */
