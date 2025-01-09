@@ -87,6 +87,11 @@ describe("AutenticazioneService - Test login", () => {
     });
   });
 
+
+
+
+
+  
   it("TC Errore interno del server", async () => {
     // Arrange
     mockUtenteDao.getUtenteByEmail.mockRejectedValueOnce(
@@ -130,6 +135,21 @@ describe("AutenticazioneService - Test login", () => {
       user: existingUser,
     });
   });
+
+
+
+
+  
+  it("TC Email o password mancanti", async () => {
+    const result = await autenticazioneService.login("", "");
+    expect(result).toEqual({
+      success: false,
+      message: "Email e password sono obbligatori.",
+    });
+  });
+
+
+
 
   it("TC Errore interno del server", async () => {
     mockUtenteDao.getUtenteByEmail.mockRejectedValueOnce(
