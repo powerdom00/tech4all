@@ -174,7 +174,7 @@ describe("TutorialService - Test creazioneTutorial", () => {
   });
 });
 
-describe("TutorialService - Test filtroTutorial", () => {
+describe("TutorialService - Test visualizzazioneListaTutorial", () => {
   let tutorialService: TutorialService;
   let mockTutorialDao: jest.Mocked<TutorialDao>;
 
@@ -190,86 +190,30 @@ describe("TutorialService - Test filtroTutorial", () => {
     jest.clearAllMocks();
   });
 
-  it("TC Filtro tutorial per categoria", async () => {
+  it("TC Errore durante la visualizzazione della lista di tutorial", async () => {
     // Arrange
-    const categoria = Categoria.INTERNET;
-    const tutorials = [
-      new Tutorial(
-        "Titolo 1",
-        "uploads/resized-1735384807365-grafica1.png",
-        "Testo del tutorial 1",
-        categoria
-      ),
-      new Tutorial(
-        "Titolo 2",
-        "uploads/resized-1735384807365-grafica2.png",
-        "Testo del tutorial 2",
-        categoria
-      ),
-    ];
-    mockTutorialDao.getTutorialsByCategoria.mockResolvedValueOnce(tutorials);
-
-    // Act
-    const result = await tutorialService.filtroTutorial(categoria);
-
-    // Assert
-    expect(mockTutorialDao.getTutorialsByCategoria).toHaveBeenCalledWith(
-      categoria
+    const errorMessage = "Errore durante la visualizzazione dei tutorial";
+    mockTutorialDao.getAllTutorials.mockRejectedValueOnce(
+      new Error(errorMessage)
     );
-    expect(result).toEqual(tutorials);
+
+    // Act & Assert
+    await expect(
+      tutorialService.visualizzazioneListaTutorial()
+    ).rejects.toThrow("Errore interno del server.");
+    expect(mockTutorialDao.getAllTutorials).toHaveBeenCalled();
   });
 
-  it("TC Filtro tutorial per valutazione ascendente", async () => {
-    // Arrange
-    const order = "asc";
-    const tutorials = [
-      new Tutorial(
-        "Titolo 1",
-        "uploads/resized-1735384807365-grafica1.png",
-        "Testo del tutorial 1",
-        Categoria.INTERNET,
-        3
-      ),
-      new Tutorial(
-        "Titolo 2",
-        "uploads/resized-1735384807365-grafica2.png",
-        "Testo del tutorial 2",
-        Categoria.INTERNET,
-        5
-      ),
-    ];
-    mockTutorialDao.getTutorialsByValutazione.mockResolvedValueOnce(tutorials);
-
-    // Act
-    const result = await tutorialService.filtroTutorial(undefined, order);
-
-    // Assert
-    expect(mockTutorialDao.getTutorialsByValutazione).toHaveBeenCalledWith(
-      order
-    );
-    expect(result).toEqual(tutorials);
-  });
-
-  it("TC Filtro tutorial senza parametri", async () => {
+  it("TC Lista tutorial visualizzata correttamente", async () => {
     // Arrange
     const tutorials = [
-      new Tutorial(
-        "Titolo 1",
-        "uploads/resized-1735384807365-grafica1.png",
-        "Testo del tutorial 1",
-        Categoria.INTERNET
-      ),
-      new Tutorial(
-        "Titolo 2",
-        "uploads/resized-1735384807365-grafica2.png",
-        "Testo del tutorial 2",
-        Categoria.INTERNET
-      ),
+      new Tutorial("Titolo 1", "grafica1.png", "Testo 1", Categoria.INTERNET),
+      new Tutorial("Titolo 2", "grafica2.png", "Testo 2", Categoria.SICUREZZA),
     ];
     mockTutorialDao.getAllTutorials.mockResolvedValueOnce(tutorials);
 
     // Act
-    const result = await tutorialService.filtroTutorial();
+    const result = await tutorialService.visualizzazioneListaTutorial();
 
     // Assert
     expect(mockTutorialDao.getAllTutorials).toHaveBeenCalled();

@@ -144,19 +144,4 @@ router.get("/tutorial/:id", async (req, res) => {
   }
 });
 
-// Filtraggio tutorial per categoria o valutazione
-router.get("/tutorial/filter", async (req, res) => {
-  const { categoria, valutazione } = req.query;
-  try {
-    const tutorials = await tutorialService.filtroTutorial(
-      categoria as string,
-      valutazione as "asc" | "desc"
-    );
-    res.status(200).json(tutorials);
-  } catch (error) {
-    console.error("Errore durante il filtraggio dei tutorial:", error);
-    res.status(500).json({ message: "Errore del server", error });
-  }
-});
-
 export default router;
