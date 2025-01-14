@@ -5,12 +5,12 @@ import Link from "next/link";
 const ChiSiamo: React.FC = () => {
   const mainImages = [
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/fb.jpeg",
       alt: "PM 1",
       description: "PM Ferdinando Boccia",
     },
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/dd.jpeg",
       alt: "PM 2",
       description: "PM Domenico D'Antuono",
     },
@@ -18,42 +18,42 @@ const ChiSiamo: React.FC = () => {
 
   const gridImages = [
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/gc.jpeg",
       alt: "Team Member 1",
       description: "Giovanni Cerchia",
     },
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/ln.jpeg",
       alt: "Team Member 2",
       description: "Luigi Nasta",
     },
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/sd.jpeg",
       alt: "Team Member 3",
       description: "Silvana De Martino",
     },
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/gsa.jpeg",
       alt: "Team Member 4",
       description: "Giovanni Salsano",
     },
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/ge.jpeg",
       alt: "Team Member 5",
       description: "Giovanni Esposito",
     },
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/gst.jpeg",
       alt: "Team Member 6",
       description: "Giuseppe Staiano",
     },
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/mc.jpeg",
       alt: "Team Member 7",
       description: "Marco Capuano",
     },
     {
-      src: "/Media/photo.jfif",
+      src: "/Media/ac.jpeg",
       alt: "Team Member 8",
       description: "Arcangelo Ciaramella",
     },
