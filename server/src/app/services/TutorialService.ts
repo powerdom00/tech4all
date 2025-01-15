@@ -132,4 +132,19 @@ export class TutorialService {
       throw new Error("Errore interno del server.");
     }
   }
+
+  // Filtro tutorial per categoria
+  async filtroTutorial(categoria?: string): Promise<Tutorial[]> {
+    try {
+      if (categoria) {
+        // Filtra direttamente dal database per categoria
+        return await this.tutorialDao.getTutorialsByCategoria(categoria);
+      }
+      // Se nessun parametro è fornito, restituisce tutti i tutorial
+      return await this.tutorialDao.getAllTutorials();
+    } catch (error) {
+      console.error("Errore durante il filtraggio dei tutorial:", error);
+      throw new Error("Errore interno del server.");
+    }
+  }
 }
