@@ -53,13 +53,6 @@ export class TutorialService {
       const categoria = tutorial.getCategoria();
       const categorieValide = Object.values(Categoria);
 
-      if (categoria.length < 5 || categoria.length > 50) {
-        return {
-          success: false,
-          message:
-            "La lunghezza della categoria deve essere tra i 5 e i 50 caratteri.",
-        };
-      }
       if (!categorieValide.includes(categoria as Categoria)) {
         return {
           success: false,

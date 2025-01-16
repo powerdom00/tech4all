@@ -108,28 +108,6 @@ describe("TutorialService - Test creazioneTutorial", () => {
     });
   });
 
-  it("TC Lunghezza della categoria invalida", async () => {
-    // Arrange
-    const tutorialWithInvalidCategory = new Tutorial(
-      "Utilizzare i social media",
-      "grafica.png",
-      "In questa guida, ti mostreremo come utilizzare i principali social media, come Facebook, Twitter e Instagram, in modo efficace e sicuro. [...]",
-      "SM"
-    );
-
-    // Act
-    const result = await tutorialService.creazioneTutorial(
-      tutorialWithInvalidCategory
-    );
-
-    // Assert
-    expect(result).toEqual({
-      success: false,
-      message:
-        "La lunghezza della categoria deve essere tra i 5 e i 50 caratteri.",
-    });
-  });
-
   it("TC Categoria non trovata", async () => {
     // Arrange
     const tutorialWithInvalidCategory = new Tutorial(
