@@ -190,9 +190,21 @@ describe("TutorialService - Test visualizzazioneListaTutorial", () => {
     jest.clearAllMocks();
   });
 
-  it("TC Errore durante la visualizzazione della lista di tutorial", async () => {
+  it("TC Lista tutorial vuota", async () => {
     // Arrange
-    const errorMessage = "Errore durante la visualizzazione dei tutorial";
+    mockTutorialDao.getAllTutorials.mockResolvedValueOnce([]);
+
+    // Act
+    const result = await tutorialService.visualizzazioneListaTutorial();
+
+    // Assert
+    expect(mockTutorialDao.getAllTutorials).toHaveBeenCalled();
+    expect(result).toEqual([]);
+  });
+
+  it("TC Errore durante la restituzione della lista di tutorial", async () => {
+    // Arrange
+    const errorMessage = "Errore di connessione con il database";
     mockTutorialDao.getAllTutorials.mockRejectedValueOnce(
       new Error(errorMessage)
     );
@@ -204,7 +216,7 @@ describe("TutorialService - Test visualizzazioneListaTutorial", () => {
     expect(mockTutorialDao.getAllTutorials).toHaveBeenCalled();
   });
 
-  it("TC Lista tutorial visualizzata correttamente", async () => {
+  it("TC Lista tutorial restituita correttamente", async () => {
     // Arrange
     const tutorials = [
       new Tutorial("Titolo 1", "grafica1.png", "Testo 1", Categoria.INTERNET),
